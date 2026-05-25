@@ -1,0 +1,114 @@
+/* Shared Office Pages */
+.office-page { min-height: 100vh; background: #f4f6fb; font-family: var(--font-sans, 'Inter', sans-serif); }
+
+.office-hero {
+  background: linear-gradient(135deg, #000080 0%, #4169E1 100%);
+  padding: 3rem 0 2.5rem;
+  color: #fff;
+}
+
+.office-container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 5%; }
+.office-body { padding-top: 3rem; padding-bottom: 4rem; }
+
+.office-back-btn {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.4);
+  color: #fff;
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  display: inline-block;
+  transition: background 0.2s;
+}
+.office-back-btn:hover { background: rgba(255,255,255,0.25); }
+
+.office-badge {
+  display: inline-block;
+  background: rgba(255,215,0,0.2);
+  color: #FFD700;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  margin-bottom: 0.75rem;
+}
+
+.office-hero-title {
+  font-family: var(--font-serif, 'Source Serif 4', serif);
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  color: #fff;
+}
+
+.office-hero-sub { font-size: 1rem; color: rgba(255,255,255,0.85); margin: 0; }
+
+/* Section */
+.office-section { margin-bottom: 3rem; }
+.office-section h2 {
+  font-family: var(--font-serif, 'Source Serif 4', serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #000080;
+  margin: 0 0 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 3px solid #FFD700;
+  display: inline-block;
+}
+.office-section p { font-size: 0.95rem; color: #444; line-height: 1.75; margin-bottom: 1rem; }
+
+/* Cards grid */
+.office-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.office-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0,0,128,0.07);
+  border-top: 3px solid #000080;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.office-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,128,0.12); }
+.office-card-icon { font-size: 2rem; margin-bottom: 0.75rem; display: block; }
+.office-card h3 { font-family: var(--font-serif, 'Source Serif 4', serif); font-size: 1rem; font-weight: 600; color: #000080; margin: 0 0 0.5rem; }
+.office-card p { font-size: 0.85rem; color: #555; line-height: 1.6; margin: 0; }
+
+/* Contact box */
+.office-contact {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1.75rem;
+  box-shadow: 0 2px 10px rgba(0,0,128,0.07);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+.office-contact-item { display: flex; flex-direction: column; gap: 0.2rem; }
+.office-contact-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #888; }
+.office-contact-value { font-size: 0.9rem; color: #222; font-weight: 500; }
+.office-contact-value a { color: #4169E1; text-decoration: none; }
+.office-contact-value a:hover { text-decoration: underline; }
+
+/* Hours table */
+.office-hours { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+.office-hours th { background: #000080; color: #fff; padding: 0.6rem 1rem; text-align: left; font-weight: 600; }
+.office-hours td { padding: 0.6rem 1rem; border-bottom: 1px solid #eee; color: #444; }
+.office-hours tr:last-child td { border-bottom: none; }
+
+@media (max-width: 768px) {
+  .office-cards { grid-template-columns: repeat(2, 1fr); }
+  .office-contact { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .office-cards { grid-template-columns: 1fr; }
+  .office-body { padding-top: 2rem; }
+}

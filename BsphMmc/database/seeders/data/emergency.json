@@ -1,0 +1,83 @@
+{
+  "slug": "emergency",
+  "icon": "🚑",
+  "title": "Emergency & Critical Care",
+  "subtitle": "Life-Saving Expertise",
+  "description": "Specialized training for emergency situations and critical care, preparing nurses for high-pressure medical scenarios.",
+  "features": ["Emergency response", "Critical care management", "Trauma nursing", "Advanced life support"],
+  "detail": {
+    "page_title": "Emergency & Critical Care Nursing",
+    "hero_tagline": "Life-Saving Expertise in Critical Moments",
+    "mission_text": "To produce highly skilled emergency and critical care nurses capable of providing rapid, evidence-based interventions in life-threatening situations while maintaining compassion and professional excellence.",
+    "intro": "The Department of Emergency and Critical Care Nursing at St. Paul's Hospital Millennium Medical College is dedicated to training nurses who can excel in high-pressure medical environments. Our program combines advanced theoretical knowledge with extensive hands-on clinical experience to prepare graduates for the challenges of emergency medicine and intensive care units.",
+    "areas": [
+      {
+        "icon": "⚡",
+        "title": "Emergency Nursing",
+        "description": "Rapid assessment and intervention for acute medical conditions, trauma care, and emergency department operations.",
+        "features": ["Triage and rapid assessment", "Trauma and injury management", "Emergency medication administration", "Crisis communication skills"]
+      },
+      {
+        "icon": "🫁",
+        "title": "Critical Care Nursing",
+        "description": "Advanced care for critically ill patients in ICU/CCU settings, including ventilator management and hemodynamic monitoring.",
+        "features": ["Mechanical ventilation support", "Hemodynamic monitoring", "Advanced life support", "Critical care pharmacology"]
+      },
+      {
+        "icon": "💉",
+        "title": "Trauma Nursing",
+        "description": "Specialized care for trauma patients, including mass casualty incidents and disaster response protocols.",
+        "features": ["Trauma assessment protocols", "Mass casualty management", "Disaster preparedness", "Emergency surgical assistance"]
+      },
+      {
+        "icon": "🔥",
+        "title": "Acute Care",
+        "description": "Management of acute exacerbations of chronic conditions and rapid deterioration scenarios in various clinical settings.",
+        "features": ["Acute deterioration recognition", "Rapid response teams", "Acute medication management", "Critical pathway navigation"]
+      }
+    ],
+    "training": [
+      {
+        "icon": "🏥",
+        "title": "Simulation Labs",
+        "description": "State-of-the-art simulation centers with high-fidelity manikins for emergency scenarios, code blue drills, and critical care skill development.",
+        "features": ["High-fidelity simulators", "Emergency scenario training", "Code blue simulations"]
+      },
+      {
+        "icon": "🔄",
+        "title": "Clinical Rotations",
+        "description": "Extensive clinical rotations through emergency departments, intensive care units, and trauma centers for real-world experience.",
+        "features": ["ED clinical rotations", "ICU/CCU placements", "Trauma center experience"]
+      },
+      {
+        "icon": "🔬",
+        "title": "Advanced Skills Labs",
+        "description": "Specialized skills training for advanced procedures, equipment operation, and emergency intervention techniques.",
+        "features": ["Advanced airway management", "Critical care equipment", "Emergency procedure labs"]
+      }
+    ],
+    "careers": [
+      {
+        "icon": "🏥",
+        "title": "Hospital Settings",
+        "items": ["Emergency Department Nurse", "Intensive Care Unit Nurse", "Trauma Center Nurse", "Critical Care Transport Nurse", "Emergency Room Manager"]
+      },
+      {
+        "icon": "⚕️",
+        "title": "Specialized Roles",
+        "items": ["Flight Nurse", "Disaster Response Nurse", "Critical Care Educator", "Emergency Department Consultant", "Trauma Program Coordinator"]
+      },
+      {
+        "icon": "🎓",
+        "title": "Advanced Practice",
+        "items": ["Critical Care Nurse Practitioner", "Emergency Nurse Practitioner", "Clinical Nurse Specialist", "Acute Care Nurse Practitioner", "Critical Care Clinical Nurse Leader"]
+      }
+    ],
+    "stats": [
+      { "number": "150+", "label": "Students Enrolled", "description": "Across all program levels" },
+      { "number": "20+", "label": "Clinical Partners", "description": "Major hospitals and centers" },
+      { "number": "98%", "label": "Employment Rate", "description": "Within 6 months of graduation" },
+      { "number": "24/7", "label": "Simulation Access", "description": "Advanced training facilities" }
+    ]
+  }
+}

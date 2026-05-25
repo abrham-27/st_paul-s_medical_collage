@@ -1,0 +1,83 @@
+{
+  "slug": "medical",
+  "icon": "⚕️",
+  "title": "Medical & Surgical",
+  "subtitle": "Comprehensive Patient Care",
+  "description": "Broad-based training covering medical-surgical nursing across diverse specialties and ward-based care.",
+  "features": ["Medical-surgical nursing", "Pre/post-operative care", "Chronic disease mgmt", "Ward administration"],
+  "detail": {
+    "page_title": "Medical & Surgical Nursing",
+    "hero_tagline": "Comprehensive Patient Care Excellence",
+    "mission_text": "To develop competent medical-surgical nurses who can provide comprehensive care across diverse clinical settings, from general wards to specialized surgical units.",
+    "intro": "The Department of Medical and Surgical Nursing prepares nurses for the dynamic challenges of ward-based care and surgical assistance. Our curriculum integrates medical-surgical nursing theory with extensive clinical practice to develop well-rounded healthcare professionals.",
+    "areas": [
+      {
+        "icon": "🏥",
+        "title": "Medical-Surgical Nursing",
+        "description": "Comprehensive care for adult patients with diverse medical and surgical conditions across various clinical settings.",
+        "features": ["Medical-surgical assessment", "Chronic disease management", "Medication administration", "Patient education"]
+      },
+      {
+        "icon": "⚕️",
+        "title": "Perioperative Nursing",
+        "description": "Specialized care for patients undergoing surgical procedures, including pre-operative preparation and post-operative recovery.",
+        "features": ["Pre-operative assessment", "Operating room assistance", "Anesthesia support", "Post-operative care"]
+      },
+      {
+        "icon": "🩹",
+        "title": "Ward Management",
+        "description": "Leadership and coordination of nursing care in medical and surgical wards, ensuring quality and efficiency.",
+        "features": ["Ward administration", "Resource management", "Quality improvement", "Team coordination"]
+      },
+      {
+        "icon": "📋",
+        "title": "Clinical Documentation",
+        "description": "Expert documentation practices for legal compliance, care continuity, and quality improvement initiatives.",
+        "features": ["Care planning documentation", "Progress note writing", "Medication administration records", "Clinical audit participation"]
+      }
+    ],
+    "training": [
+      {
+        "icon": "🏥",
+        "title": "Ward-Based Training",
+        "description": "Extensive clinical rotations through medical, surgical, and specialty wards for comprehensive patient care experience.",
+        "features": ["Medical ward rotations", "Surgical ward experience", "Specialty unit placements"]
+      },
+      {
+        "icon": "🔧",
+        "title": "Surgical Skills Lab",
+        "description": "Advanced training in surgical assistance, sterile techniques, and operating room equipment management.",
+        "features": ["Sterile technique mastery", "Surgical instrument training", "Operating room simulation"]
+      },
+      {
+        "icon": "🫁",
+        "title": "Critical Care Training",
+        "description": "Advanced skills for managing acutely ill medical-surgical patients in high-dependency care settings.",
+        "features": ["Critical assessment skills", "Advanced life support", "Hemodynamic monitoring"]
+      }
+    ],
+    "careers": [
+      {
+        "icon": "🏥",
+        "title": "Ward Settings",
+        "items": ["Medical Ward Nurse", "Surgical Ward Nurse", "Charge Nurse", "Ward Manager", "Clinical Nurse Leader"]
+      },
+      {
+        "icon": "⚕️",
+        "title": "Surgical Settings",
+        "items": ["Operating Room Nurse", "Perioperative Nurse", "Surgical First Assistant", "Day Surgery Nurse", "Surgical Nurse Specialist"]
+      },
+      {
+        "icon": "🎓",
+        "title": "Advanced Practice",
+        "items": ["Medical-Surgical Nurse Practitioner", "Clinical Nurse Specialist", "Wound Care Specialist", "Stoma Care Nurse", "Clinical Nurse Consultant"]
+      }
+    ],
+    "stats": [
+      { "number": "180+", "label": "Students Enrolled", "description": "Medical-surgical program" },
+      { "number": "25+", "label": "Clinical Partners", "description": "Hospitals and surgical centers" },
+      { "number": "96%", "label": "Employment Rate", "description": "Within 6 months of graduation" },
+      { "number": "40+", "label": "Ward Rotations", "description": "Clinical placement sites" }
+    ]
+  }
+}

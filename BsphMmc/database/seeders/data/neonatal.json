@@ -1,0 +1,83 @@
+{
+  "slug": "neonatal",
+  "icon": "👶",
+  "title": "Neonatal & Pediatrics",
+  "subtitle": "Care for Youngest Patients",
+  "description": "Focused on specialized care for infants, children and adolescents with family-centered approaches.",
+  "features": ["Neonatal intensive care", "Pediatric assessment", "Child development", "Family support"],
+  "detail": {
+    "page_title": "Neonatal & Pediatrics Nursing",
+    "hero_tagline": "Care for Our Youngest Patients",
+    "mission_text": "To prepare compassionate neonatal and pediatric nurses who can provide developmentally appropriate care for infants, children, and adolescents while supporting families through evidence-based practice.",
+    "intro": "The Department of Neonatal and Pediatrics Nursing focuses on the specialized healthcare needs of children from birth through adolescence. Our program emphasizes developmental considerations, family-centered care, and the unique physiological and psychological aspects of pediatric nursing.",
+    "areas": [
+      {
+        "icon": "🍼",
+        "title": "Neonatal Nursing",
+        "description": "Specialized care for newborns, particularly premature infants and those with medical complications requiring intensive monitoring.",
+        "features": ["Neonatal intensive care", "Premature infant management", "Newborn assessment skills", "Parent education and support"]
+      },
+      {
+        "icon": "👧",
+        "title": "Pediatric Nursing",
+        "description": "Comprehensive care for children from infancy through adolescence, focusing on growth, development, and age-appropriate interventions.",
+        "features": ["Developmental assessment", "Pediatric medication management", "Child growth monitoring", "Age-specific care protocols"]
+      },
+      {
+        "icon": "🏥",
+        "title": "Pediatric Critical Care",
+        "description": "Advanced care for critically ill children, including pediatric intensive care and emergency pediatric interventions.",
+        "features": ["Pediatric ICU management", "Critical child assessment", "Pediatric life support", "Family crisis support"]
+      },
+      {
+        "icon": "👨‍👩‍👧",
+        "title": "Family-Centered Care",
+        "description": "Holistic approach involving parents and families in care planning, education, and support throughout the child's healthcare journey.",
+        "features": ["Family education programs", "Parent support systems", "Child life care coordination", "Home care preparation"]
+      }
+    ],
+    "training": [
+      {
+        "icon": "🤱",
+        "title": "Neonatal Simulation",
+        "description": "Advanced neonatal simulators for premature infant care, neonatal resuscitation, and intensive care skill development.",
+        "features": ["Premature infant simulators", "Neonatal resuscitation training", "PICU simulation scenarios"]
+      },
+      {
+        "icon": "🩺",
+        "title": "Pediatric Clinical Skills",
+        "description": "Hands-on training in pediatric assessment, medication administration, and developmental care across all pediatric age groups.",
+        "features": ["Pediatric assessment labs", "Age-specific skill training", "Developmental care techniques"]
+      },
+      {
+        "icon": "👨‍👩‍👧",
+        "title": "Family Support Training",
+        "description": "Training in family education, counseling, and support strategies to enhance family-centered care delivery.",
+        "features": ["Parent education techniques", "Family counseling skills", "Support system coordination"]
+      }
+    ],
+    "careers": [
+      {
+        "icon": "🍼",
+        "title": "Neonatal Settings",
+        "items": ["Neonatal Intensive Care Nurse", "Nursery Level II/III Nurse", "Neonatal Nurse Practitioner", "Newborn Care Specialist", "Lactation Consultant"]
+      },
+      {
+        "icon": "👧",
+        "title": "Pediatric Settings",
+        "items": ["Pediatric Unit Nurse", "Pediatric ICU Nurse", "Pediatric Emergency Nurse", "Pediatric Nurse Practitioner", "School Nurse"]
+      },
+      {
+        "icon": "🏥",
+        "title": "Specialized Roles",
+        "items": ["Developmental Care Nurse", "Pediatric Clinical Nurse Specialist", "Child Life Specialist", "Pediatric Palliative Care Nurse", "Pediatric Case Manager"]
+      }
+    ],
+    "stats": [
+      { "number": "120+", "label": "Students Enrolled", "description": "Across neonatal and pediatrics" },
+      { "number": "15+", "label": "Clinical Partners", "description": "Hospitals and specialty centers" },
+      { "number": "97%", "label": "Family Satisfaction", "description": "Parent feedback ratings" },
+      { "number": "50+", "label": "Simulation Hours", "description": "Per student per semester" }
+    ]
+  }
+}

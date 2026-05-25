@@ -1,0 +1,149 @@
+.sph-departments-page {
+  background: #f8fafc;
+  min-height: 100vh;
+  padding-bottom: 6rem;
+}
+
+.sph-departments-header {
+  background: linear-gradient(135deg, #020617 0%, navy 100%);
+  color: white;
+  padding: 6rem 0 8rem;
+  text-align: center;
+}
+
+.sph-departments-header h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  color: #fff;
+  margin-top: 1rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.sph-departments-container {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 3rem;
+  margin-top: -4rem;
+  position: relative;
+  z-index: 100;
+  align-items: start;
+}
+
+.sph-sidebar-nav {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0, 38, 77, 0.05);
+  border: 1px solid #e2e8f0;
+}
+
+.sph-sidebar-nav h3 {
+  font-size: 1.25rem;
+  color: darkblue;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.sph-nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sph-nav-btn {
+  width: 100%;
+  text-align: left;
+  background: blue;
+  border: 1px solid #e2e8f0;
+  padding: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: navy;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sph-nav-btn .icon {
+  font-size: 1.25rem;
+}
+
+.sph-nav-btn:hover {
+  background: #f0f9ff;
+  border-color: blue;
+  color: #0284c7;
+  transform: translateX(5px);
+}
+
+.sph-nav-btn.active {
+  background: #0284c7;
+  color: white;
+  border-color: #0284c7;
+  box-shadow: 0 5px 15px rgba(2, 132, 199, 0.2);
+}
+
+.sph-department-card {
+  background: white;
+  padding: 4rem;
+  border-radius: 24px;
+  box-shadow: 0 15px 40px rgba(0, 38, 77, 0.08);
+  border: 1px solid #f1f5f9;
+  text-align: center;
+}
+
+.sph-department-details {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.sph-department-details p {
+  font-size: 1.15rem;
+  color: darkblue;
+  line-height: 1.7;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.sph-program-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.program-tag {
+  background: #f0f9ff;
+  color: #0284c7;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: 1px solid #bae6fd;
+}
+
+.program-tag.highlight {
+  background: #ecfdf5;
+  color: navy;
+  border-color: #a7f3d0;
+}
+
+@media (max-width: 1024px) {
+  .sph-departments-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .sph-department-card {
+    padding: 2.5rem;
+  }
+}

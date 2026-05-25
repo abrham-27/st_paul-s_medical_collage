@@ -1,0 +1,283 @@
+.about-us-page {
+  background: #f8fafc;
+  min-height: 100vh;
+  padding-bottom: 5rem;
+}
+
+/* Override container to be full width for About Us page */
+.about-us-page .container {
+  max-width: 100%;
+  padding: 0 2rem;
+  margin: 0;
+}
+
+/* Override modern-card to be full width */
+.about-us-page .modern-card {
+  max-width: 100%;
+  margin: 0;
+  padding: 4rem 2rem;
+}
+
+.about-header {
+  background: linear-gradient(135deg, #000080 0%, #4169E1 100%);
+  color: white;
+  padding: 4rem 0 6rem;
+  text-align: left;
+}
+
+.about-header h1 {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  margin-top: 1rem;
+}
+
+.back-link {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.back-link:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.about-content-section {
+  margin-top: -3rem;
+  position: relative;
+  z-index: 10;
+}
+
+.modern-card {
+  background: white;
+  border-radius: 24px;
+  padding: 4rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 128, 0.08);
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.section-label {
+  display: inline-block;
+  color: #000080;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.banner-content h2 {
+  font-size: 2.2rem;
+  color: #000080;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.welcome-text {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #000080;
+  margin-bottom: 2.5rem;
+}
+
+.action-link-container {
+  margin-bottom: 2rem;
+}
+
+.why-link {
+  background: none;
+  border: 1px solid #e2e8f0;
+  color: #000080;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.why-link:hover {
+  border-color: #000080;
+  color: #FFD700;
+  background: #f0f9ff;
+}
+
+.why-link.active {
+  background: #000080;
+  color: white;
+  border-color: #000080;
+}
+
+.why-content-expanded {
+  background: #f8fafc;
+  border-radius: 16px;
+  padding: 2.5rem;
+  margin-top: 1rem;
+  border: 1px solid #e2e8f0;
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.why-item h4 {
+  color: #000080;
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.why-item p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #000080;
+}
+
+.closing-statement {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 1.5rem;
+  font-style: italic;
+  color: #000080;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.specialized-spaces {
+  padding: 6rem 0;
+}
+
+.about-us-page .section-title {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.about-us-page .section-title .label {
+  color: #000080;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.about-us-page .section-title h2 {
+  font-size: 2.5rem;
+  color: #000080;
+  margin-bottom: 1rem;
+}
+
+.about-us-page .section-title p {
+  color: #000080;
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.specialized-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.specialized-card {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 128, 0.04);
+  transition: all 0.3s ease;
+  border: 1px solid #f1f5f9;
+}
+
+.specialized-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 128, 0.1);
+  border-color: #000080;
+}
+
+.card-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.specialized-card h3 {
+  font-size: 1.4rem;
+  color: #000080;
+  margin-bottom: 1rem;
+}
+
+.specialized-card p {
+  color: #000080;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.status-badge {
+  display: inline-block;
+  background: #e0f2fe;
+  color: #000080;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+
+.vision-mission-simple {
+  padding: 4rem 0;
+}
+
+.dual-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.simple-card {
+  background: #000080;
+  color: white;
+  padding: 3rem;
+  border-radius: 20px;
+}
+
+.simple-card h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1.25rem;
+  color: #FFD700;
+}
+
+.simple-card p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  opacity: 0.9;
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .modern-card {
+    padding: 2rem;
+  }
+  
+  .dual-cards {
+    grid-template-columns: 1fr;
+  }
+}

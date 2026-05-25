@@ -1,0 +1,186 @@
+.medicine-partnership-page .partnership-loading,
+.medicine-partnership-page .partnership-error {
+    padding: 2rem 0;
+    font-size: 1.05rem;
+}
+
+.medicine-partnership-page .partnership-error {
+    color: #b91c1c;
+    background: #fef2f2;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+}
+
+.partnership-content-section {
+    margin-bottom: 80px;
+}
+
+.partnership-featured-image {
+    margin-bottom: 2rem;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 16px 40px rgba(10, 22, 40, 0.12);
+}
+
+.partnership-featured-image img {
+    width: 100%;
+    max-height: 420px;
+    object-fit: cover;
+    display: block;
+}
+
+.partnership-text-card {
+    background: white;
+    border-radius: 24px;
+    padding: 3rem;
+    box-shadow: 0 12px 40px rgba(10, 22, 40, 0.06);
+    border: 1px solid #e2e8f0;
+}
+
+.partnership-text-card h2 {
+    font-size: 2rem;
+    color: #0a1628;
+    font-weight: 800;
+    margin: 0 0 1.25rem 0;
+}
+
+.partnership-body,
+.partnership-lead {
+    white-space: pre-line;
+    line-height: 1.85;
+    color: #334155;
+    font-size: 1.05rem;
+    margin: 0;
+}
+
+.partnership-filters {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+}
+
+.partnership-filters button {
+    padding: 10px 22px;
+    border-radius: 30px;
+    border: 1px solid #cbd5e1;
+    background: white;
+    color: #0a1628;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.partnership-filters button.active,
+.partnership-filters button:hover {
+    background: #1a237e;
+    border-color: #1a237e;
+    color: white;
+}
+
+.partnership-list-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 28px;
+    margin-bottom: 80px;
+}
+
+.partnership-list-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 30px rgba(10, 22, 40, 0.06);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.partnership-list-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(26, 35, 126, 0.12);
+}
+
+.partnership-list-card-image img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+}
+
+.partnership-list-card-body {
+    padding: 1.5rem 1.75rem 1.75rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.partnership-area-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    width: fit-content;
+}
+
+.partnership-area-local {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.partnership-area-international {
+    background: #ede9fe;
+    color: #5b21b6;
+}
+
+.partnership-area-hero {
+    margin-bottom: 12px;
+}
+
+.partnership-list-card-body h3 {
+    font-size: 1.25rem;
+    color: #0a1628;
+    margin: 0 0 10px 0;
+    font-weight: 700;
+}
+
+.partnership-list-card-body p {
+    color: #64748b;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0 0 16px 0;
+    flex: 1;
+}
+
+.partnership-view-detail {
+    color: #1a237e;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.partnership-view-detail:hover {
+    color: #0ea5e9;
+}
+
+.partnership-empty {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: white;
+    border-radius: 20px;
+    border: 1px solid #e2e8f0;
+    color: #64748b;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 80px;
+}
+
+@media (max-width: 768px) {
+    .partnership-text-card {
+        padding: 1.75rem;
+    }
+}

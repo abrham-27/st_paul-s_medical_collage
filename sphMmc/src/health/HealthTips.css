@@ -1,0 +1,416 @@
+/* ── Color Palette ──────────────────────────────────────────
+   Deep Navy  : #0a1628
+   Sky Blue   : #0ea5e9
+   Golden     : #f59e0b  (hover / accent only)
+──────────────────────────────────────────────────────────── */
+
+.health-tips-page {
+    background: #f0f6ff;
+    color: #0a1628;
+    padding-top: 110px;
+    padding-bottom: 100px;
+    min-height: 100vh;
+    font-family: 'Outfit', sans-serif;
+    width: 100%;
+}
+
+.health-tips-page .container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0 2rem;
+}
+
+/* ── Navigation & Breadcrumbs ─────────────────────────────── */
+.health-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.back-btn {
+    background: white;
+    border: 2px solid #e0f2fe;
+    color: #0a1628;
+    padding: 10px 22px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 10px rgba(10, 22, 40, 0.06);
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.back-btn:hover {
+    background: #0a1628;
+    border-color: #0a1628;
+    color: white;
+    transform: translateX(-4px);
+    box-shadow: 0 6px 20px rgba(10, 22, 40, 0.18);
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 8px 18px;
+    border-radius: 8px;
+    border: 1px solid #e0f2fe;
+    font-size: 0.88rem;
+    box-shadow: 0 2px 8px rgba(10, 22, 40, 0.05);
+}
+
+.breadcrumbs span {
+    cursor: pointer;
+    color: #1e3a5f;
+    transition: color 0.2s;
+    font-weight: 500;
+}
+
+.breadcrumbs span:hover { color: #0ea5e9; }
+
+.breadcrumbs span.active {
+    color: #0a1628;
+    font-weight: 700;
+}
+
+.breadcrumbs .separator {
+    margin: 0 8px;
+    color: #bae6fd;
+    cursor: default;
+}
+
+/* ── Page Header ──────────────────────────────────────────── */
+.health-tips-header {
+    text-align: center;
+    margin-bottom: 56px;
+    animation: htSlideUp 0.55s ease-out;
+}
+
+@keyframes htSlideUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.subtitle {
+    display: inline-block;
+    background: rgba(245, 158, 11, 0.12);
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    color: #f59e0b;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.35rem 1rem;
+    border-radius: 20px;
+    margin-bottom: 1.25rem;
+    font-size: 0.78rem;
+}
+
+.health-tips-header h1 {
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    color: #0a1628;
+    margin-bottom: 1.25rem;
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+
+.health-tips-header p {
+    font-size: 1.15rem;
+    color: #1e3a5f;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+/* ── Quick Links Bar ──────────────────────────────────────── */
+.disease-links-section {
+    background: white;
+    padding: 2rem 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(10, 22, 40, 0.06);
+    margin-bottom: 48px;
+    border: 1px solid #e0f2fe;
+}
+
+.disease-links-section h3 {
+    color: #0a1628;
+    margin-bottom: 1.25rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    position: relative;
+    padding-bottom: 0.75rem;
+}
+
+.disease-links-section h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background: linear-gradient(90deg, #0ea5e9, #38bdf8);
+    border-radius: 2px;
+}
+
+.links-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.disease-link-item {
+    background: #f0f9ff;
+    border: 1px solid #bae6fd;
+    color: #0a1628;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+}
+
+.disease-link-item .dot {
+    width: 6px;
+    height: 6px;
+    background: #0ea5e9;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.disease-link-item:hover {
+    background: #0a1628;
+    border-color: #0a1628;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(10, 22, 40, 0.15);
+}
+
+.disease-link-item:hover .dot { background: #f59e0b; }
+
+/* ── Cards Grid ───────────────────────────────────────────── */
+.disease-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    animation: htFadeIn 0.6s ease-out;
+}
+
+@keyframes htFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.disease-card {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(10, 22, 40, 0.06);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid #e0f2fe;
+    border-top: 4px solid #0ea5e9;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.disease-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(10, 22, 40, 0.12);
+    border-top-color: #f59e0b;
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+.disease-icon-wrapper {
+    font-size: 2.5rem;
+    background: #e0f2fe;
+    width: 72px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    transition: background 0.3s;
+}
+
+.disease-card:hover .disease-icon-wrapper { background: #fef3c7; }
+
+.disease-icon-wrapper.mini {
+    width: 52px;
+    height: 52px;
+    font-size: 1.75rem;
+    border-radius: 10px;
+}
+
+.card-badge {
+    background: #e0f2fe;
+    color: #0a1628;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.card-body h3 {
+    font-size: 1.35rem;
+    color: #0a1628;
+    margin-bottom: 0.75rem;
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+.card-body p {
+    color: #1e3a5f;
+    line-height: 1.65;
+    margin-bottom: 1.25rem;
+    font-size: 0.95rem;
+}
+
+.card-footer {
+    border-top: 1px solid #e0f2fe;
+    padding-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.card-action-link {
+    color: #0ea5e9;
+    font-weight: 700;
+    font-size: 0.88rem;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.2s;
+}
+
+.disease-card:hover .card-action-link {
+    color: #f59e0b;
+    transform: translateX(6px);
+}
+
+/* ── Detail View ──────────────────────────────────────────── */
+.detail-view { animation: htFadeIn 0.5s ease-out; }
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.detail-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(10, 22, 40, 0.06);
+    border: 1px solid #e0f2fe;
+    border-top: 4px solid #0ea5e9;
+    transition: transform 0.25s;
+}
+
+.detail-section:hover { transform: translateY(-5px); }
+
+/* Differentiate the three panels with subtle top-border colors */
+.symptoms   { border-top-color: #0ea5e9; }
+.prevention { border-top-color: #0a1628; }
+.advice     { border-top-color: #f59e0b; }
+
+.section-icon {
+    font-size: 2rem;
+    margin-bottom: 1.25rem;
+    background: #e0f2fe;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+}
+
+.prevention .section-icon { background: #0a1628; }
+.advice .section-icon     { background: #fef3c7; }
+
+.detail-section h3 {
+    font-size: 1.25rem;
+    color: #0a1628;
+    margin-bottom: 1.25rem;
+    font-weight: 800;
+}
+
+.detail-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.detail-section li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.85rem;
+    line-height: 1.6;
+    color: #1e3a5f;
+    font-size: 0.95rem;
+}
+
+.detail-section li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 7px;
+    height: 7px;
+    background: #0ea5e9;
+    border-radius: 50%;
+}
+
+.prevention li::before { background: #0a1628; }
+.advice li::before     { background: #f59e0b; }
+
+/* ── Emergency Notice ─────────────────────────────────────── */
+.emergency-notice {
+    background: #0a1628;
+    color: #bae6fd;
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    border-left: 6px solid #f59e0b;
+    font-size: 0.95rem;
+    line-height: 1.65;
+}
+
+.emergency-notice strong { color: #f59e0b; }
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 1024px) {
+    .detail-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+    .health-tips-page { padding-top: 110px; }
+    .health-tips-header h1 { font-size: 2.2rem; }
+    .disease-cards-grid { grid-template-columns: 1fr; }
+    .health-nav { flex-direction: column; align-items: flex-start; }
+    .health-tips-page .container { padding: 0 1rem; }
+}

@@ -1,0 +1,185 @@
+/* ── Color Palette ──────────────────────────────────────────
+   Deep Navy  : #0a1628
+   Sky Blue   : #0ea5e9
+   Golden     : #f59e0b  (hover / accent only)
+──────────────────────────────────────────────────────────── */
+
+.medicine-overview-page {
+    background-color: #f0f6ff;
+    color: #0a1628;
+    min-height: 100vh;
+    animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Hero */
+.medicine-overview-page .hero-section {
+    background: linear-gradient(135deg, #0a1628 0%, #0e2040 60%, #0ea5e9 100%);
+    color: white;
+    padding-top: 150px;
+    padding-bottom: 80px;
+    margin-bottom: 60px;
+}
+
+.medicine-overview-page .hero-section .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.back-btn {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.35);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    margin-bottom: 30px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+    background: #f59e0b;
+    border-color: #f59e0b;
+    color: #0a1628;
+}
+
+.hero-content .badge {
+    background: rgba(14, 165, 233, 0.25);
+    border: 1px solid rgba(14, 165, 233, 0.5);
+    padding: 6px 14px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 15px;
+    color: #7dd3fc;
+}
+
+.hero-content h1 {
+    font-size: 4.5rem;
+    margin-bottom: 20px;
+    font-weight: 900;
+}
+
+.hero-content .lead {
+    font-size: 1.4rem;
+    max-width: 800px;
+    opacity: 0.9;
+}
+
+/* Main content */
+.medicine-overview-page .main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px 100px;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+}
+
+.text-box h2 {
+    font-size: 2.2rem;
+    color: #0a1628;
+    margin-bottom: 30px;
+}
+
+.text-box p {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #1e3a5f;
+    margin-bottom: 20px;
+}
+
+/* Stats box */
+.stats-box {
+    background: white;
+    padding: 40px;
+    border-radius: 30px;
+    box-shadow: 0 20px 50px rgba(10, 22, 40, 0.08);
+    border: 1px solid #bae6fd;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.stat-item { text-align: center; padding: 20px; }
+
+.stat-item .value {
+    display: block;
+    font-size: 3rem;
+    font-weight: 900;
+    color: #0ea5e9;
+}
+
+.stat-item .label {
+    font-size: 1rem;
+    color: #0a1628;
+    font-weight: 700;
+}
+
+/* Mission / Vision cards */
+.vision-mission-section { margin-top: 80px; }
+
+.card {
+    padding: 50px;
+    border-radius: 30px;
+}
+
+.mission {
+    background: #0a1628;
+    border-left: 6px solid #0ea5e9;
+}
+
+.mission h3, .mission p { color: #e0f2fe; }
+
+.vision {
+    background: #0a1628;
+    border-left: 6px solid #f59e0b;
+}
+
+.vision h3, .vision p { color: #e0f2fe; }
+
+/* Highlights */
+.highlights { margin-top: 100px; text-align: center; }
+.highlights h2 { font-size: 2.5rem; color: #0a1628; margin-bottom: 50px; }
+
+.highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.hl-card {
+    background: white;
+    padding: 40px;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(10, 22, 40, 0.05);
+    border-top: 4px solid #0ea5e9;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+
+.hl-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(10, 22, 40, 0.12);
+    border-top-color: #f59e0b;
+}
+
+.hl-icon { font-size: 3rem; margin-bottom: 20px; }
+.hl-card h4 { font-size: 1.5rem; color: #0a1628; margin-bottom: 15px; }
+.hl-card p  { line-height: 1.6; color: #1e3a5f; }
+
+@media (max-width: 768px) {
+    .grid-2, .highlights-grid { grid-template-columns: 1fr; }
+    .hero-content h1 { font-size: 3rem; }
+}

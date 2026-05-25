@@ -1,0 +1,47 @@
+{
+  "hero_title": "Our Departments",
+  "hero_subtitle": "Excellence in Specialized Nursing Education",
+  "excellence": [
+    { "icon": "🎓", "title": "Expert Faculty", "description": "Experienced nursing professionals with extensive clinical and academic backgrounds." },
+    { "icon": "🏥", "title": "Advanced Facilities", "description": "State-of-the-art simulation labs and modern equipment for hands-on learning." },
+    { "icon": "🔬", "title": "Research Integration", "description": "Each department contributes to nursing research and evidence-based practice." },
+    { "icon": "🤝", "title": "Community Impact", "description": "Departments engage in community outreach and health promotion activities." }
+  ],
+  "stats": [
+    { "number": "4", "label": "Specialized Departments", "description": "Comprehensive nursing specialties" },
+    { "number": "500+", "label": "Students Enrolled", "description": "Across all departments" },
+    { "number": "50+", "label": "Clinical Partners", "description": "Training hospitals and centers" },
+    { "number": "95%", "label": "Employment Rate", "description": "Graduate success rate" }
+  ],
+  "programs": [
+    {
+      "title": "Undergraduate Programs",
+      "items": [
+        "BSc in Emergency and Critical Care Nursing",
+        "BSc in Neonatal and Pediatrics Nursing",
+        "BSc in Medical and Surgical Nursing",
+        "BSc in Operative Theatre Nursing"
+      ],
+      "footer": "4-year programs combining theory and extensive clinical practice"
+    },
+    {
+      "title": "Postgraduate Programs",
+      "items": [
+        "MSc in Critical Care Nursing",
+        "MSc in Neonatal Nursing",
+        "MSc in Medical-Surgical Nursing",
+        "MSc in Perioperative Nursing"
+      ],
+      "footer": "Advanced specialization for nursing leadership and expertise"
+    },
+    {
+      "title": "Residency Programs",
+      "items": [
+        "Nursing Residency in Critical Care",
+        "Nursing Residency in Neonatology",
+        "Nursing Residency in Perioperative Care"
+      ],
+      "footer": "Hospital-based training with hands-on clinical experience"
+    }
+  ]
+}

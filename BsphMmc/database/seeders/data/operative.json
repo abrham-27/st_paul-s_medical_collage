@@ -1,0 +1,83 @@
+{
+  "slug": "operative",
+  "icon": "🔬",
+  "title": "Operative Theatre",
+  "subtitle": "Surgical Excellence",
+  "description": "Perioperative nursing education preparing nurses to assist in surgical procedures and sterile environments.",
+  "features": ["Operating room assist", "Anesthesia support", "Sterile technique", "Surgical instrumentation"],
+  "detail": {
+    "page_title": "Operative Theatre Nursing",
+    "hero_tagline": "Surgical Excellence and Precision",
+    "mission_text": "To produce highly skilled perioperative nurses who can ensure safe, efficient surgical environments and provide excellent patient care throughout the surgical experience.",
+    "intro": "The Department of Operative Theatre Nursing specializes in perioperative care, preparing nurses to work in operating rooms and surgical settings. Our program emphasizes sterile techniques, surgical assistance, and comprehensive patient safety protocols.",
+    "areas": [
+      {
+        "icon": "🔧",
+        "title": "Operating Room Assistance",
+        "description": "Direct surgical assistance, instrument handling, and operating room coordination during surgical procedures.",
+        "features": ["Surgical instrument management", "Operating room setup", "Surgical field maintenance", "Surgeon assistance"]
+      },
+      {
+        "icon": "🩹",
+        "title": "Anesthesia Support",
+        "description": "Advanced anesthesia assistance, patient monitoring, and airway management during surgical procedures.",
+        "features": ["Anesthesia administration support", "Patient monitoring", "Airway management", "Recovery care"]
+      },
+      {
+        "icon": "🦠",
+        "title": "Sterile Techniques",
+        "description": "Mastery of sterile procedures, infection control, and maintaining aseptic environments in surgical settings.",
+        "features": ["Sterile field establishment", "Infection control protocols", "Sterile technique maintenance", "Environmental monitoring"]
+      },
+      {
+        "icon": "📊",
+        "title": "Surgical Technology",
+        "description": "Advanced surgical equipment operation, technology integration, and modern surgical system management.",
+        "features": ["Surgical equipment operation", "Technology troubleshooting", "System integration", "Equipment maintenance"]
+      }
+    ],
+    "training": [
+      {
+        "icon": "🏥",
+        "title": "Operating Room Simulation",
+        "description": "State-of-the-art operating room simulators for surgical procedure practice and team coordination training.",
+        "features": ["Virtual surgery simulation", "Team coordination training", "Emergency scenario practice"]
+      },
+      {
+        "icon": "🔧",
+        "title": "Instrument Skills Lab",
+        "description": "Hands-on training with surgical instruments, equipment setup, and sterile technique development.",
+        "features": ["Instrument identification", "Suture and needle skills", "Laparoscopic techniques"]
+      },
+      {
+        "icon": "💉",
+        "title": "Anesthesia Training",
+        "description": "Advanced anesthesia equipment operation, patient monitoring, and emergency response training.",
+        "features": ["Anesthesia machine operation", "Patient monitoring systems", "Airway management skills"]
+      }
+    ],
+    "careers": [
+      {
+        "icon": "⚕️",
+        "title": "Operating Room Roles",
+        "items": ["Scrub Nurse", "Circulating Nurse", "First Assistant", "Operating Room Manager", "Surgical Team Lead"]
+      },
+      {
+        "icon": "🩹",
+        "title": "Anesthesia Roles",
+        "items": ["Anesthesia Nurse", "Recovery Room Nurse", "PACU Nurse", "Anesthesia Technician", "Pain Management Nurse"]
+      },
+      {
+        "icon": "🎓",
+        "title": "Advanced Practice",
+        "items": ["Perioperative Nurse Practitioner", "Surgical Nurse Specialist", "Operating Room Consultant", "Surgical Educator", "Clinical Nurse Specialist"]
+      }
+    ],
+    "stats": [
+      { "number": "100+", "label": "Students Enrolled", "description": "Perioperative program" },
+      { "number": "18+", "label": "Operating Rooms", "description": "Clinical training sites" },
+      { "number": "99%", "label": "Safety Record", "description": "Infection control compliance" },
+      { "number": "30+", "label": "Simulation Hours", "description": "Per student per semester" }
+    ]
+  }
+}

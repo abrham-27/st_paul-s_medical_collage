@@ -1,0 +1,5 @@
+export { default as ResearchBackground } from './Background'
+export { default as ResearchVissionMission } from './VissionMission'
+export { default as ResearchGoals } from './Goals'
+export { default as FunctionsOfIRB } from './FunctionsOfIRB'
+export { default as RolesResponsibilities } from './RolesResponsibilities'
