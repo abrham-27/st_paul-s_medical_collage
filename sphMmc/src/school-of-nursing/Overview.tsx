@@ -1,5 +1,6 @@
 import { useState, useEffect, type JSX } from 'react';
 import { apiService, type AcademicPageData } from '../services/api';
+import { containsHtml } from '../services/content';
 import { getNursingOverviewContent } from './overviewContent';
 import './about.css';
 
@@ -78,16 +79,27 @@ export default function NursingOverview({ onBack }: Props): JSX.Element {
                 ) : null}
 
                 {overview.about_text && (
-                  <p
-                    style={{
-                      whiteSpace: 'pre-line',
-                      lineHeight: 1.75,
-                      color: '#444',
-                      marginTop: overview.timeline.length ? '1.5rem' : 0,
-                    }}
-                  >
-                    {overview.about_text}
-                  </p>
+                  containsHtml(overview.about_text) ? (
+                    <div
+                      style={{
+                        lineHeight: 1.75,
+                        color: '#444',
+                        marginTop: overview.timeline.length ? '1.5rem' : 0,
+                      }}
+                      dangerouslySetInnerHTML={{ __html: overview.about_text }}
+                    />
+                  ) : (
+                    <p
+                      style={{
+                        whiteSpace: 'pre-line',
+                        lineHeight: 1.75,
+                        color: '#444',
+                        marginTop: overview.timeline.length ? '1.5rem' : 0,
+                      }}
+                    >
+                      {overview.about_text}
+                    </p>
+                  )
                 )}
               </div>
 
@@ -105,16 +117,27 @@ export default function NursingOverview({ onBack }: Props): JSX.Element {
                     {page?.secondary_title || 'Our Mission'}
                   </h2>
                   {page?.secondary_content && (
-                    <p
-                      style={{
-                        whiteSpace: 'pre-line',
-                        lineHeight: 1.75,
-                        color: '#444',
-                        fontSize: '1rem',
-                      }}
-                    >
-                      {page.secondary_content}
-                    </p>
+                    containsHtml(page.secondary_content) ? (
+                      <div
+                        style={{
+                          lineHeight: 1.75,
+                          color: '#444',
+                          fontSize: '1rem',
+                        }}
+                        dangerouslySetInnerHTML={{ __html: page.secondary_content }}
+                      />
+                    ) : (
+                      <p
+                        style={{
+                          whiteSpace: 'pre-line',
+                          lineHeight: 1.75,
+                          color: '#444',
+                          fontSize: '1rem',
+                        }}
+                      >
+                        {page.secondary_content}
+                      </p>
+                    )
                   )}
                 </div>
               )}
@@ -128,16 +151,27 @@ export default function NursingOverview({ onBack }: Props): JSX.Element {
                     {page?.tertiary_title || 'Our Vision'}
                   </h2>
                   {page?.tertiary_content && (
-                    <p
-                      style={{
-                        whiteSpace: 'pre-line',
-                        lineHeight: 1.75,
-                        color: '#444',
-                        fontSize: '1rem',
-                      }}
-                    >
-                      {page.tertiary_content}
-                    </p>
+                    containsHtml(page.tertiary_content) ? (
+                      <div
+                        style={{
+                          lineHeight: 1.75,
+                          color: '#444',
+                          fontSize: '1rem',
+                        }}
+                        dangerouslySetInnerHTML={{ __html: page.tertiary_content }}
+                      />
+                    ) : (
+                      <p
+                        style={{
+                          whiteSpace: 'pre-line',
+                          lineHeight: 1.75,
+                          color: '#444',
+                          fontSize: '1rem',
+                        }}
+                      >
+                        {page.tertiary_content}
+                      </p>
+                    )
                   )}
                 </div>
               )}

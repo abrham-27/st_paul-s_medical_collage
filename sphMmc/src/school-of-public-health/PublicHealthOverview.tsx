@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { apiService, type AcademicPageData } from '../services/api';
+import { containsHtml } from '../services/content';
 import './PublicHealthAbout.css';
 
 interface Props { onBack: () => void }
@@ -65,7 +66,14 @@ export default function PublicHealthOverview({ onBack }: Props) {
             <div className="section-icon">🏥</div>
             <h2>{page?.title || 'About School of Public Health'}</h2>
             {page?.content ? (
-              <p style={{ whiteSpace: 'pre-line', lineHeight: 1.8, color: '#444' }}>{page.content}</p>
+              containsHtml(page.content) ? (
+                <div
+                  style={{ lineHeight: 1.8, color: '#444' }}
+                  dangerouslySetInnerHTML={{ __html: page.content }}
+                />
+              ) : (
+                <p style={{ whiteSpace: 'pre-line', lineHeight: 1.8, color: '#444' }}>{page.content}</p>
+              )
             ) : (
               <>
                 <p className="lead-text">
@@ -84,10 +92,22 @@ export default function PublicHealthOverview({ onBack }: Props) {
           <section className="sph-section" style={{ background: '#f0f4ff', borderRadius: 12, padding: '2rem', marginBottom: '2rem' }}>
             <div className="section-icon">🎯</div>
             <h2>{page?.secondary_title || 'Mission'}</h2>
-            <p style={{ whiteSpace: 'pre-line', lineHeight: 1.8, color: '#444', fontSize: '1rem' }}>
-              {page?.secondary_content ||
-                'To advance the health of the people by developing and implementing innovative Public Health Education, research and community services through proposing interventions and health policies based on scientific knowledge and evidence.'}
-            </p>
+            {page?.secondary_content ? (
+              containsHtml(page.secondary_content) ? (
+                <div
+                  style={{ lineHeight: 1.8, color: '#444', fontSize: '1rem' }}
+                  dangerouslySetInnerHTML={{ __html: page.secondary_content }}
+                />
+              ) : (
+                <p style={{ whiteSpace: 'pre-line', lineHeight: 1.8, color: '#444', fontSize: '1rem' }}>
+                  {page.secondary_content}
+                </p>
+              )
+            ) : (
+              <p style={{ whiteSpace: 'pre-line', lineHeight: 1.8, color: '#444', fontSize: '1rem' }}>
+                To advance the health of the people by developing and implementing innovative Public Health Education, research and community services through proposing interventions and health policies based on scientific knowledge and evidence.
+              </p>
+            )}
           </section>
 
           {/* Research Publications Card */}
@@ -115,10 +135,22 @@ export default function PublicHealthOverview({ onBack }: Props) {
           <section className="sph-section" style={{ background: '#fff8f0', borderRadius: 12, padding: '2rem' }}>
             <div className="section-icon">🔭</div>
             <h2>{page?.tertiary_title || 'Vision'}</h2>
-            <p style={{ whiteSpace: 'pre-line', lineHeight: 1.8, color: '#444', fontSize: '1rem' }}>
-              {page?.tertiary_content ||
-                'Leader in the development of academic programs that are nationally and internationally recognized because of the impact of the innovative researches on health policy and interventions in Ethiopia by 2027/28.'}
-            </p>
+            {page?.tertiary_content ? (
+              containsHtml(page.tertiary_content) ? (
+                <div
+                  style={{ lineHeight: 1.8, color: '#444', fontSize: '1rem' }}
+                  dangerouslySetInnerHTML={{ __html: page.tertiary_content }}
+                />
+              ) : (
+                <p style={{ whiteSpace: 'pre-line', lineHeight: 1.8, color: '#444', fontSize: '1rem' }}>
+                  {page.tertiary_content}
+                </p>
+              )
+            ) : (
+              <p style={{ whiteSpace: 'pre-line', lineHeight: 1.8, color: '#444', fontSize: '1rem' }}>
+                Leader in the development of academic programs that are nationally and internationally recognized because of the impact of the innovative researches on health policy and interventions in Ethiopia by 2027/28.
+              </p>
+            )}
           </section>
 
         </div>

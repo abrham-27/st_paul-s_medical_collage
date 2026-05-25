@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { apiService, type AcademicPageData } from '../services/api';
+import { containsHtml } from '../services/content';
 import './PublicHealthAbout.css';
 
 interface Props { onBack: () => void }
@@ -40,7 +41,14 @@ export default function PublicHealthPartnership({ onBack }: Props) {
             <div className="section-icon">🤝</div>
             <h2>{page?.title || 'Partnership & Collaboration'}</h2>
             {page?.content ? (
-              <p style={{ whiteSpace: 'pre-line', lineHeight: 1.8, color: '#444', fontSize: '1rem' }}>{page.content}</p>
+              containsHtml(page.content) ? (
+                <div
+                  style={{ lineHeight: 1.8, color: '#444', fontSize: '1rem' }}
+                  dangerouslySetInnerHTML={{ __html: page.content }}
+                />
+              ) : (
+                <p style={{ whiteSpace: 'pre-line', lineHeight: 1.8, color: '#444', fontSize: '1rem' }}>{page.content}</p>
+              )
             ) : (
               <>
                 <p className="lead-text">

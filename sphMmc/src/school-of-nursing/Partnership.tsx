@@ -1,5 +1,6 @@
 import { useState, useEffect, type JSX } from 'react';
 import { apiService, type AcademicPageData } from '../services/api';
+import { containsHtml } from '../services/content';
 import './about.css';
 
 interface Props { onBack: () => void }
@@ -40,7 +41,14 @@ export default function NursingPartnership({ onBack }: Props): JSX.Element {
           <div className="content-section">
             <h2>{page?.title || 'Partnership & Collaboration'}</h2>
             {page?.content ? (
-              <p style={{ whiteSpace: 'pre-line', lineHeight: 1.8, color: '#444', fontSize: '1rem' }}>{page.content}</p>
+              containsHtml(page.content) ? (
+                <div
+                  style={{ lineHeight: 1.8, color: '#444', fontSize: '1rem' }}
+                  dangerouslySetInnerHTML={{ __html: page.content }}
+                />
+              ) : (
+                <p style={{ whiteSpace: 'pre-line', lineHeight: 1.8, color: '#444', fontSize: '1rem' }}>{page.content}</p>
+              )
             ) : (
               <>
                 <p>The School of Nursing at SPHMMC actively collaborates with national and international institutions to advance nursing education, research, and clinical practice.</p>

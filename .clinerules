@@ -1,0 +1,7 @@
+NEVER run php artisan migrate:fresh
+NEVER run php artisan migrate:refresh
+NEVER run php artisan db:wipe
+NEVER truncate or delete database tables
+NEVER modify existing database rows unless explicitly asked
+Always preserve uploaded files
+Always ask before running destructive commands

@@ -1,6 +1,7 @@
 import { type JSX, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { apiService, type MedicinePartnershipDetail } from '../services/api';
+import { containsHtml } from '../services/content';
 import './Overview.css';
 import './Partnership.css';
 
@@ -72,7 +73,14 @@ export default function MedicinePartnershipDetail({ onBack }: PartnershipDetailP
 
                         <div className="partnership-text-card">
                             {partnership.content?.trim() ? (
-                                <p className="partnership-body">{partnership.content}</p>
+                                containsHtml(partnership.content) ? (
+                                    <div
+                                        className="partnership-body"
+                                        dangerouslySetInnerHTML={{ __html: partnership.content }}
+                                    />
+                                ) : (
+                                    <p className="partnership-body">{partnership.content}</p>
+                                )
                             ) : (
                                 <p className="partnership-empty">No additional details provided.</p>
                             )}
