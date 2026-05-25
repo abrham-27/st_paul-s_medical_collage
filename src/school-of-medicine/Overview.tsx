@@ -18,8 +18,8 @@ export default function Overview({ onBack }: { onBack: () => void }): JSX.Elemen
     useEffect(() => {
         const fetchMedicineOverview = async () => {
             try {
-                // Backend URL - no double /api
-                const endpoint = 'http://127.0.0.1:8000/api/medicine-overview';
+                // Correct backend endpoint
+                const endpoint = 'http://127.0.0.1:8000/admin/academics/medicine/overview';
                 
                 console.log('Fetching from:', endpoint);
 
@@ -29,7 +29,6 @@ export default function Overview({ onBack }: { onBack: () => void }): JSX.Elemen
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',
                     }
-                    // Removed credentials: 'include' to fix CORS issue
                 });
                 
                 if (!response.ok) {
