@@ -1,4 +1,5 @@
 import type { HomeHeroSlide } from '../services/api';
+import { sanitizeHtml } from '../utils/richText';
 
 interface HeroSectionProps {
   slides: HomeHeroSlide[];
@@ -48,7 +49,7 @@ export default function HeroSection({
                 {slide.description && (
                   <div
                     className="hero-description"
-                    dangerouslySetInnerHTML={{ __html: slide.description }}
+                    dangerouslySetInnerHTML={{ __html: sanitizeHtml(slide.description) }}
                   />
                 )}
                 {slide.button_text && slide.button_link && (

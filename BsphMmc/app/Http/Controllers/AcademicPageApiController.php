@@ -10,7 +10,7 @@ class AcademicPageApiController extends Controller
     public function show(string $school, string $page): JsonResponse
     {
         $allowed_schools = ['medicine', 'nursing', 'public_health'];
-        $allowed_pages   = ['overview', 'partnership'];
+        $allowed_pages   = ['overview', 'partnership', 'dept_epidemiology', 'dept_health_management', 'dept_program'];
 
         if (!in_array($school, $allowed_schools) || !in_array($page, $allowed_pages)) {
             return response()->json(['success' => false, 'message' => 'Not found'], 404);

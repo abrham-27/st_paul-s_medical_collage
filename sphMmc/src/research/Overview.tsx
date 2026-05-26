@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Overview.css';
+import { sanitizeHtml } from '../utils/richText';
 
 interface ResearchPage {
     title?: string;
@@ -150,7 +151,7 @@ const Overview: React.FC = () => {
                                             <img src={`/storage/${background.image}`} alt={background.title} />
                                         </div>
                                     )}
-                                    <div className="content-body" dangerouslySetInnerHTML={{ __html: background.content || '' }} />
+                                    <div className="content-body" dangerouslySetInnerHTML={{ __html: sanitizeHtml(background.content ?? '') }} />
                                 </div>
                             )}
 
@@ -163,7 +164,7 @@ const Overview: React.FC = () => {
                                                 <i className="fas fa-bullseye"></i>
                                                 {mission.title}
                                             </h2>
-                                            <div className="content-body" dangerouslySetInnerHTML={{ __html: mission.content || '' }} />
+                                            <div className="content-body" dangerouslySetInnerHTML={{ __html: sanitizeHtml(mission.content ?? '') }} />
                                         </div>
                                     </div>
                                     {vision && (
@@ -172,7 +173,7 @@ const Overview: React.FC = () => {
                                                 <i className="fas fa-eye"></i>
                                                 {vision.title}
                                             </h2>
-                                            <div className="content-body" dangerouslySetInnerHTML={{ __html: vision.content || '' }} />
+                                            <div className="content-body" dangerouslySetInnerHTML={{ __html: sanitizeHtml(vision.content ?? '') }} />
                                         </div>
                                     )}
                                 </div>
@@ -182,7 +183,7 @@ const Overview: React.FC = () => {
                             {activeTab === 'vision' && vision && (
                                 <div className="tab-content">
                                     <h2 className="content-title">{vision.title}</h2>
-                                    <div className="content-body" dangerouslySetInnerHTML={{ __html: vision.content || '' }} />
+                                    <div className="content-body" dangerouslySetInnerHTML={{ __html: sanitizeHtml(vision.content ?? '') }} />
                                 </div>
                             )}
 
@@ -198,7 +199,10 @@ const Overview: React.FC = () => {
                                                 <div className="goal-content">
                                                     <h3 className="goal-title">{goal.title}</h3>
                                                     {goal.description && (
-                                                        <p className="goal-description">{goal.description}</p>
+                                                        <div
+                                                          className="goal-description"
+                                                          dangerouslySetInnerHTML={{ __html: sanitizeHtml(goal.description) }}
+                                                        />
                                                     )}
                                                 </div>
                                             </div>

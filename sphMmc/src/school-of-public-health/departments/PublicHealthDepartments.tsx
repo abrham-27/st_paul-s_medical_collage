@@ -1,71 +1,102 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { apiService, type AcademicPageData } from '../../services/api';
+import { containsHtml } from '../../services/content';
+import { sanitizeHtml } from '../../utils/richText';
 import './PublicHealthDepartments.css';
+
+type DeptKey = 'epidemiology' | 'health_management' | 'program';
+
+const DEPT_PAGE_TYPES: Record<DeptKey, string> = {
+  epidemiology:       'dept_epidemiology',
+  health_management:  'dept_health_management',
+  program:            'dept_program',
+};
+
+const DEPT_DEFAULTS: Record<DeptKey, { title: string; content: string; icon: string }> = {
+  epidemiology: {
+    icon: '📊',
+    title: 'Department of Epidemiology',
+    content: '<p>The Department of Epidemiology is dedicated to understanding the distribution and determinants of health and disease conditions in defined populations.</p><p>We focus on teaching rigorous methodological skills and conducting cutting-edge epidemiological research. Our goal is to provide evidence-based insights to shape public health policies and interventions in Ethiopia and beyond.</p>',
+  },
+  health_management: {
+    icon: '⚕️',
+    title: 'Department of Health Management, Promotion, Reproductive Health and Nutrition',
+    content: '<p>A multidisciplinary department focusing on health systems, reproductive health, and nutritional well-being.</p><p>This department plays a critical role in addressing the multidimensional health challenges of the community. We train leaders in health management, implement health promotion strategies, and conduct extensive research in reproductive health and community nutrition.</p>',
+  },
+  program: {
+    icon: '🎓',
+    title: 'Academic Programs',
+    content: '<p>The School of Public Health offers graduate-level training programs, including Master of Public Health (MPH) degrees in General Public Health, Field Epidemiology, Epidemiology, Nutrition, and Health Communication and Promotion. The school also offers doctoral programs in public health.</p>',
+  },
+};
+
+const DEPT_NAMES: Record<DeptKey, string | null> = {
+  epidemiology:      'Department of Epidemiology',
+  health_management: 'Department of Health Management, Promotion, Reproductive Health and Nutrition',
+  program:           null,
+};
 
 const PublicHealthDepartments: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   const navigate = useNavigate();
-  const [activeSection, setActiveSection] = useState<string>('epidemiology');
+  const [activeSection, setActiveSection] = useState<DeptKey>('epidemiology');
+  const [pages, setPages] = useState<Partial<Record<DeptKey, AcademicPageData | null>>>({});
+  const [loading, setLoading] = useState(true);
 
-  const departmentNames: Record<string, string | null> = {
-    epidemiology: 'Department of Epidemiology',
-    health_management_nutrition: 'Department of Health Management, Promotion, Reproductive Health and Nutrition',
-    program: null,
+  useEffect(() => {
+    const keys = Object.keys(DEPT_PAGE_TYPES) as DeptKey[];
+    Promise.all(
+      keys.map(key =>
+        apiService.getAcademicPage('public_health', DEPT_PAGE_TYPES[key])
+          .then(res => ({ key, data: res.success ? res.data : null }))
+          .catch(() => ({ key, data: null }))
+      )
+    ).then(results => {
+      const map: Partial<Record<DeptKey, AcademicPageData | null>> = {};
+      results.forEach(r => { map[r.key] = r.data; });
+      setPages(map);
+      setLoading(false);
+    });
+  }, []);
+
+  const getContent = (key: DeptKey) => {
+    const page = pages[key];
+    const def = DEPT_DEFAULTS[key];
+    return {
+      title:         page?.title         || def.title,
+      content:       page?.content       || def.content,
+      featured_image: page?.featured_image ?? null,
+      icon:          def.icon,
+    };
   };
 
-  const activeDepartmentName = departmentNames[activeSection] ?? null;
+  const activeDepartmentName = DEPT_NAMES[activeSection];
 
   const renderContent = () => {
-    switch(activeSection) {
-      case 'epidemiology':
-         return (
-           <div className="sph-department-card fade-in">
-             <div className="card-icon-large">📊</div>
-             <h2>Department of Epidemiology</h2>
-             <div className="card-divider"></div>
-             <p className="sph-primary-statement">
-               The Department of Epidemiology is dedicated to understanding the distribution and determinants of health and disease conditions in defined populations. 
-             </p>
-             <div className="sph-department-details">
-                <p>We focus on teaching rigorous methodological skills and conducting cutting-edge epidemiological research. Our goal is to provide evidence-based insights to shape public health policies and interventions in Ethiopia and beyond.</p>
-             </div>
-           </div>
-         );
-      case 'health_management_nutrition':
-        return (
-          <div className="sph-department-card fade-in">
-             <div className="card-icon-large">⚕️</div>
-             <h2>Department of Health Management, Promotion, Reproductive Health and Nutrition</h2>
-             <div className="card-divider"></div>
-             <p className="sph-primary-statement">
-               A multidisciplinary department focusing on health systems, reproductive health, and nutritional well-being.
-             </p>
-             <div className="sph-department-details">
-                <p>This department plays a critical role in addressing the multidimensional health challenges of the community. We train leaders in health management, implement health promotion strategies, and conduct extensive research in reproductive health and community nutrition.</p>
-             </div>
-           </div>
-        );
-      case 'program':
-        return (
-           <div className="sph-department-card fade-in">
-             <div className="card-icon-large">🎓</div>
-             <h2>Academic Programs</h2>
-             <div className="card-divider"></div>
-             <p className="sph-primary-statement">
-               The School of Public Health offers graduate-level training programs, including Master of Public Health (MPH) degrees in General Public Health, Field Epidemiology, Epidemiology, Nutrition, and Health Communication and Promotion. The school also offers doctoral programs in public health.
-             </p>
-             <div className="sph-program-tags">
-                <span className="program-tag">MPH in General Public Health</span>
-                <span className="program-tag">MPH in Field Epidemiology</span>
-                <span className="program-tag">MPH in Epidemiology</span>
-                <span className="program-tag">MPH in Nutrition</span>
-                <span className="program-tag">MPH in Health Communication and Promotion</span>
-                <span className="program-tag highlight">PhD in Public Health</span>
-             </div>
-           </div>
-        );
-      default: return null;
-    }
-  }
+    if (loading) return <div className="sph-department-card fade-in"><p style={{ color: '#888' }}>Loading…</p></div>;
+    const { title, content, featured_image, icon } = getContent(activeSection);
+    return (
+      <div className="sph-department-card fade-in">
+        <div className="card-icon-large">{icon}</div>
+        <h2>{title}</h2>
+        <div className="card-divider"></div>
+        {containsHtml(content) ? (
+          <div className="sph-primary-statement" dangerouslySetInnerHTML={{ __html: sanitizeHtml(content) }} />
+        ) : (
+          <p className="sph-primary-statement">{content}</p>
+        )}
+        {featured_image && (
+          <div style={{ marginTop: '1.5rem' }}>
+            <img
+              src={featured_image}
+              alt={title}
+              style={{ width: '100%', maxHeight: '360px', objectFit: 'cover', borderRadius: '10px' }}
+            />
+          </div>
+        )}
+      </div>
+    );
+  };
 
   return (
     <div className="sph-departments-page">
@@ -92,30 +123,17 @@ const PublicHealthDepartments: React.FC<{ onBack: () => void }> = ({ onBack }) =
         <div className="sph-sidebar-nav">
           <h3>Browse By</h3>
           <ul className="sph-nav-list">
-            <li>
-              <button 
-                className={`sph-nav-btn ${activeSection === 'epidemiology' ? 'active' : ''}`}
-                onClick={() => setActiveSection('epidemiology')}
-              >
-                <span className="icon">📊</span> Department of Epidemiology
-              </button>
-            </li>
-            <li>
-              <button 
-                className={`sph-nav-btn ${activeSection === 'health_management_nutrition' ? 'active' : ''}`}
-                onClick={() => setActiveSection('health_management_nutrition')}
-              >
-                <span className="icon">⚕️</span> Department of Health Management, Promotion, Reproductive Health and Nutrition
-              </button>
-            </li>
-            <li>
-              <button 
-                className={`sph-nav-btn ${activeSection === 'program' ? 'active' : ''}`}
-                onClick={() => setActiveSection('program')}
-              >
-                <span className="icon">🎓</span> Academic Programs
-              </button>
-            </li>
+            {(Object.keys(DEPT_DEFAULTS) as DeptKey[]).map(key => (
+              <li key={key}>
+                <button
+                  className={`sph-nav-btn ${activeSection === key ? 'active' : ''}`}
+                  onClick={() => setActiveSection(key)}
+                >
+                  <span className="icon">{DEPT_DEFAULTS[key].icon}</span>
+                  {pages[key]?.title || DEPT_DEFAULTS[key].title}
+                </button>
+              </li>
+            ))}
           </ul>
         </div>
 

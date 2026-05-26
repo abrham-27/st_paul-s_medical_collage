@@ -1,5 +1,6 @@
 import { type JSX, useEffect, useState } from 'react';
 import { apiService, type ResearchPublicationItem } from '../services/api';
+import { toExcerpt } from '../utils/richText';
 import './ResearchPublications.css';
 
 interface Props {
@@ -83,7 +84,7 @@ export default function ResearchPublications({ school, title, onBack }: Props): 
                   <div className="pub-card-body">
                     <span className="pub-badge">{item.publication_type || 'Publication'}</span>
                     <h2>{item.title}</h2>
-                    <p>{item.abstract ? item.abstract.replace(/<[^>]+>/g, '').slice(0, 180) + '...' : 'No abstract available.'}</p>
+                    <p>{toExcerpt(item.abstract, 180)}</p>
                     <div className="pub-meta">
                       <span>{item.authors || 'Unknown author'}</span>
                       <span>{item.publication_date ? new Date(item.publication_date).toLocaleDateString() : 'No date'}</span>

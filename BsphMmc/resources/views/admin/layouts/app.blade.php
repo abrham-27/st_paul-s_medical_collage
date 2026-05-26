@@ -154,28 +154,64 @@
             </div>
 
             {{-- School of Nursing --}}
-            <a href="{{ route('admin.academics.school', 'nursing') }}"
-               class="flex flex-row items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all w-full {{ request()->is('admin/academics/nursing*') ? 'bg-blue-700 text-white' : 'text-blue-200 hover:bg-blue-700 hover:text-white' }}">
-                <i class="fa-solid fa-heart-pulse text-base w-5 text-center flex-shrink-0"></i>
-                <span>School of Nursing</span>
-            </a>
-            <a href="{{ route('admin.academics.research-publications.index', 'nursing') }}"
-               class="flex flex-row items-center gap-3 px-4 py-2 rounded-lg text-xs font-medium transition-all w-full {{ request()->is('admin/academics/nursing/research-publications*') ? 'bg-blue-700 text-white' : 'text-blue-300 hover:bg-blue-700 hover:text-white' }}">
-                <i class="fa-solid fa-book-open text-sm w-4 text-center"></i>
-                <span>Research Publications</span>
-            </a>
+            <div x-data="{ nursingOpen: {{ request()->is('admin/academics/nursing*') ? 'true' : 'false' }} }">
+                <button @click="nursingOpen=!nursingOpen"
+                        class="flex flex-row items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all w-full {{ request()->is('admin/academics/nursing*') ? 'bg-blue-700 text-white' : 'text-blue-200 hover:bg-blue-700 hover:text-white' }}">
+                    <i class="fa-solid fa-heart-pulse text-base w-5 text-center flex-shrink-0"></i>
+                    <span class="flex-1 text-left">School of Nursing</span>
+                    <i class="fa-solid fa-chevron-down text-xs transition-transform" :class="nursingOpen ? 'rotate-180' : ''"></i>
+                </button>
+                <div x-show="nursingOpen" x-cloak class="pl-4 mt-0.5 space-y-0.5">
+                    <a href="{{ route('admin.academics.school', 'nursing') }}"
+                       class="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-all w-full {{ request()->routeIs('admin.academics.school') && request()->route('school') === 'nursing' ? 'bg-blue-700 text-white' : 'text-blue-300 hover:bg-blue-700 hover:text-white' }}">
+                        <i class="fa-solid fa-eye w-4 text-center"></i> Overview
+                    </a>
+                    <a href="{{ route('admin.nursing.partnerships.index') }}"
+                       class="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-all w-full {{ request()->routeIs('admin.nursing.partnerships.*') ? 'bg-blue-700 text-white' : 'text-blue-300 hover:bg-blue-700 hover:text-white' }}">
+                        <i class="fa-solid fa-handshake w-4 text-center"></i> Partnerships
+                    </a>
+                    <a href="{{ route('admin.academic-staffs.index') }}?school=nursing"
+                       class="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-all w-full {{ request()->routeIs('admin.academic-staffs.*') && request('school') === 'nursing' ? 'bg-blue-700 text-white' : 'text-blue-300 hover:bg-blue-700 hover:text-white' }}">
+                        <i class="fa-solid fa-user-nurse w-4 text-center"></i> Staff
+                    </a>
+                    <a href="{{ route('admin.academics.research-publications.index', 'nursing') }}"
+                       class="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-all w-full {{ request()->is('admin/academics/nursing/research-publications*') ? 'bg-blue-700 text-white' : 'text-blue-300 hover:bg-blue-700 hover:text-white' }}">
+                        <i class="fa-solid fa-book-open w-4 text-center"></i> Research Publications
+                    </a>
+                </div>
+            </div>
 
             {{-- School of Public Health --}}
-            <a href="{{ route('admin.academics.school', 'public_health') }}"
-               class="flex flex-row items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all w-full {{ request()->is('admin/academics/public_health*') ? 'bg-blue-700 text-white' : 'text-blue-200 hover:bg-blue-700 hover:text-white' }}">
-                <i class="fa-solid fa-earth-africa text-base w-5 text-center flex-shrink-0"></i>
-                <span>School of Public Health</span>
-            </a>
-            <a href="{{ route('admin.academics.research-publications.index', 'public_health') }}"
-               class="flex flex-row items-center gap-3 px-4 py-2 rounded-lg text-xs font-medium transition-all w-full {{ request()->is('admin/academics/public_health/research-publications*') ? 'bg-blue-700 text-white' : 'text-blue-300 hover:bg-blue-700 hover:text-white' }}">
-                <i class="fa-solid fa-book-open text-sm w-4 text-center"></i>
-                <span>Research Publications</span>
-            </a>
+            <div x-data="{ sphOpen: {{ request()->is('admin/academics/public*') ? 'true' : 'false' }} }">
+                <button @click="sphOpen=!sphOpen"
+                        class="flex flex-row items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all w-full {{ request()->is('admin/academics/public*') ? 'bg-blue-700 text-white' : 'text-blue-200 hover:bg-blue-700 hover:text-white' }}">
+                    <i class="fa-solid fa-earth-africa text-base w-5 text-center flex-shrink-0"></i>
+                    <span class="flex-1 text-left">School of Public Health</span>
+                    <i class="fa-solid fa-chevron-down text-xs transition-transform" :class="sphOpen ? 'rotate-180' : ''"></i>
+                </button>
+                <div x-show="sphOpen" x-cloak class="pl-4 mt-0.5 space-y-0.5">
+                    <a href="{{ route('admin.academics.school', 'public_health') }}"
+                       class="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-all w-full {{ request()->routeIs('admin.academics.school') && request()->route('school') === 'public_health' ? 'bg-blue-700 text-white' : 'text-blue-300 hover:bg-blue-700 hover:text-white' }}">
+                        <i class="fa-solid fa-eye w-4 text-center"></i> Overview
+                    </a>
+                    <a href="{{ route('admin.public-health.partnerships.index') }}"
+                       class="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-all w-full {{ request()->routeIs('admin.public-health.partnerships.*') ? 'bg-blue-700 text-white' : 'text-blue-300 hover:bg-blue-700 hover:text-white' }}">
+                        <i class="fa-solid fa-handshake w-4 text-center"></i> Partnerships
+                    </a>
+                    <a href="{{ route('admin.public-health.departments.index') }}"
+                       class="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-all w-full {{ request()->routeIs('admin.public-health.departments.*') ? 'bg-blue-700 text-white' : 'text-blue-300 hover:bg-blue-700 hover:text-white' }}">
+                        <i class="fa-solid fa-sitemap w-4 text-center"></i> Departments
+                    </a>
+                    <a href="{{ route('admin.academic-staffs.index') }}?school=public_health"
+                       class="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-all w-full {{ request()->routeIs('admin.academic-staffs.*') && request('school') === 'public_health' ? 'bg-blue-700 text-white' : 'text-blue-300 hover:bg-blue-700 hover:text-white' }}">
+                        <i class="fa-solid fa-user w-4 text-center"></i> Staff
+                    </a>
+                    <a href="{{ route('admin.academics.research-publications.index', 'public_health') }}"
+                       class="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-all w-full {{ request()->is('admin/academics/public_health/research-publications*') ? 'bg-blue-700 text-white' : 'text-blue-300 hover:bg-blue-700 hover:text-white' }}">
+                        <i class="fa-solid fa-book-open w-4 text-center"></i> Research Publications
+                    </a>
+                </div>
+            </div>
 
             <a href="{{ route('admin.academic-staffs.index') }}"
                class="flex flex-row items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all w-full {{ request()->routeIs('admin.academic-staffs.*') ? 'bg-blue-700 text-white' : 'text-blue-200 hover:bg-blue-700 hover:text-white' }}">
@@ -246,6 +282,34 @@
                     <a href="{{ route('admin.offices.registrar.contact') }}"
                        class="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-all w-full {{ request()->routeIs('admin.offices.registrar.contact') ? 'bg-blue-700 text-white' : 'text-blue-300 hover:bg-blue-700 hover:text-white' }}">
                         <i class="fa-solid fa-address-card w-4 text-center"></i> Contact Info
+                    </a>
+                </div>
+            </div>
+
+            <!-- All Offices Management -->
+            <div x-data="{ allOfficesOpen: {{ request()->routeIs('admin.all-offices.*') ? 'true' : 'false' }} }">
+                <button @click="allOfficesOpen=!allOfficesOpen"
+                        class="flex flex-row items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all w-full {{ request()->routeIs('admin.all-offices.*') ? 'bg-blue-700 text-white' : 'text-blue-200 hover:bg-blue-700 hover:text-white' }}">
+                    <i class="fa-solid fa-building text-base w-5 text-center flex-shrink-0"></i>
+                    <span class="flex-1 text-left">All Offices</span>
+                    <i class="fa-solid fa-chevron-down text-xs transition-transform" :class="allOfficesOpen ? 'rotate-180' : ''"></i>
+                </button>
+                <div x-show="allOfficesOpen" x-cloak class="pl-4 mt-0.5 space-y-0.5">
+                    <a href="{{ route('admin.all-offices.about') }}"
+                       class="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-all w-full {{ request()->routeIs('admin.all-offices.about') ? 'bg-blue-700 text-white' : 'text-blue-300 hover:bg-blue-700 hover:text-white' }}">
+                        <i class="fa-solid fa-circle-info w-4 text-center"></i> About
+                    </a>
+                    <a href="{{ route('admin.all-offices.services') }}"
+                       class="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-all w-full {{ request()->routeIs('admin.all-offices.services') ? 'bg-blue-700 text-white' : 'text-blue-300 hover:bg-blue-700 hover:text-white' }}">
+                        <i class="fa-solid fa-gears w-4 text-center"></i> Our Services
+                    </a>
+                    <a href="{{ route('admin.all-offices.projects') }}"
+                       class="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-all w-full {{ request()->routeIs('admin.all-offices.projects*') ? 'bg-blue-700 text-white' : 'text-blue-300 hover:bg-blue-700 hover:text-white' }}">
+                        <i class="fa-solid fa-diagram-project w-4 text-center"></i> Projects
+                    </a>
+                    <a href="{{ route('admin.all-offices.contact') }}"
+                       class="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium transition-all w-full {{ request()->routeIs('admin.all-offices.contact') ? 'bg-blue-700 text-white' : 'text-blue-300 hover:bg-blue-700 hover:text-white' }}">
+                        <i class="fa-solid fa-address-card w-4 text-center"></i> Contact
                     </a>
                 </div>
             </div>

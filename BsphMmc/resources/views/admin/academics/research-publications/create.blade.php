@@ -11,6 +11,17 @@
         </div>
 
         <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+            @if ($errors->any())
+                <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                    <h4 class="text-red-800 font-medium mb-2">Please fix the following errors:</h4>
+                    <ul class="text-red-700 text-sm space-y-1">
+                        @foreach ($errors->all() as $error)
+                            <li>• {{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <form action="{{ route('admin.academics.research-publications.store', ['school' => $school]) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                 @csrf
                 <input type="hidden" name="school_type" value="{{ $school }}" />
@@ -85,12 +96,14 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Cover Image</label>
                         <input type="file" name="cover_image" accept="image/*"
-                               class="mt-1 block w-full text-sm text-gray-700 dark:text-gray-200" />
+                               class="mt-1 block w-full text-sm text-gray-700 dark:text-gray-200 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
+                        <p class="text-xs text-gray-500 mt-1">Max size: 5MB. Supported: JPG, PNG, GIF</p>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">PDF File</label>
                         <input type="file" name="pdf_file" accept="application/pdf"
-                               class="mt-1 block w-full text-sm text-gray-700 dark:text-gray-200" />
+                               class="mt-1 block w-full text-sm text-gray-700 dark:text-gray-200 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
+                        <p class="text-xs text-gray-500 mt-1">Max size: 10MB. PDF files only</p>
                     </div>
                 </div>
 
@@ -125,6 +138,30 @@
         if (window.ClassicEditor) {
             document.querySelectorAll('textarea.ckeditor').forEach(function (textarea) {
                 ClassicEditor.create(textarea).catch(function (error) { console.error(error); });
+            });
+        }
+
+        // File size validation
+        const coverImageInput = document.querySelector('input[name="cover_image"]');
+        const pdfFileInput = document.querySelector('input[name="pdf_file"]');
+
+        if (coverImageInput) {
+            coverImageInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file && file.size > 5 * 1024 * 1024) { // 5MB
+                    alert('Cover image must be smaller than 5MB');
+                    e.target.value = '';
+                }
+            });
+        }
+
+        if (pdfFileInput) {
+            pdfFileInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file && file.size > 10 * 1024 * 1024) { // 10MB
+                    alert('PDF file must be smaller than 10MB');
+                    e.target.value = '';
+                }
             });
         }
     });

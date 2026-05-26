@@ -1,6 +1,7 @@
 import { type JSX, useState, useEffect } from 'react';
 import './News.css';
 import { apiService, type LatestPost } from '../services/api';
+import { sanitizeHtml } from '../utils/richText';
 
 interface NewsArticle {
     id: number;
@@ -122,7 +123,7 @@ export default function News({ onBack }: { onBack: () => void }): JSX.Element {
                             {selectedArticle.image && (
                                 <div style={{ width: '100%', minHeight: 220, borderRadius: 16, backgroundImage: `url(${selectedArticle.image})`, backgroundSize: 'cover', backgroundPosition: 'center', marginBottom: 18 }} />
                             )}
-                            <div style={{ color: '#111', lineHeight: 1.75 }} dangerouslySetInnerHTML={{ __html: selectedArticle.content || selectedArticle.description }} />
+                            <div style={{ color: '#111', lineHeight: 1.75 }} dangerouslySetInnerHTML={{ __html: sanitizeHtml(selectedArticle.content || selectedArticle.description) }} />
                         </div>
                     </div>
                 )}

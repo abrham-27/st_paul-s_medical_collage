@@ -159,6 +159,49 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
         Route::delete('{publication}', [SchoolResearchPublicationController::class, 'destroy'])->name('destroy');
     });
 
+    // All Offices Management (unified interface)
+    Route::prefix('all-offices')->name('all-offices.')->group(function () {
+        Route::get('about', [\App\Http\Controllers\Admin\AllOfficesController::class, 'about'])->name('about');
+        Route::put('about', [\App\Http\Controllers\Admin\AllOfficesController::class, 'updateAbout'])->name('about.update');
+        Route::get('services', [\App\Http\Controllers\Admin\AllOfficesController::class, 'services'])->name('services');
+        Route::post('services', [\App\Http\Controllers\Admin\AllOfficesController::class, 'storeService'])->name('services.store');
+        Route::put('services/{officeService}', [\App\Http\Controllers\Admin\AllOfficesController::class, 'updateService'])->name('services.update');
+        Route::delete('services/{officeService}', [\App\Http\Controllers\Admin\AllOfficesController::class, 'destroyService'])->name('services.destroy');
+        Route::get('projects', [\App\Http\Controllers\Admin\AllOfficesController::class, 'projects'])->name('projects');
+        Route::get('projects/create', [\App\Http\Controllers\Admin\AllOfficesController::class, 'createProject'])->name('projects.create');
+        Route::post('projects', [\App\Http\Controllers\Admin\AllOfficesController::class, 'storeProject'])->name('projects.store');
+        Route::get('projects/{officeProject}/edit', [\App\Http\Controllers\Admin\AllOfficesController::class, 'editProject'])->name('projects.edit');
+        Route::put('projects/{officeProject}', [\App\Http\Controllers\Admin\AllOfficesController::class, 'updateProject'])->name('projects.update');
+        Route::delete('projects/{officeProject}', [\App\Http\Controllers\Admin\AllOfficesController::class, 'destroyProject'])->name('projects.destroy');
+        Route::get('contact', [\App\Http\Controllers\Admin\AllOfficesController::class, 'contact'])->name('contact');
+        Route::put('contact', [\App\Http\Controllers\Admin\AllOfficesController::class, 'updateContact'])->name('contact.update');
+    });
+
+    // Generic Office CMS for all offices
+    Route::prefix('offices/{office}')->name('offices.generic.')->group(function () {
+        Route::get('about', [\App\Http\Controllers\Admin\GenericOfficeCmsController::class, 'about'])->name('about');
+        Route::put('about', [\App\Http\Controllers\Admin\GenericOfficeCmsController::class, 'updateAbout'])->name('about.update');
+        Route::get('gallery', [\App\Http\Controllers\Admin\GenericOfficeCmsController::class, 'gallery'])->name('gallery');
+        Route::post('gallery', [\App\Http\Controllers\Admin\GenericOfficeCmsController::class, 'storeGallery'])->name('gallery.store');
+        Route::delete('gallery/{officeGallery}', [\App\Http\Controllers\Admin\GenericOfficeCmsController::class, 'destroyGallery'])->name('gallery.destroy');
+        Route::get('services', [\App\Http\Controllers\Admin\GenericOfficeCmsController::class, 'services'])->name('services');
+        Route::post('services', [\App\Http\Controllers\Admin\GenericOfficeCmsController::class, 'storeService'])->name('services.store');
+        Route::put('services/{officeService}', [\App\Http\Controllers\Admin\GenericOfficeCmsController::class, 'updateService'])->name('services.update');
+        Route::delete('services/{officeService}', [\App\Http\Controllers\Admin\GenericOfficeCmsController::class, 'destroyService'])->name('services.destroy');
+        Route::get('projects', [\App\Http\Controllers\Admin\GenericOfficeCmsController::class, 'projects'])->name('projects');
+        Route::get('projects/create', [\App\Http\Controllers\Admin\GenericOfficeCmsController::class, 'createProject'])->name('projects.create');
+        Route::post('projects', [\App\Http\Controllers\Admin\GenericOfficeCmsController::class, 'storeProject'])->name('projects.store');
+        Route::get('projects/{officeProject}/edit', [\App\Http\Controllers\Admin\GenericOfficeCmsController::class, 'editProject'])->name('projects.edit');
+        Route::put('projects/{officeProject}', [\App\Http\Controllers\Admin\GenericOfficeCmsController::class, 'updateProject'])->name('projects.update');
+        Route::delete('projects/{officeProject}', [\App\Http\Controllers\Admin\GenericOfficeCmsController::class, 'destroyProject'])->name('projects.destroy');
+        Route::get('process', [\App\Http\Controllers\Admin\GenericOfficeCmsController::class, 'process'])->name('process');
+        Route::post('process', [\App\Http\Controllers\Admin\GenericOfficeCmsController::class, 'storeProcess'])->name('process.store');
+        Route::put('process/{officeProcess}', [\App\Http\Controllers\Admin\GenericOfficeCmsController::class, 'updateProcess'])->name('process.update');
+        Route::delete('process/{officeProcess}', [\App\Http\Controllers\Admin\GenericOfficeCmsController::class, 'destroyProcess'])->name('process.destroy');
+        Route::get('contact', [\App\Http\Controllers\Admin\GenericOfficeCmsController::class, 'contact'])->name('contact');
+        Route::put('contact', [\App\Http\Controllers\Admin\GenericOfficeCmsController::class, 'updateContact'])->name('contact.update');
+    });
+
     // ICT Office CMS
     Route::prefix('offices/ict')->name('offices.ict.')->group(function () {
         Route::get('about',              [IctCmsController::class, 'about'])->name('about');
@@ -208,12 +251,23 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::put('academics/nursing/departments/landing', [\App\Http\Controllers\Admin\NursingDepartmentAdminController::class, 'updateLanding'])->name('nursing.departments.landing.update');
     Route::get('academics/nursing/departments/{department}/edit', [\App\Http\Controllers\Admin\NursingDepartmentAdminController::class, 'edit'])->name('nursing.departments.edit');
     Route::put('academics/nursing/departments/{department}', [\App\Http\Controllers\Admin\NursingDepartmentAdminController::class, 'update'])->name('nursing.departments.update');
+    Route::resource('academics/nursing/partnerships', \App\Http\Controllers\Admin\NursingPartnershipAdminController::class)
+        ->except(['show'])
+        ->names('nursing.partnerships')
+        ->parameters(['partnerships' => 'partnership']);
 
     // Public Health CMS
     Route::get('academics/public-health/overview', [PublicHealthCmsController::class, 'overview'])->name('public-health.overview');
     Route::put('academics/public-health/overview', [PublicHealthCmsController::class, 'updateOverview'])->name('public-health.overview.update');
     Route::get('academics/public-health/partnership', [PublicHealthCmsController::class, 'partnership'])->name('public-health.partnership');
     Route::put('academics/public-health/partnership', [PublicHealthCmsController::class, 'updatePartnership'])->name('public-health.partnership.update');
+    Route::resource('academics/public-health/partnerships', \App\Http\Controllers\Admin\PublicHealthPartnershipAdminController::class)
+        ->except(['show'])
+        ->names('public-health.partnerships')
+        ->parameters(['partnerships' => 'partnership']);
+    Route::get('academics/public-health/departments', [PublicHealthCmsController::class, 'departmentsIndex'])->name('public-health.departments.index');
+    Route::get('academics/public-health/departments/{dept}/edit', [PublicHealthCmsController::class, 'departmentEdit'])->name('public-health.departments.edit');
+    Route::put('academics/public-health/departments/{dept}', [PublicHealthCmsController::class, 'departmentUpdate'])->name('public-health.departments.update');
 
     // Medicine CMS
     Route::get('academics/medicine/overview', [MedicineCmsController::class, 'overview'])->name('medicine.overview');

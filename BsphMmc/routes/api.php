@@ -21,6 +21,8 @@ use App\Http\Controllers\MedicineDepartmentApiController;
 use App\Http\Controllers\NursingDepartmentApiController;
 use App\Http\Controllers\HomeHeroApiController;
 use App\Http\Controllers\MedicinePartnershipApiController;
+use App\Http\Controllers\NursingPartnershipApiController;
+use App\Http\Controllers\PublicHealthPartnershipApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -86,6 +88,14 @@ Route::get('/academic-projects/{slug}', [AcademicProjectApiController::class, 's
 // Medicine Partnerships public API
 Route::get('/medicine/partnerships', [MedicinePartnershipApiController::class, 'index']);
 Route::get('/medicine/partnerships/{slug}', [MedicinePartnershipApiController::class, 'show']);
+
+// Nursing Partnerships public API
+Route::get('/nursing/partnerships', [NursingPartnershipApiController::class, 'index']);
+Route::get('/nursing/partnerships/{slug}', [NursingPartnershipApiController::class, 'show']);
+
+// Public Health Partnerships public API
+Route::get('/public-health/partnerships', [PublicHealthPartnershipApiController::class, 'index']);
+Route::get('/public-health/partnerships/{slug}', [PublicHealthPartnershipApiController::class, 'show']);
 
 // Medicine Departments public API
 Route::get('/medicine/departments', [MedicineDepartmentApiController::class, 'index']);

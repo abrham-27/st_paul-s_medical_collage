@@ -128,12 +128,18 @@ import Specialized from './school-of-medicine/departments/Specialized'
 import SubDepartmentDetail from './school-of-medicine/departments/SubDepartmentDetail'
 import MedicineStaffs from './school-of-medicine/Staffs'
 import StaffProfile from './school-of-medicine/StaffProfile'
+import NursingStaffs from './school-of-nursing/Staffs'
+import NursingStaffProfile from './school-of-nursing/StaffProfile'
+import PublicHealthStaffs from './school-of-public-health/Staffs'
+import PublicHealthStaffProfile from './school-of-public-health/StaffProfile'
 import SchoolOfNursingAbout from './school-of-nursing/about'
 import SchoolOfNursingMission from './school-of-nursing/mission'
 import SchoolOfNursingVision from './school-of-nursing/vision'
 import SchoolOfNursingDepartments from './school-of-nursing/departments'
 import NursingOverview from './school-of-nursing/Overview'
 import NursingPartnership from './school-of-nursing/Partnership'
+import NursingPartnershipPage from './school-of-nursing/PartnershipPage'
+import NursingPartnershipDetailPage from './school-of-nursing/PartnershipDetail'
 import EmergencyCriticalCare from './school-of-nursing/departments/EmergencyCriticalCare'
 import NeonatalPediatrics from './school-of-nursing/departments/NeonatalPediatrics'
 import MedicalSurgical from './school-of-nursing/departments/MedicalSurgical'
@@ -151,6 +157,8 @@ import PublicHealthMissionVision from './school-of-public-health/PublicHealthMis
 import PublicHealthDepartments from './school-of-public-health/departments/PublicHealthDepartments'
 import PublicHealthOverview from './school-of-public-health/PublicHealthOverview'
 import PublicHealthPartnership from './school-of-public-health/PublicHealthPartnership'
+import PublicHealthPartnershipPage from './school-of-public-health/PartnershipPage'
+import PublicHealthPartnershipDetailPage from './school-of-public-health/PartnershipDetail'
 import DepartmentStaffsPage from './components/DepartmentStaffsPage'
 import Statistics from './statistics/Statistics'
 import { useParams } from 'react-router-dom'
@@ -163,11 +171,22 @@ import ResearchPublicationDetail from './school-research-publications/ResearchPu
 import RegistrarOffice from './offices/Registrar'
 import ICTOffice from './offices/ICT'
 import LibraryOffice from './offices/Library'
+import GenericOffice from './offices/GenericOffice'
 
 // Wrapper to extract slug param for StaffProfile
 function StaffProfileRoute({ onBack }: { onBack: () => void }) {
   const { slug = '' } = useParams<{ slug: string }>();
   return <StaffProfile slug={slug} onBack={onBack} />;
+}
+
+function NursingStaffProfileRoute({ onBack }: { onBack: () => void }) {
+  const { slug = '' } = useParams<{ slug: string }>();
+  return <NursingStaffProfile slug={slug} onBack={onBack} />;
+}
+
+function PublicHealthStaffProfileRoute({ onBack }: { onBack: () => void }) {
+  const { slug = '' } = useParams<{ slug: string }>();
+  return <PublicHealthStaffProfile slug={slug} onBack={onBack} />;
 }
 
 function AcademicResearchDetailRoute({ onBack }: { onBack: () => void }) {
@@ -543,6 +562,7 @@ function App(): JSX.Element {
                       <a href="#" onClick={(e) => { e.preventDefault(); navigate('/academics/nursing/partnership-collaboration'); }}>Partnership and Collaboration</a>
                       <a href="#" onClick={(e) => { e.preventDefault(); navigate('/academics/nursing/research-publications'); }}>Research & Publications</a>
                       <a href="#" onClick={(e) => { e.preventDefault(); navigate('/academics/nursing/staffs'); }}>Staffs</a>
+
                       <a href="/academics/nursing/contacts">contacts</a>
                     </div>
                   </div>
@@ -554,7 +574,7 @@ function App(): JSX.Element {
                       <a href="#" onClick={(e) => { e.preventDefault(); navigate('/academics/public-health/departments'); }}>Departments</a>
                       <a href="#" onClick={(e) => { e.preventDefault(); navigate('/academics/public-health/partnership-collaboration'); }}>Partnership and Collaboration</a>
                       <a href="#" onClick={(e) => { e.preventDefault(); navigate('/academics/public-health/research-publications'); }}>Research & Publications</a>
-                      <a href="/academics/public-health/staff">Staffs</a>
+                      <a href="#" onClick={(e) => { e.preventDefault(); navigate('/academics/public-health/staffs'); }}>Staffs</a>
                       <a href="/academics/public-health/contacts">Contacts</a>
                     </div>
                   </div>
@@ -583,19 +603,20 @@ function App(): JSX.Element {
               >
                 <a href="#" className="nav-link">Offices <span className="arrow">▾</span></a>
                 <div className="dropdown-content">
-                  <a href="#">Provost office</a>
-                  <a href="#">BDVP</a>
-                  <a href="#">MSVP office</a>
-                  <a href="#">Finance</a>
+                  <a href="#" onClick={(e) => { e.preventDefault(); navigate('/office/provost'); }}>Provost office</a>
+                  <a href="#" onClick={(e) => { e.preventDefault(); navigate('/office/bdvp'); }}>BDVP</a>
+                  <a href="#" onClick={(e) => { e.preventDefault(); navigate('/office/msvp'); }}>MSVP office</a>
+                  <a href="#" onClick={(e) => { e.preventDefault(); navigate('/office/finance'); }}>Finance</a>
                   <div className="dropdown-submenu">
-                    <a href="/offices/arvp" className="dropdown-submenu-title"> ARVP <span className="arrow">▸</span></a>
+                    <a href="#" onClick={(e) => { e.preventDefault(); navigate('/office/arvp'); }} className="dropdown-submenu-title"> ARVP <span className="arrow">▸</span></a>
                     <div className="mdropdown-content">
-                      <a href="/offices/arvp/mission-vision"> ARVP mission & vission </a>
-                      <a href="/offices/arvp/achievements">Office Achivments</a>
+                      <a href="#" onClick={(e) => { e.preventDefault(); navigate('/office/arvp'); }}>ARVP Overview</a>
+                      <a href="/offices/arvp/mission-vision">ARVP mission & vision</a>
+                      <a href="/offices/arvp/achievements">Office Achievements</a>
                       <a href="/offices/arvp/structure">ARVP Structure</a>
-                      <a href="/offices/arvp/curriculum-development">Curriculume development</a>
+                      <a href="/offices/arvp/curriculum-development">Curriculum development</a>
                       <a href="/offices/arvp/community-wellness">Community Wellness</a>
-                      <a href="/offices/arvp/responsibilities">ARVP Responsiblities</a>
+                      <a href="/offices/arvp/responsibilities">ARVP Responsibilities</a>
                     </div>
                   </div>
                   <a href="#" onClick={(e) => { e.preventDefault(); navigate('/office/registrar'); }}>Registrar</a>
@@ -646,18 +667,24 @@ function App(): JSX.Element {
           <Route path="/academics/medicine/departments/:deptSlug/sub/:subDeptId" element={<SubDepartmentDetail onBack={(deptSlug) => navigate(`/academics/medicine/departments/${deptSlug}`)} />} />
           <Route path="/academics/medicine/staffs" element={<MedicineStaffs onBack={() => navigate('/')} onViewProfile={(slug) => navigate(`/academics/medicine/staffs/${slug}`)} />} />
           <Route path="/academics/medicine/staffs/:slug" element={<StaffProfileRoute onBack={() => navigate('/academics/medicine/staffs')} />} />
+          <Route path="/academics/nursing/staffs" element={<NursingStaffs onBack={() => navigate('/')} onViewProfile={(slug) => navigate(`/academics/nursing/staffs/${slug}`)} />} />
+          <Route path="/academics/nursing/staffs/:slug" element={<NursingStaffProfileRoute onBack={() => navigate('/academics/nursing/staffs')} />} />
+          <Route path="/academics/public-health/staffs" element={<PublicHealthStaffs onBack={() => navigate('/')} onViewProfile={(slug) => navigate(`/academics/public-health/staffs/${slug}`)} />} />
+          <Route path="/academics/public-health/staffs/:slug" element={<PublicHealthStaffProfileRoute onBack={() => navigate('/academics/public-health/staffs')} />} />
           <Route path="/academics/nursing/about" element={<SchoolOfNursingAbout onBack={() => navigate('/')} />} />
           <Route path="/academics/nursing/mission" element={<SchoolOfNursingMission onBack={() => navigate('/')} />} />
           <Route path="/academics/nursing/vision" element={<SchoolOfNursingVision onBack={() => navigate('/')} />} />
           <Route path="/academics/nursing/overview" element={<NursingOverview onBack={() => navigate('/')} />} />
-          <Route path="/academics/nursing/partnership-collaboration" element={<NursingPartnership onBack={() => navigate('/')} />} />
+          <Route path="/academics/nursing/partnership-collaboration" element={<NursingPartnershipPage onBack={() => navigate('/')} />} />
+          <Route path="/academics/nursing/partnership-collaboration/:slug" element={<NursingPartnershipDetailPage onBack={() => navigate('/academics/nursing/partnership-collaboration')} />} />
           <Route path="/academics/nursing/departments" element={<SchoolOfNursingDepartments onBack={() => navigate('/')} onSelect={(id) => navigate(`/academics/nursing/departments/${id}`)} />} />
           <Route path="/academics/public-health/about" element={<PublicHealthAbout onBack={() => navigate('/')} />} />
           <Route path="/academics/public-health/mission-vision" element={<PublicHealthMissionVision onBack={() => navigate('/')} />} />
           <Route path="/academics/public-health/overview" element={<PublicHealthOverview onBack={() => navigate('/')} />} />
           <Route path="/academics/public-health/departments" element={<PublicHealthDepartments onBack={() => navigate('/')} />} />
           <Route path="/academics/:school/department-staffs/:departmentKey" element={<DepartmentStaffsPage />} />
-          <Route path="/academics/public-health/partnership-collaboration" element={<PublicHealthPartnership onBack={() => navigate('/')} />} />
+          <Route path="/academics/public-health/partnership-collaboration" element={<PublicHealthPartnershipPage onBack={() => navigate('/')} />} />
+          <Route path="/academics/public-health/partnership-collaboration/:slug" element={<PublicHealthPartnershipDetailPage onBack={() => navigate('/academics/public-health/partnership-collaboration')} />} />
           <Route path="/academics/public-health/research-publications" element={<SchoolResearchPublicationsRoute onBack={() => navigate('/academics/public-health/overview')} school="public-health" title="School of Public Health" />} />
           <Route path="/academics/public-health/research-publications/:slug" element={<SchoolResearchPublicationDetailRoute onBack={() => navigate('/academics/public-health/research-publications')} school="public-health" title="School of Public Health" />} />
           <Route path="/academics/nursing/research-publications" element={<SchoolResearchPublicationsRoute onBack={() => navigate('/academics/nursing/overview')} school="nursing" title="School of Nursing" />} />
@@ -678,6 +705,11 @@ function App(): JSX.Element {
           <Route path="/office/registrar" element={<RegistrarOffice onBack={() => navigate('/')} />} />
           <Route path="/office/ict" element={<ICTOffice onBack={() => navigate('/')} />} />
           <Route path="/office/library" element={<LibraryOffice onBack={() => navigate('/')} />} />
+          <Route path="/office/provost" element={<GenericOffice onBack={() => navigate('/')} officeType="provost" />} />
+          <Route path="/office/bdvp" element={<GenericOffice onBack={() => navigate('/')} officeType="bdvp" />} />
+          <Route path="/office/msvp" element={<GenericOffice onBack={() => navigate('/')} officeType="msvp" />} />
+          <Route path="/office/finance" element={<GenericOffice onBack={() => navigate('/')} officeType="finance" />} />
+          <Route path="/office/arvp" element={<GenericOffice onBack={() => navigate('/')} officeType="arvp" />} />
           {/* Fallback for unknown routes */}
           <Route path="*" element={<Home navigate={navigate} slides={slides} currentSlide={currentSlide} onPrev={handlePrev} onNext={handleNext} currentNewsSlide={currentNewsSlide} newsImages={newsImages} latestNews={latestNews} scrolled={scrolled} announcements={announcements} />} />
         </Routes>

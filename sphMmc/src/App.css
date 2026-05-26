@@ -369,6 +369,7 @@ body {
   pointer-events: none;
   /* Blue gradient fills the whole slide — image overlays on top */
   background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+  overflow: hidden; /* Ensure content doesn't overflow */
 }
 
 .hero-slide--active {
@@ -385,11 +386,14 @@ body {
   z-index: 2;
   /* Large ellipse: left edge flush, right side curves inward — AAU style */
   clip-path: ellipse(82% 100% at 8% 50%);
+  overflow: hidden; /* Ensure image doesn't break the clip-path */
 }
 
 .hero-oval-frame {
   width: 100%;
   height: 100%;
+  position: relative;
+  overflow: hidden;
 }
 
 .hero-slide-img {
@@ -397,12 +401,18 @@ body {
   height: 100%;
   object-fit: cover;
   display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .hero-img-placeholder {
   width: 100%;
   height: 100%;
   background: var(--navy);
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 /* ── Right: content panel — transparent, sits on the blue slide background ── */
@@ -415,6 +425,8 @@ body {
   position: relative;
   z-index: 1;
   background: transparent;
+  overflow: hidden; /* Prevent content overflow */
+  min-height: 100%; /* Ensure full height */
 }
 
 /* Animate content in when slide becomes active */
@@ -552,13 +564,20 @@ body {
 
 /* ── Responsive ── */
 @media (max-width: 1023px) {
-  .hero-section { height: auto; }
+  .hero-section { 
+    height: auto; 
+    min-height: 500px; /* Ensure minimum height on mobile */
+  }
   .hero-slide {
     position: relative;
     grid-template-columns: 1fr;
     inset: unset;
+    min-height: 500px; /* Consistent minimum height */
   }
-  .hero-slides-track { height: auto; }
+  .hero-slides-track { 
+    height: auto; 
+    min-height: 500px;
+  }
   .hero-slide:not(.hero-slide--active) { display: none; }
   .hero-image-panel {
     height: 45vw;
@@ -566,15 +585,37 @@ body {
     clip-path: ellipse(100% 75% at 50% 0%);
     margin-right: 0;
   }
-  .hero-content-panel { padding: 2.5rem 5%; }
+  .hero-content-panel { 
+    padding: 2.5rem 5%; 
+    min-height: auto;
+  }
   .hero-nav { bottom: 1rem; right: 1rem; }
 }
 
 @media (max-width: 767px) {
-  .hero-image-panel { height: 55vw; min-height: 200px; }
-  .hero-content-panel { padding: 2rem 4%; }
-  .hero-cta-group { flex-direction: column; align-items: flex-start; }
-  .hero-heading { font-size: clamp(1.3rem, 5vw, 1.8rem); }
+  .hero-section {
+    min-height: 450px;
+  }
+  .hero-slide {
+    min-height: 450px;
+  }
+  .hero-slides-track {
+    min-height: 450px;
+  }
+  .hero-image-panel { 
+    height: 55vw; 
+    min-height: 200px; 
+  }
+  .hero-content-panel { 
+    padding: 2rem 4%; 
+  }
+  .hero-cta-group { 
+    flex-direction: column; 
+    align-items: flex-start; 
+  }
+  .hero-heading { 
+    font-size: clamp(1.3rem, 5vw, 1.8rem); 
+  }
 }
 
 

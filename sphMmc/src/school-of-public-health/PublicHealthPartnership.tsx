@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { apiService, type AcademicPageData } from '../services/api';
 import { containsHtml } from '../services/content';
+import { sanitizeHtml } from '../utils/richText';
 import './PublicHealthAbout.css';
 
 interface Props { onBack: () => void }
@@ -44,7 +45,7 @@ export default function PublicHealthPartnership({ onBack }: Props) {
               containsHtml(page.content) ? (
                 <div
                   style={{ lineHeight: 1.8, color: '#444', fontSize: '1rem' }}
-                  dangerouslySetInnerHTML={{ __html: page.content }}
+                  dangerouslySetInnerHTML={{ __html: sanitizeHtml(page.content) }}
                 />
               ) : (
                 <p style={{ whiteSpace: 'pre-line', lineHeight: 1.8, color: '#444', fontSize: '1rem' }}>{page.content}</p>

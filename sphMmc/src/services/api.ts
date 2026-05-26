@@ -271,6 +271,11 @@ export interface MedicinePartnershipDetail extends MedicinePartnershipListItem {
   display_order: number;
 }
 
+export type NursingPartnershipListItem = MedicinePartnershipListItem;
+export type NursingPartnershipDetail = MedicinePartnershipDetail;
+export type PublicHealthPartnershipListItem = MedicinePartnershipListItem;
+export type PublicHealthPartnershipDetail = MedicinePartnershipDetail;
+
 class ApiService {
   private async request<T>(url: string, options?: RequestInit): Promise<T> {
     try {
@@ -500,6 +505,22 @@ class ApiService {
     );
     if (Array.isArray(response)) return response;
     return response.data ?? [];
+  }
+
+  async getNursingPartnerships(): Promise<NursingPartnershipListItem[]> {
+    return this.request<NursingPartnershipListItem[]>(`${API_BASE_URL}/nursing/partnerships`);
+  }
+
+  async getNursingPartnership(slug: string): Promise<NursingPartnershipDetail> {
+    return this.request<NursingPartnershipDetail>(`${API_BASE_URL}/nursing/partnerships/${slug}`);
+  }
+
+  async getPublicHealthPartnerships(): Promise<PublicHealthPartnershipListItem[]> {
+    return this.request<PublicHealthPartnershipListItem[]>(`${API_BASE_URL}/public-health/partnerships`);
+  }
+
+  async getPublicHealthPartnership(slug: string): Promise<PublicHealthPartnershipDetail> {
+    return this.request<PublicHealthPartnershipDetail>(`${API_BASE_URL}/public-health/partnerships/${slug}`);
   }
 
   // ── Nursing Departments ─────────────────────────────────────────────────────

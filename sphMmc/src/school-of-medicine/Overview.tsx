@@ -1,6 +1,7 @@
 import { type JSX, useState, useEffect } from 'react';
 import { apiService } from '../services/api';
 import { containsHtml } from '../services/content';
+import { sanitizeHtml } from '../utils/richText';
 import './Overview.css';
 
 interface OverviewData {
@@ -57,7 +58,7 @@ export default function Overview({ onBack }: { onBack: () => void }): JSX.Elemen
                             containsHtml(overviewData.description) ? (
                                 <div
                                     className="lead"
-                                    dangerouslySetInnerHTML={{ __html: overviewData.description }}
+                                    dangerouslySetInnerHTML={{ __html: sanitizeHtml(overviewData.description) }}
                                 />
                             ) : (
                                 <p className="lead">{overviewData.description}</p>
@@ -111,7 +112,7 @@ export default function Overview({ onBack }: { onBack: () => void }): JSX.Elemen
                             <h3>Our Mission</h3>
                             {overviewData?.mission ? (
                                 containsHtml(overviewData.mission) ? (
-                                    <div dangerouslySetInnerHTML={{ __html: overviewData.mission }} />
+                                    <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(overviewData.mission) }} />
                                 ) : (
                                     <p>{overviewData.mission}</p>
                                 )
@@ -123,7 +124,7 @@ export default function Overview({ onBack }: { onBack: () => void }): JSX.Elemen
                             <h3>Our Vision</h3>
                             {overviewData?.vision ? (
                                 containsHtml(overviewData.vision) ? (
-                                    <div dangerouslySetInnerHTML={{ __html: overviewData.vision }} />
+                                    <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(overviewData.vision) }} />
                                 ) : (
                                     <p>{overviewData.vision}</p>
                                 )

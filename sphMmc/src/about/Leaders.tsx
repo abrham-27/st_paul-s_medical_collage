@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import './Leaders.css';
 import { apiService, type Leader } from '../services/api';
+import { sanitizeHtml } from '../utils/richText';
 
 const Leaders: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   const location = useLocation();
@@ -118,11 +119,10 @@ const Leaders: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             <div className="profile-details-card fade-in-up">
               <div className="bio-content">
                 <h3>Biography</h3>
-                <div className="bio-text">
-                  {(activeLeader.biography ?? '').split('\n\n').map((para, i) => (
-                    <p key={i}>{para.trim()}</p>
-                  ))}
-                </div>
+                <div
+                  className="bio-text"
+                  dangerouslySetInnerHTML={{ __html: sanitizeHtml(activeLeader.biography ?? '') }}
+                />
               </div>
             </div>
           </div>

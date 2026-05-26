@@ -1,6 +1,7 @@
 import { type JSX, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { apiService, type ResearchPublicationItem } from '../services/api';
+import { sanitizeHtml } from '../utils/richText';
 import './ResearchPublications.css';
 
 interface Props {
@@ -66,7 +67,7 @@ export default function ResearchPublicationDetail({ school, title, onBack }: Pro
 
             <div className="detail-content">
               <h3>Abstract</h3>
-              <div dangerouslySetInnerHTML={{ __html: item.abstract || '<p>No abstract provided.</p>' }} />
+              <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(item.abstract || '<p>No abstract provided.</p>') }} />
 
               <div className="detail-grid">
                 <div>

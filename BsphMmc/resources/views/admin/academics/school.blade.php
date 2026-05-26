@@ -34,7 +34,7 @@
                     </div>
                     <div>
                         <h3 class="font-semibold text-gray-900 dark:text-white text-sm">Overview Page</h3>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">About · Mission · Vision</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">About &middot; Mission &middot; Vision</p>
                     </div>
                 </div>
                 <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">
@@ -62,8 +62,9 @@
                 @endif
             </div>
         </div>
+
+        {{-- Nursing Departments --}}
         @if($school === 'nursing')
-        {{-- Departments --}}
         <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
             <div class="p-5">
                 <div class="flex items-center gap-3 mb-3">
@@ -72,7 +73,7 @@
                     </div>
                     <div>
                         <h3 class="font-semibold text-gray-900 dark:text-white text-sm">Departments</h3>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">Cards � Detail pages � Landing</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Cards &middot; Detail pages &middot; Landing</p>
                     </div>
                 </div>
                 <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">
@@ -86,6 +87,29 @@
         </div>
         @endif
 
+        {{-- Public Health Departments --}}
+        @if($school === 'public_health')
+        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
+            <div class="p-5">
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="w-10 h-10 bg-teal-100 dark:bg-teal-900 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-sitemap text-teal-600 dark:text-teal-300"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-900 dark:text-white text-sm">Departments</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Epidemiology &middot; Health Management &middot; Programs</p>
+                    </div>
+                </div>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">
+                    Manage the public health department pages and academic programs.
+                </p>
+                <a href="{{ route('admin.public-health.departments.index') }}"
+                   class="inline-flex items-center gap-1.5 px-4 py-2 bg-teal-600 text-white text-xs font-medium rounded-lg hover:bg-teal-700 transition">
+                    <i class="fa-solid fa-pen-to-square"></i> Manage Departments
+                </a>
+            </div>
+        </div>
+        @endif
 
         {{-- Academic Staffs --}}
         <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
@@ -96,7 +120,7 @@
                     </div>
                     <div>
                         <h3 class="font-semibold text-gray-900 dark:text-white text-sm">Academic Staffs</h3>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">{{ $activeStaff }} active · {{ $staffCount }} total</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">{{ $activeStaff }} active &middot; {{ $staffCount }} total</p>
                     </div>
                 </div>
                 <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">
@@ -109,7 +133,8 @@
             </div>
         </div>
 
-        {{-- Partnership & Collaboration --}}
+        {{-- Partnership & Collaboration — Medicine only --}}
+        @if($school === 'medicine')
         <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
             <div class="p-5">
                 <div class="flex items-center gap-3 mb-3">
@@ -118,38 +143,19 @@
                     </div>
                     <div>
                         <h3 class="font-semibold text-gray-900 dark:text-white text-sm">Partnership & Collaboration</h3>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">Partners · Links · Content</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Partners &middot; Links &middot; Content</p>
                     </div>
                 </div>
                 <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">
-                    @if($school === 'medicine')
-                        {{ ($partnershipsCount ?? 0) > 0 ? $partnershipsCount . ' partnership(s) published' : 'No partnerships yet.' }}
-                    @else
-                        {{ $partnershipPage && $partnershipPage->title ? 'Last updated: ' . $partnershipPage->updated_at->diffForHumans() : 'Not configured yet.' }}
-                    @endif
+                    {{ ($partnershipsCount ?? 0) > 0 ? $partnershipsCount . ' partnership(s) published' : 'No partnerships yet.' }}
                 </p>
-                @if($school === 'nursing')
-                    <a href="{{ route('admin.nursing.partnership') }}"
-                       class="inline-flex items-center gap-1.5 px-4 py-2 bg-purple-600 text-white text-xs font-medium rounded-lg hover:bg-purple-700 transition">
-                        <i class="fa-solid fa-pen-to-square"></i> Edit Partnership
-                    </a>
-                @elseif($school === 'public_health')
-                    <a href="{{ route('admin.public-health.partnership') }}"
-                       class="inline-flex items-center gap-1.5 px-4 py-2 bg-purple-600 text-white text-xs font-medium rounded-lg hover:bg-purple-700 transition">
-                        <i class="fa-solid fa-pen-to-square"></i> Edit Partnership
-                    </a>
-                @elseif($school === 'medicine')
-                    <a href="{{ route('admin.medicine.partnership') }}"
-                       class="inline-flex items-center gap-1.5 px-4 py-2 bg-purple-600 text-white text-xs font-medium rounded-lg hover:bg-purple-700 transition">
-                        <i class="fa-solid fa-handshake"></i> Manage Partnerships
-                    </a>
-                @else
-                    <span class="inline-flex items-center gap-1.5 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-400 text-xs font-medium rounded-lg cursor-not-allowed">
-                        Coming Soon
-                    </span>
-                @endif
+                <a href="{{ route('admin.medicine.partnership') }}"
+                   class="inline-flex items-center gap-1.5 px-4 py-2 bg-purple-600 text-white text-xs font-medium rounded-lg hover:bg-purple-700 transition">
+                    <i class="fa-solid fa-handshake"></i> Manage Partnerships
+                </a>
             </div>
         </div>
+        @endif
 
         {{-- Add Staff shortcut --}}
         <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">

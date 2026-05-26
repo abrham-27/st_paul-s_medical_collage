@@ -2,6 +2,7 @@ import { type JSX, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { apiService, type MedicinePartnershipDetail } from '../services/api';
 import { containsHtml } from '../services/content';
+import { sanitizeHtml } from '../utils/richText';
 import './Overview.css';
 import './Partnership.css';
 
@@ -76,7 +77,7 @@ export default function MedicinePartnershipDetail({ onBack }: PartnershipDetailP
                                 containsHtml(partnership.content) ? (
                                     <div
                                         className="partnership-body"
-                                        dangerouslySetInnerHTML={{ __html: partnership.content }}
+                                        dangerouslySetInnerHTML={{ __html: sanitizeHtml(partnership.content) }}
                                     />
                                 ) : (
                                     <p className="partnership-body">{partnership.content}</p>

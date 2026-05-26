@@ -1,6 +1,7 @@
 import { useState, useEffect, type JSX } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './Projects.css'
+import { sanitizeHtml } from '../utils/richText'
 
 interface ResearchProject {
   id: number;
@@ -124,9 +125,10 @@ function ResearchProjects(): JSX.Element {
         <div className="rp-hero">
           <div className="rp-badge"><span>⚖️</span><span>Ethical Oversight</span></div>
           <h2 className="rp-hero-title">{project?.title || 'Ensuring Research Integrity & Participant Protection'}</h2>
-          <p className="rp-hero-desc">
-            {project?.content || 'The Institutional Review Board serves as the guardian of ethical standards in research, ensuring all studies protect human subjects while advancing scientific knowledge.'}
-          </p>
+          <div
+            className="rp-hero-desc"
+            dangerouslySetInnerHTML={{ __html: sanitizeHtml(project?.content || 'The Institutional Review Board serves as the guardian of ethical standards in research, ensuring all studies protect human subjects while advancing scientific knowledge.') }}
+          />
         </div>
 
         {/* Legal Framework */}
@@ -143,7 +145,7 @@ function ResearchProjects(): JSX.Element {
                   <div className="rp-card-icon">{card.icon}</div>
                   <h3>{card.title}</h3>
                 </div>
-                <p dangerouslySetInnerHTML={{ __html: card.content }}></p>
+                <p dangerouslySetInnerHTML={{ __html: sanitizeHtml(card.content) }}></p>
                 {card.items && (
                   <ul className="rp-items-list">
                     {card.items.map((item: any, j: number) => (
@@ -163,7 +165,7 @@ function ResearchProjects(): JSX.Element {
             <h2 className="rp-sec-title">Structure of IRB</h2>
             <div className="rp-underline"></div>
           </div>
-          <p className="rp-intro-text" dangerouslySetInnerHTML={{ __html: irbStructure?.intro_text ?? '' }}></p>
+          <p className="rp-intro-text" dangerouslySetInnerHTML={{ __html: sanitizeHtml(irbStructure?.intro_text ?? '') }}></p>
           <div className="rp-card-grid">
             {irbStructure?.members?.map((member: any, i: number) => (
               <div key={i} className="rp-card">
@@ -171,7 +173,7 @@ function ResearchProjects(): JSX.Element {
                   <div className="rp-card-icon">{member.icon}</div>
                   <h3>{member.title}</h3>
                 </div>
-                <p>{member.desc}</p>
+                <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(member.desc) }} />
               </div>
             ))}
           </div>
@@ -191,7 +193,7 @@ function ResearchProjects(): JSX.Element {
                   <div className="rp-card-icon">{card.icon}</div>
                   <h3>{card.title}</h3>
                 </div>
-                <p dangerouslySetInnerHTML={{ __html: card.content }}></p>
+                <p dangerouslySetInnerHTML={{ __html: sanitizeHtml(card.content) }}></p>
                 {card.steps && (
                   <div className="rp-step-list">
                     {card.steps.map((step: any, j: number) => (
@@ -224,9 +226,10 @@ function ResearchProjects(): JSX.Element {
         <div className="rp-hero">
           <div className="rp-badge"><span>🔬</span><span>Innovation Hub</span></div>
           <h2 className="rp-hero-title">{project?.title || 'iDream Laboratory'}</h2>
-          <p className="rp-hero-desc">
-            {project?.content || 'The iDream Laboratory serves as an innovation hub for cutting-edge research and development in medical sciences, fostering collaboration between researchers and industry partners.'}
-          </p>
+          <div
+            className="rp-hero-desc"
+            dangerouslySetInnerHTML={{ __html: sanitizeHtml(project?.content || 'The iDream Laboratory serves as an innovation hub for cutting-edge research and development in medical sciences, fostering collaboration between researchers and industry partners.') }}
+          />
           {project?.image && <img src={resolveResearchImage(project.image)} alt={project.title} className="rp-hero-image" />}
         </div>
 
@@ -265,9 +268,10 @@ function ResearchProjects(): JSX.Element {
         <div className="rp-hero">
           <div className="rp-badge"><span>📊</span><span>Health Surveillance</span></div>
           <h2 className="rp-hero-title">{project?.title || 'Health and Demographic Surveillance System'}</h2>
-          <p className="rp-hero-desc">
-            {project?.content || 'The HDSS provides comprehensive health and demographic data collection and analysis to support public health research and policy development.'}
-          </p>
+          <div
+            className="rp-hero-desc"
+            dangerouslySetInnerHTML={{ __html: sanitizeHtml(project?.content || 'The HDSS provides comprehensive health and demographic data collection and analysis to support public health research and policy development.') }}
+          />
           {project?.image && <img src={resolveResearchImage(project.image)} alt={project.title} className="rp-hero-image" />}
         </div>
 

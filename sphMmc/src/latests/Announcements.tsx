@@ -1,6 +1,7 @@
 import { type JSX, useState, useEffect } from 'react';
 import './Announcements.css';
 import { apiService, type LatestPost } from '../services/api';
+import { sanitizeHtml } from '../utils/richText';
 
 interface Announcement {
     id: number;
@@ -139,7 +140,7 @@ export default function Announcements({ onBack }: { onBack: () => void }): JSX.E
                             </button>
                             <div style={{ marginBottom: 16, color: '#6b7280', fontSize: 14 }}>{selectedAnnouncement.date}</div>
                             <h2 style={{ marginTop: 0, marginBottom: 16 }}>{selectedAnnouncement.title}</h2>
-                            <div style={{ color: '#111', lineHeight: 1.75 }} dangerouslySetInnerHTML={{ __html: selectedAnnouncement.content || selectedAnnouncement.description }} />
+                            <div style={{ color: '#111', lineHeight: 1.75 }} dangerouslySetInnerHTML={{ __html: sanitizeHtml(selectedAnnouncement.content || selectedAnnouncement.description) }} />
                         </div>
                     </div>
                 )}

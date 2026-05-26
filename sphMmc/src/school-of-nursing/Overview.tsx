@@ -1,6 +1,7 @@
 import { useState, useEffect, type JSX } from 'react';
 import { apiService, type AcademicPageData } from '../services/api';
 import { containsHtml } from '../services/content';
+import { sanitizeHtml } from '../utils/richText';
 import { getNursingOverviewContent } from './overviewContent';
 import './about.css';
 
@@ -86,7 +87,7 @@ export default function NursingOverview({ onBack }: Props): JSX.Element {
                         color: '#444',
                         marginTop: overview.timeline.length ? '1.5rem' : 0,
                       }}
-                      dangerouslySetInnerHTML={{ __html: overview.about_text }}
+                      dangerouslySetInnerHTML={{ __html: sanitizeHtml(overview.about_text) }}
                     />
                   ) : (
                     <p
@@ -124,7 +125,7 @@ export default function NursingOverview({ onBack }: Props): JSX.Element {
                           color: '#444',
                           fontSize: '1rem',
                         }}
-                        dangerouslySetInnerHTML={{ __html: page.secondary_content }}
+                        dangerouslySetInnerHTML={{ __html: sanitizeHtml(page.secondary_content) }}
                       />
                     ) : (
                       <p
@@ -158,7 +159,7 @@ export default function NursingOverview({ onBack }: Props): JSX.Element {
                           color: '#444',
                           fontSize: '1rem',
                         }}
-                        dangerouslySetInnerHTML={{ __html: page.tertiary_content }}
+                        dangerouslySetInnerHTML={{ __html: sanitizeHtml(page.tertiary_content) }}
                       />
                     ) : (
                       <p

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './AboutUs.css';
 import { apiService, type AboutPage } from '../services/api';
+import { sanitizeHtml } from '../utils/richText';
 
 interface WhyItem { title: string; desc: string; }
 interface SpecializedCenter { title: string; desc: string; icon: string; }
@@ -87,7 +88,7 @@ const AboutUs: React.FC<AboutUsProps> = ({ onBack }) => {
               {about?.main_description && (
                 <div
                   className="welcome-text"
-                  dangerouslySetInnerHTML={{ __html: about.main_description }}
+                  dangerouslySetInnerHTML={{ __html: sanitizeHtml(about.main_description) }}
                 />
               )}
 

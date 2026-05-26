@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import './MissionVisionValues.css';
+import { sanitizeHtml } from '../utils/richText';
 
 interface MissionVisionData {
   mission: { title: string; description: string } | null;
@@ -73,9 +74,10 @@ const MissionVisionValues: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             <div className="card-icon-large">🎯</div>
             <h2>{data?.mission?.title ?? 'Our Mission'}</h2>
             <div className="card-divider"></div>
-            <p className="primary-statement">
-              {data?.mission?.description ?? 'No mission content available.'}
-            </p>
+            <div
+              className="primary-statement"
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(data?.mission?.description ?? 'No mission content available.') }}
+            />
           </div>
         );
       case 'vision':
@@ -84,9 +86,10 @@ const MissionVisionValues: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             <div className="card-icon-large">🔭</div>
             <h2>{data?.vision?.title ?? 'Our Vision'}</h2>
             <div className="card-divider"></div>
-            <p className="primary-statement">
-              {data?.vision?.description ?? 'No vision content available.'}
-            </p>
+            <div
+              className="primary-statement"
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(data?.vision?.description ?? 'No vision content available.') }}
+            />
           </div>
         );
       case 'values':
@@ -119,9 +122,10 @@ const MissionVisionValues: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                           <span className="value-chevron">{isOpen ? '▲' : '▼'}</span>
                         </button>
                         {isOpen && v.description && (
-                          <ul className="value-list">
-                            <li>{v.description}</li>
-                          </ul>
+                          <div
+                            className="value-list"
+                            dangerouslySetInnerHTML={{ __html: sanitizeHtml(v.description) }}
+                          />
                         )}
                       </div>
                     );

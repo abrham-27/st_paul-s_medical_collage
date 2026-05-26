@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { apiService, type ResearchPublicationItem } from '../services/api';
+import { sanitizeHtml } from '../utils/richText';
 import './AcademicProjects.css';
 
 interface Props {
@@ -93,7 +94,7 @@ export default function AcademicResearchDetail({ onBack }: Props) {
                   <span>{formatPublicationDate(item.publication_date)}</span>
                 </div>
 
-                <div className="ap-detail-excerpt" dangerouslySetInnerHTML={{ __html: item.abstract || '<p>No abstract is currently available for this record.</p>' }} />
+                <div className="ap-detail-excerpt" dangerouslySetInnerHTML={{ __html: sanitizeHtml(item.abstract || '<p>No abstract is currently available for this record.</p>') }} />
 
                 <div className="ap-detail-content">
                   <h2>Publication Details</h2>

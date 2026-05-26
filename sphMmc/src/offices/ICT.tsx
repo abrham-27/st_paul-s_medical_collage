@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import './Office.css';
 import './ICT.css';
+import { sanitizeHtml } from '../utils/richText';
 
 interface Props { onBack: () => void }
 
@@ -262,7 +263,7 @@ export default function ICTOffice({ onBack }: Props) {
             {aboutData && (
               <>
                 <h2>{aboutData.title}</h2>
-                <p>{aboutData.description}</p>
+                <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(aboutData.description) }} />
                 
                 {/* ICT Gallery - integrated into About section */}
                 {gallery.length > 0 && (
@@ -301,7 +302,7 @@ export default function ICTOffice({ onBack }: Props) {
                     <div key={service.id} className="office-card">
                       <span className="office-card-icon">{service.icon}</span>
                       <h3>{service.title}</h3>
-                      <p>{service.description}</p>
+                      <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(service.description) }} />
                     </div>
                   ))}
                 </div>
@@ -326,7 +327,7 @@ export default function ICTOffice({ onBack }: Props) {
                       )}
                       <div className="ict-project-body">
                         <h3>{project.title}</h3>
-                        <p>{project.excerpt}</p>
+                        <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(project.excerpt) }} />
                         <a href={`/office/ict/projects/${project.slug}`} className="ict-read-more">
                           Read More →
                         </a>

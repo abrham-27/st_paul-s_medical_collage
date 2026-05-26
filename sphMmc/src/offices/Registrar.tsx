@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import './Office.css';
 import './Registrar.css';
+import { sanitizeHtml } from '../utils/richText';
 
 interface Props { onBack: () => void }
 
@@ -216,7 +217,7 @@ export default function RegistrarOffice({ onBack }: Props) {
             {aboutData && (
               <>
                 <h2>{aboutData.title}</h2>
-                <p>{aboutData.description}</p>
+                <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(aboutData.description) }} />
               </>
             )}
           </div>
@@ -233,7 +234,7 @@ export default function RegistrarOffice({ onBack }: Props) {
                     <div key={service.id} className="office-card">
                       <span className="office-card-icon">{service.icon}</span>
                       <h3>{service.title}</h3>
-                      <p>{service.description}</p>
+                      <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(service.description) }} />
                     </div>
                   ))}
                 </div>
@@ -256,7 +257,7 @@ export default function RegistrarOffice({ onBack }: Props) {
                       </div>
                       <div className="registrar-step-content">
                         <h3>{process.title}</h3>
-                        <p>{process.description}</p>
+                        <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(process.description) }} />
                       </div>
                     </div>
                   ))}

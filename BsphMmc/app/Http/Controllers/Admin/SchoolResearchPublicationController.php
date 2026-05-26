@@ -61,41 +61,74 @@ class SchoolResearchPublicationController extends Controller
     {
         $school = $this->normalizeSchool($school);
 
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'subtitle' => 'nullable|string|max:255',
-            'abstract' => 'nullable|string',
-            'authors' => 'nullable|string|max:255',
-            'publication_type' => 'nullable|string|max:100',
-            'publication_date' => 'nullable|date',
-            'journal_name' => 'nullable|string|max:255',
-            'doi_link' => 'nullable|url|max:500',
-            'external_link' => 'nullable|url|max:500',
-            'cover_image' => 'nullable|image|max:5120',
-            'pdf_file' => 'nullable|file|mimes:pdf|max:10240',
-            'keywords' => 'nullable|string|max:500',
-            'status' => 'required|in:published,draft',
-            'featured' => 'sometimes|boolean',
-            'display_order' => 'nullable|integer',
-        ]);
+        try {
+            $validated = $request->validate([
+                'title' => 'required|string|max:255',
+                'subtitle' => 'nullable|string|max:255',
+                'abstract' => 'nullable|string',
+                'authors' => 'nullable|string|max:255',
+                'publication_type' => 'nullable|string|max:100',
+                'publication_date' => 'nullable|date',
+                'journal_name' => 'nullable|string|max:255',
+                'doi_link' => 'nullable|url|max:500',
+                'external_link' => 'nullable|url|max:500',
+                'cover_image' => 'nullable|image|max:5120',
+                'pdf_file' => 'nullable|file|mimes:pdf|max:10240',
+                'keywords' => 'nullable|string|max:500',
+                'featured' => 'sometimes|boolean',
+                'display_order' => 'nullable|integer',
+            ]);
 
-        $validated['school_type'] = $school;
-        $validated['featured'] = $request->has('featured');
-        $validated['display_order'] = $validated['display_order'] ?? 0;
-        $validated['slug'] = SchoolResearchPublication::generateSlug($validated['title']);
+            $validated['school_type'] = $school;
+            $validated['featured'] = $request->has('featured');
+            $validated['status'] = $request->has('status') ? 'published' : 'draft';
+            $validated['display_order'] = $validated['display_order'] ?? 0;
+            $validated['slug'] = SchoolResearchPublication::generateSlug($validated['title']);
 
-        if ($request->hasFile('cover_image')) {
-            $validated['cover_image'] = $request->file('cover_image')->store('research/covers', 'public');
+            // Handle file uploads with error checking
+            if ($request->hasFile('cover_image')) {
+                $file = $request->file('cover_image');
+                if ($file->isValid()) {
+                    try {
+                        $validated['cover_image'] = $file->store('research/covers', 'public');
+                    } catch (\Exception $e) {
+                        return redirect()->back()
+                            ->withInput()
+                            ->withErrors(['cover_image' => 'Failed to upload cover image: ' . $e->getMessage()]);
+                    }
+                } else {
+                    return redirect()->back()
+                        ->withInput()
+                        ->withErrors(['cover_image' => 'Invalid cover image file.']);
+                }
+            }
+
+            if ($request->hasFile('pdf_file')) {
+                $file = $request->file('pdf_file');
+                if ($file->isValid()) {
+                    try {
+                        $validated['pdf_file'] = $file->store('research/pdfs', 'public');
+                    } catch (\Exception $e) {
+                        return redirect()->back()
+                            ->withInput()
+                            ->withErrors(['pdf_file' => 'Failed to upload PDF file: ' . $e->getMessage()]);
+                    }
+                } else {
+                    return redirect()->back()
+                        ->withInput()
+                        ->withErrors(['pdf_file' => 'Invalid PDF file.']);
+                }
+            }
+
+            SchoolResearchPublication::create($validated);
+
+            return redirect()->route('admin.academics.research-publications.index', ['school' => $school])
+                ->with('success', 'Research or publication entry created successfully.');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['error' => 'Failed to create entry: ' . $e->getMessage()]);
         }
-
-        if ($request->hasFile('pdf_file')) {
-            $validated['pdf_file'] = $request->file('pdf_file')->store('research/pdfs', 'public');
-        }
-
-        SchoolResearchPublication::create($validated);
-
-        return redirect()->route('admin.academics.research-publications.index', ['school' => $school])
-            ->with('success', 'Research or publication entry created successfully.');
     }
 
     public function edit(string $school, SchoolResearchPublication $publication)
@@ -131,26 +164,33 @@ class SchoolResearchPublicationController extends Controller
             'cover_image' => 'nullable|image|max:5120',
             'pdf_file' => 'nullable|file|mimes:pdf|max:10240',
             'keywords' => 'nullable|string|max:500',
-            'status' => 'required|in:published,draft',
             'featured' => 'sometimes|boolean',
             'display_order' => 'nullable|integer',
         ]);
 
         $validated['featured'] = $request->has('featured');
+        $validated['status'] = $request->has('status') ? 'published' : 'draft';
         $validated['display_order'] = $validated['display_order'] ?? 0;
 
+        // Handle file uploads with error checking
         if ($request->hasFile('cover_image')) {
-            if ($publication->cover_image) {
-                Storage::disk('public')->delete($publication->cover_image);
+            $file = $request->file('cover_image');
+            if ($file->isValid()) {
+                if ($publication->cover_image) {
+                    Storage::disk('public')->delete($publication->cover_image);
+                }
+                $validated['cover_image'] = $file->store('research/covers', 'public');
             }
-            $validated['cover_image'] = $request->file('cover_image')->store('research/covers', 'public');
         }
 
         if ($request->hasFile('pdf_file')) {
-            if ($publication->pdf_file) {
-                Storage::disk('public')->delete($publication->pdf_file);
+            $file = $request->file('pdf_file');
+            if ($file->isValid()) {
+                if ($publication->pdf_file) {
+                    Storage::disk('public')->delete($publication->pdf_file);
+                }
+                $validated['pdf_file'] = $file->store('research/pdfs', 'public');
             }
-            $validated['pdf_file'] = $request->file('pdf_file')->store('research/pdfs', 'public');
         }
 
         $publication->update($validated);
