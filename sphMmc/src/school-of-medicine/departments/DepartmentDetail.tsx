@@ -98,16 +98,16 @@ export default function DepartmentDetail({ slug, onBack }: DepartmentDetailProps
                 <header className="dept-header">
                     <span className="dept-tag">School of Medicine</span>
                     <h1>{departmentData.name}</h1>
-                <p className="intro">
-                    {departmentData.description || 'Department details and academic structure.'}
-                </p>
+                <p className="intro"
+                   dangerouslySetInnerHTML={{ __html: departmentData.description || 'Department details and academic structure.' }}
+                />
                 <button
                     type="button"
                     className="back-btn"
-                    onClick={() => navigate(`/academics/medicine/department-staffs/${slug}`)}
+                    onClick={() => navigate(`/academics/medicine/staffs`)}
                     style={{ marginTop: '1rem', fontSize: '1rem', padding: '0.85rem 1.4rem' }}
                 >
-                    View Staffs
+                    View Department Staffs →
                 </button>
                 </header>
                 
@@ -128,7 +128,10 @@ export default function DepartmentDetail({ slug, onBack }: DepartmentDetailProps
                             <span className="sub-dept-link-text">
                                 <span className="sub-dept-link-name">{subDept.name}</span>
                                 {subDept.description && (
-                                    <span className="sub-dept-link-desc">{subDept.description}</span>
+                                    <span
+                                        className="sub-dept-link-desc"
+                                        dangerouslySetInnerHTML={{ __html: subDept.description }}
+                                    />
                                 )}
                             </span>
                             <span className="sub-dept-link-arrow" aria-hidden="true">

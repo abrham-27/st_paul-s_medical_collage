@@ -183,3 +183,10 @@
     .grid-2, .highlights-grid { grid-template-columns: 1fr; }
     .hero-content h1 { font-size: 3rem; }
 }
+
+/* Rich text content from admin editor */
+.rich-content p { margin-bottom: 0.85rem; line-height: 1.75; }
+.rich-content ul, .rich-content ol { padding-left: 1.5rem; margin-bottom: 0.85rem; }
+.rich-content li { margin-bottom: 0.4rem; line-height: 1.65; }
+.rich-content strong { font-weight: 600; }
+.rich-content h1, .rich-content h2, .rich-content h3 { margin-bottom: 0.5rem; }

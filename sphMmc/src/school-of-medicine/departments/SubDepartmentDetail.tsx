@@ -79,10 +79,9 @@ export default function SubDepartmentDetail({ onBack }: SubDepartmentDetailProps
                         <header className="dept-header sub-dept-page-header">
                             <span className="dept-tag">School of Medicine</span>
                             <h1>{subDepartment.name}</h1>
-                            <p className="intro">
-                                {subDepartment.description ||
-                                    'Academic units and programs within this sub-department.'}
-                            </p>
+                            <p className="intro"
+                               dangerouslySetInnerHTML={{ __html: subDepartment.description || 'Academic units and programs within this sub-department.' }}
+                            />
                         </header>
 
                         <section className="academic-units-page-section">
@@ -104,10 +103,9 @@ export default function SubDepartmentDetail({ onBack }: SubDepartmentDetailProps
                                         <article key={unit.id} className="academic-unit-card">
                                             <div className="academic-unit-card-accent" />
                                             <h4>{unit.name}</h4>
-                                            <p>
-                                                {unit.description ||
-                                                    'Academic unit within this sub-department.'}
-                                            </p>
+                                            <div
+                                                dangerouslySetInnerHTML={{ __html: unit.description || 'Academic unit within this sub-department.' }}
+                                            />
                                         </article>
                                     ))}
                                 </div>
