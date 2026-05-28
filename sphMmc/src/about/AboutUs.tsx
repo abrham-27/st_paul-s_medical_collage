@@ -15,7 +15,7 @@ interface AboutUsProps {
 }
 
 const AboutUs: React.FC<AboutUsProps> = ({ onBack }) => {
-  const [showWhy, setShowWhy] = useState(false);
+  const [showWhy, setShowWhy] = useState(true); // Show by default since we have content
   const [about, setAbout] = useState<AboutPage | null>(null);
   const [mission, setMission] = useState<string>('');
   const [vision, setVision] = useState<string>('');
@@ -23,28 +23,52 @@ const AboutUs: React.FC<AboutUsProps> = ({ onBack }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    Promise.allSettled([
-      apiService.getAboutPage(),
-      apiService.getMissionVisionValues(),
-    ]).then(([aboutRes, mvRes]) => {
-      if (aboutRes.status === 'fulfilled') {
-        const data = aboutRes.value.data;
-        setAbout(data);
-        if (data?.additional_content) {
-          try {
-            const parsed = typeof data.additional_content === 'string'
-              ? JSON.parse(data.additional_content)
-              : data.additional_content;
-            setAdditional(parsed);
-          } catch { setAdditional({}); }
+    const fetchData = async () => {
+      try {
+        const [aboutRes, mvRes] = await Promise.allSettled([
+          apiService.getAboutPage(),
+          apiService.getMissionVisionValues(),
+        ]);
+        
+        if (aboutRes.status === 'fulfilled' && aboutRes.value?.success) {
+          const data = aboutRes.value.data;
+          setAbout(data);
+          
+          if (data?.additional_content) {
+            try {
+              // If it's already an object (parsed by backend), use it directly
+              // If it's still a string, parse it
+              let parsed;
+              if (typeof data.additional_content === 'object') {
+                parsed = data.additional_content;
+              } else {
+                parsed = JSON.parse(data.additional_content);
+              }
+              setAdditional(parsed || {});
+            } catch (e) { 
+              console.warn('Failed to parse additional_content:', e);
+              setAdditional({}); 
+            }
+          }
+        } else {
+          console.error('Failed to fetch about page:', aboutRes);
         }
+        
+        if (mvRes.status === 'fulfilled' && mvRes.value?.success) {
+          const mvData = mvRes.value.data;
+          if (mvData?.mission?.description) setMission(mvData.mission.description);
+          if (mvData?.vision?.description) setVision(mvData.vision.description);
+        } else {
+          console.error('Failed to fetch mission/vision:', mvRes);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
       }
-      if (mvRes.status === 'fulfilled' && mvRes.value.success) {
-        if (mvRes.value.data?.mission?.description) setMission(mvRes.value.data.mission.description);
-        if (mvRes.value.data?.vision?.description)  setVision(mvRes.value.data.vision.description);
-      }
-      setLoading(false);
-    });
+    };
+    
+    fetchData();
   }, []);
 
   if (loading) {
@@ -91,34 +115,39 @@ const AboutUs: React.FC<AboutUsProps> = ({ onBack }) => {
                   dangerouslySetInnerHTML={{ __html: sanitizeHtml(about.main_description) }}
                 />
               )}
-
-              {whyItems.length > 0 && (
-                <div className="action-link-container">
-                  <button
-                    className={`why-link ${showWhy ? 'active' : ''}`}
-                    onClick={() => setShowWhy(!showWhy)}
-                  >
-                    Why SPHMMC? {showWhy ? '▾' : '▸'}
-                  </button>
-                </div>
+              
+              {about?.history_text && (
+                <div
+                  className="history-text"
+                  style={{ marginTop: '1.5rem' }}
+                  dangerouslySetInnerHTML={{ __html: sanitizeHtml(about.history_text) }}
+                />
               )}
 
-              {showWhy && whyItems.length > 0 && (
-                <div className="why-content-expanded fade-in">
-                  <div className="why-grid">
-                    {whyItems.map((item, i) => (
-                      <div key={i} className="why-item">
-                        <h4>{item.title}</h4>
-                        <p>{item.desc}</p>
-                      </div>
-                    ))}
+              {whyItems.length > 0 && (
+                <>
+                  <div className="action-link-container">
+                    <button
+                      className={`why-link ${showWhy ? 'active' : ''}`}
+                      onClick={() => setShowWhy(!showWhy)}
+                    >
+                      Why SPHMMC? {showWhy ? '▾' : '▸'}
+                    </button>
                   </div>
-                  {about?.history_text && (
-                    <div className="closing-statement">
-                      <p>{about.history_text}</p>
+
+                  {showWhy && (
+                    <div className="why-content-expanded fade-in">
+                      <div className="why-grid">
+                        {whyItems.map((item, i) => (
+                          <div key={i} className="why-item">
+                            <h4>{item.title}</h4>
+                            <p>{item.desc}</p>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   )}
-                </div>
+                </>
               )}
             </div>
           </div>

@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LatestPostController;
 use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\AboutController;
@@ -37,6 +38,30 @@ use App\Http\Controllers\PublicHealthPartnershipApiController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+// Simple auth check for admin features
+Route::post('/auth/login', function (Request $request) {
+    $credentials = $request->validate([
+        'email' => 'required|email',
+        'password' => 'required'
+    ]);
+    
+    if (Auth::attempt($credentials)) {
+        $user = Auth::user();
+        $token = $user->createToken('auth-token')->plainTextToken;
+        
+        return response()->json([
+            'success' => true,
+            'token' => $token,
+            'user' => $user
+        ]);
+    }
+    
+    return response()->json([
+        'success' => false,
+        'message' => 'Invalid credentials'
+    ], 401);
 });
 
 // Specific routes must come before the resource route to avoid conflicts
@@ -126,8 +151,10 @@ Route::get('/research/mission', [ResearchController::class, 'mission']);
 Route::get('/research/vision', [ResearchController::class, 'vision']);
 Route::get('/research/goals', [ResearchController::class, 'goals']);
 
-// Research Projects API routes
+// Research Projects API routes (NEW V2 IMPLEMENTATION)
 Route::get('/research/projects/irb', [ResearchProjectsController::class, 'irb']);
 Route::get('/research/projects/idream', [ResearchProjectsController::class, 'idream']);
 Route::get('/research/projects/hdss', [ResearchProjectsController::class, 'hdss']);
 Route::get('/research/projects/all', [ResearchProjectsController::class, 'all']);
+Route::get('/research/projects-v2/{type}', [ResearchProjectsController::class, 'getProject']);
+Route::get('/research/projects-v2/all/data', [ResearchProjectsController::class, 'getAllProjects']);

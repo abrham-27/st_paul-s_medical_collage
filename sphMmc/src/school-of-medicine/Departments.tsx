@@ -74,7 +74,7 @@ export default function DepartmentsLanding({ onBack, onSelect }: { onBack: () =>
                             </div>
                             <div className="info">
                                 <h3>{dept.name}</h3>
-                                <p>{dept.description || 'Department details'}</p>
+                                <p dangerouslySetInnerHTML={{ __html: dept.description || 'Department details' }} />
                             </div>
                             <div className="arrow">↗</div>
                         </button>

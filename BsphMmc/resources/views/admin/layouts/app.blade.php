@@ -330,7 +330,7 @@
 
             <a href="{{ route('admin.research.projects.index') }}"
                class="flex flex-row items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all w-full {{ request()->routeIs('admin.research.projects.*') ? 'bg-blue-700 text-white' : 'text-blue-200 hover:bg-blue-700 hover:text-white' }}">
-                <i class="fa-solid fa-project-diagram text-base w-5 text-center flex-shrink-0"></i>
+                <i class="fa-solid fa-flask text-base w-5 text-center flex-shrink-0"></i>
                 <span>Research Projects</span>
             </a>
 
@@ -419,6 +419,8 @@
         @yield('content')
     </main>
 </div>
+
+@stack('scripts')
 
 </body>
 </html>

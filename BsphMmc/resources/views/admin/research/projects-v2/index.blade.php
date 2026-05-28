@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Research Projects')
+@section('title', 'Research Projects V2')
 
 @section('content')
 <div class="max-w-7xl mx-auto">
@@ -21,7 +21,7 @@
                         <h5 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Function of IRB</h5>
                         <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">Institutional Review Board - Ethical oversight and research integrity</p>
                         <div class="space-y-2">
-                            <a href="{{ route('admin.research.projects.show', 'irb') }}" class="w-full inline-flex items-center justify-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors">
+                            <a href="{{ route('admin.research.projects-v2.show', 'irb') }}" class="w-full inline-flex items-center justify-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors">
                                 <i class="fas fa-edit mr-2"></i> Manage IRB
                             </a>
                         </div>
@@ -40,7 +40,7 @@
                         <h5 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">iDream Lab</h5>
                         <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">Innovation laboratory for research and development</p>
                         <div class="space-y-2">
-                            <a href="{{ route('admin.research.projects.show', 'idream') }}" class="w-full inline-flex items-center justify-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg transition-colors">
+                            <a href="{{ route('admin.research.projects-v2.show', 'idream') }}" class="w-full inline-flex items-center justify-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg transition-colors">
                                 <i class="fas fa-edit mr-2"></i> Manage iDream
                             </a>
                         </div>
@@ -59,7 +59,7 @@
                         <h5 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">HDSS</h5>
                         <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">Health and Demographic Surveillance System</p>
                         <div class="space-y-2">
-                            <a href="{{ route('admin.research.projects.show', 'hdss') }}" class="w-full inline-flex items-center justify-center px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-medium rounded-lg transition-colors">
+                            <a href="{{ route('admin.research.projects-v2.show', 'hdss') }}" class="w-full inline-flex items-center justify-center px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-medium rounded-lg transition-colors">
                                 <i class="fas fa-edit mr-2"></i> Manage HDSS
                             </a>
                         </div>

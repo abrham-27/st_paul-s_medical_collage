@@ -12,13 +12,27 @@ class ResearchProject extends Model
     protected $fillable = [
         'project_type',
         'title',
+        'subtitle',
         'content',
+        'hero_description',
         'image',
+        'hero_image',
         'status',
         'legal_framework',
         'irb_structure',
         'appointment_training',
         'additional_sections',
+        'contact_info',
+        'office_hours',
+        'office_address',
+        'office_phone',
+        'office_email',
+        'meta_description',
+        'meta_keywords',
+    ];
+
+    protected $casts = [
+        'contact_info' => 'array',
     ];
 
     /**
@@ -184,5 +198,97 @@ class ResearchProject extends Model
         }
         
         return null;
+    }
+
+    /**
+     * Relationships
+     */
+    public function teamMembers()
+    {
+        return $this->hasMany(ResearchProjectTeamMember::class)->active()->ordered();
+    }
+
+    public function faqs()
+    {
+        return $this->hasMany(ResearchProjectFAQ::class)->active()->ordered();
+    }
+
+    public function resources()
+    {
+        return $this->hasMany(ResearchProjectResource::class)->active()->ordered();
+    }
+
+    public function statistics()
+    {
+        return $this->hasMany(ResearchProjectStatistic::class)->active()->ordered();
+    }
+
+    public function workflowSteps()
+    {
+        return $this->hasMany(ResearchProjectWorkflowStep::class)->active()->ordered();
+    }
+
+    public function functions()
+    {
+        return $this->hasMany(ResearchProjectFunction::class)->active()->ordered();
+    }
+
+    /**
+     * Get the full image URL
+     */
+    public function getImageUrlAttribute()
+    {
+        return $this->resolveImageUrl($this->image);
+    }
+
+    /**
+     * Get the full hero image URL
+     */
+    public function getHeroImageUrlAttribute()
+    {
+        return $this->resolveImageUrl($this->hero_image);
+    }
+
+    /**
+     * Resolve image URL helper
+     */
+    private function resolveImageUrl($imagePath)
+    {
+        if (!$imagePath) {
+            return null;
+        }
+
+        if (str_starts_with($imagePath, 'http')) {
+            return $imagePath;
+        }
+
+        $apiUrl = config('app.url');
+        $storageBase = rtrim($apiUrl, '/') . '/storage';
+        $normalized = ltrim($imagePath, '/');
+        $normalized = preg_replace('/^storage\//', '', $normalized);
+        
+        return $storageBase . '/' . $normalized;
+    }
+
+    /**
+     * Load all related data for frontend
+     */
+    public function loadCompleteData()
+    {
+        $this->load([
+            'teamMembers',
+            'faqs',
+            'resources',
+            'statistics',
+            'workflowSteps',
+            'functions'
+        ]);
+
+        // Add structured content
+        $this->legal_framework_content = $this->getLegalFrameworkContent();
+        $this->irb_structure_content = $this->getIrbStructureContent();
+        $this->appointment_training_content = $this->getAppointmentTrainingContent();
+
+        return $this;
     }
 }

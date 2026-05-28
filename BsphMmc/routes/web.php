@@ -308,8 +308,13 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     // Research Projects CMS
     Route::prefix('research/projects')->name('research.projects.')->group(function () {
         Route::get('/', [AdminResearchProjectsController::class, 'index'])->name('index');
-        Route::post('irb', [AdminResearchProjectsController::class, 'updateIrb'])->name('irb.update');
-        Route::post('idream', [AdminResearchProjectsController::class, 'updateIdream'])->name('idream.update');
-        Route::post('hdss', [AdminResearchProjectsController::class, 'updateHdss'])->name('hdss.update');
+        Route::get('/{type}', [AdminResearchProjectsController::class, 'show'])->name('show');
+        Route::post('/{type}/basic-info', [AdminResearchProjectsController::class, 'updateBasicInfo'])->name('basic-info.update');
+        Route::post('/{type}/functions', [AdminResearchProjectsController::class, 'addFunction'])->name('functions.store');
+        Route::post('/{type}/workflows', [AdminResearchProjectsController::class, 'addWorkflow'])->name('workflows.store');
+        Route::post('/{type}/resources', [AdminResearchProjectsController::class, 'addResource'])->name('resources.store');
+        Route::post('/{type}/statistics', [AdminResearchProjectsController::class, 'addStatistic'])->name('statistics.store');
+        Route::post('/{type}/team-members', [AdminResearchProjectsController::class, 'addTeamMember'])->name('team-members.store');
+        Route::post('/{type}/faqs', [AdminResearchProjectsController::class, 'addFaq'])->name('faqs.store');
     });
 });

@@ -6,25 +6,45 @@
 @section('content')
 <div class="py-6 space-y-6" x-data="{ addValueModal: false, editValueModal: false, editValue: null }">
 
+    {{-- Success/Error Messages --}}
+    @if(session('success'))
+        <div class="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg mb-4">
+            <i class="fa-solid fa-circle-check text-green-500 mr-2"></i>
+            {{ session('success') }}
+        </div>
+    @endif
+    
+    @if($errors->any())
+        <div class="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg mb-4">
+            <i class="fa-solid fa-circle-exclamation text-red-500 mr-2"></i>
+            <ul class="list-disc list-inside">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     {{-- Mission --}}
     <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
         <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-5 border-b border-gray-200 dark:border-gray-700 pb-3 flex items-center gap-2">
             <i class="fa-solid fa-bullseye text-blue-600"></i> Mission
         </h2>
-        <form method="POST" action="{{ route('admin.mission-vision.mission') }}" class="space-y-4">
-            @csrf @method('PUT')
+        <form method="POST" action="{{ route('admin.mission-vision.mission') }}" class="space-y-4" id="mission-form">
+            @csrf 
+            @method('PUT')
             <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Title <span class="text-red-500">*</span></label>
-                <input type="text" name="title" value="{{ old('title', $mission->title) }}" required
+                <input type="text" name="title" value="{{ old('title', $mission->title ?? '') }}" required
                        class="w-full px-4 py-2.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none">
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Description <span class="text-red-500">*</span></label>
                 <textarea name="description" rows="4" required
-                          class="w-full px-4 py-2.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none resize-y rich-editor">{{ old('description', $mission->description) }}</textarea>
+                          class="w-full px-4 py-2.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none resize-y">{{ old('description', $mission->description ?? '') }}</textarea>
             </div>
-            <button type="submit"
-                    class="px-5 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition">
+            <button type="submit" id="save-mission-btn"
+                    class="px-5 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <i class="fa-solid fa-floppy-disk mr-1"></i> Save Mission
             </button>
         </form>
@@ -35,20 +55,21 @@
         <h2 class="text-base font-semibold text-gray-900 dark:text-white mb-5 border-b border-gray-200 dark:border-gray-700 pb-3 flex items-center gap-2">
             <i class="fa-solid fa-eye text-blue-600"></i> Vision
         </h2>
-        <form method="POST" action="{{ route('admin.mission-vision.vision') }}" class="space-y-4">
-            @csrf @method('PUT')
+        <form method="POST" action="{{ route('admin.mission-vision.vision') }}" class="space-y-4" id="vision-form">
+            @csrf 
+            @method('PUT')
             <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Title <span class="text-red-500">*</span></label>
-                <input type="text" name="title" value="{{ old('title', $vision->title) }}" required
+                <input type="text" name="title" value="{{ old('title', $vision->title ?? '') }}" required
                        class="w-full px-4 py-2.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none">
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Description <span class="text-red-500">*</span></label>
                 <textarea name="description" rows="4" required
-                          class="w-full px-4 py-2.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none resize-y rich-editor">{{ old('description', $vision->description) }}</textarea>
+                          class="w-full px-4 py-2.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none resize-y">{{ old('description', $vision->description ?? '') }}</textarea>
             </div>
-            <button type="submit"
-                    class="px-5 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition">
+            <button type="submit" id="save-vision-btn"
+                    class="px-5 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <i class="fa-solid fa-floppy-disk mr-1"></i> Save Vision
             </button>
         </form>
@@ -177,7 +198,7 @@
                 </button>
             </div>
             <template x-if="editValue">
-                <form method="POST" :action="`/admin/mission-vision/values/${editValue.id}`" class="space-y-4">
+                <form method="POST" :action="`{{ route('admin.mission-vision.values.update', '') }}/${editValue.id}`" class="space-y-4">
                     @csrf @method('PUT')
                     <div class="grid grid-cols-2 gap-3">
                         <div>
@@ -218,3 +239,30 @@
 
 </div>
 @endsection
+
+@push('scripts')
+<script>
+// Ensure buttons are clickable
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Mission Vision page loaded');
+    
+    // Test mission button
+    const missionBtn = document.getElementById('save-mission-btn');
+    if (missionBtn) {
+        console.log('Mission button found');
+        missionBtn.addEventListener('click', function(e) {
+            console.log('Mission button clicked');
+        });
+    }
+    
+    // Test vision button
+    const visionBtn = document.getElementById('save-vision-btn');
+    if (visionBtn) {
+        console.log('Vision button found');
+        visionBtn.addEventListener('click', function(e) {
+            console.log('Vision button clicked');
+        });
+    }
+});
+</script>
+@endpush

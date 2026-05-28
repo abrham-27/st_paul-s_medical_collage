@@ -13,7 +13,7 @@ class AcademicPage extends Model
         'title', 'content',
         'secondary_title', 'secondary_content',
         'tertiary_title', 'tertiary_content',
-        'featured_image',
+        'featured_image', 'additional_content',
     ];
 
     public static function getOrCreate(string $school, string $page): self

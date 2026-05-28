@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\ResearchProject;
+use App\Models\ResearchProjectV2;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -14,176 +14,228 @@ class ResearchProjectsController extends Controller
      */
     public function index()
     {
-        $irb = ResearchProject::getOrCreateByType('irb');
-        $idream = ResearchProject::getOrCreateByType('idream');
-        $hdss = ResearchProject::getOrCreateByType('hdss');
+        $irb = ResearchProjectV2::getOrCreateByType('irb');
+        $idream = ResearchProjectV2::getOrCreateByType('idream');
+        $hdss = ResearchProjectV2::getOrCreateByType('hdss');
         
         return view('admin.research.projects.index', compact('irb', 'idream', 'hdss'));
     }
 
     /**
-     * Update IRB project
+     * Show specific project management page
      */
-    public function updateIrb(Request $request)
+    public function show($type)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
-        ]);
-
-        $data = [
-            'project_type' => 'irb',
-            'title' => $request->title,
-            'content' => $request->content,
-            'status' => 'active',
-        ];
-
-        // Handle structured content
-        if ($request->has('legal_framework')) {
-            $legalFramework = [];
-            for ($i = 0; $i < 3; $i++) {
-                if ($request->input("legal_framework_{$i}_title")) {
-                    $itemsString = $request->input("legal_framework_{$i}_items", '');
-                    $itemsArray = $itemsString ? array_filter(array_map('trim', explode("\n", $itemsString))) : [];
-                    
-                    $legalFramework[] = [
-                        'icon' => $request->input("legal_framework_{$i}_icon", '🏛️'),
-                        'title' => $request->input("legal_framework_{$i}_title"),
-                        'content' => $request->input("legal_framework_{$i}_content"),
-                        'items' => $itemsArray
-                    ];
-                }
-            }
-            $data['legal_framework'] = json_encode(['cards' => $legalFramework]);
-        }
-
-        if ($request->has('irb_structure')) {
-            $irbStructure = [
-                'intro_text' => $request->input('irb_intro_text', 'As per national guideline, SPHMMC IRB has <strong>15 members</strong> from a multidisciplinary panel:'),
-                'members' => []
-            ];
-            
-            for ($i = 0; $i < 6; $i++) {
-                if ($request->input("irb_member_{$i}_title")) {
-                    $irbStructure['members'][] = [
-                        'icon' => $request->input("irb_member_{$i}_icon", '👤'),
-                        'title' => $request->input("irb_member_{$i}_title"),
-                        'desc' => $request->input("irb_member_{$i}_desc")
-                    ];
-                }
-            }
-            $data['irb_structure'] = json_encode($irbStructure);
-        }
-
-        if ($request->has('appointment_training')) {
-            $appointmentTraining = ['cards' => []];
-            
-            for ($i = 0; $i < 2; $i++) {
-                if ($request->input("appointment_{$i}_title")) {
-                    $card = [
-                        'icon' => $request->input("appointment_{$i}_icon", '📋'),
-                        'title' => $request->input("appointment_{$i}_title"),
-                        'content' => $request->input("appointment_{$i}_content")
-                    ];
-                    
-                    // Handle steps
-                    if ($request->has("appointment_{$i}_steps")) {
-                        $card['steps'] = [];
-                        for ($j = 0; $j < 3; $j++) {
-                            if ($request->input("appointment_{$i}_step_{$j}_text")) {
-                                $card['steps'][] = [
-                                    'num' => ($j + 1) . '',
-                                    'text' => $request->input("appointment_{$i}_step_{$j}_text")
-                                ];
-                            }
-                        }
-                    }
-                    
-                    // Handle items
-                    if ($request->has("appointment_{$i}_items")) {
-                        $itemsString = $request->input("appointment_{$i}_items", '');
-                        $card['items'] = $itemsString ? array_filter(array_map('trim', explode("\n", $itemsString))) : [];
-                    }
-                    
-                    $appointmentTraining['cards'][] = $card;
-                }
-            }
-            $data['appointment_training'] = json_encode($appointmentTraining);
-        }
-
-        if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('research-projects', 'public');
-        }
-
-        ResearchProject::updateOrCreate(
-            ['project_type' => 'irb'],
-            $data
-        );
-
-        return redirect()->route('admin.research.projects.index')
-            ->with('success', 'IRB project updated successfully!');
+        $project = ResearchProjectV2::getOrCreateByType($type);
+        $project->loadCompleteData();
+        
+        return view('admin.research.projects.show', compact('project', 'type'));
     }
 
     /**
-     * Update iDream project
+     * Update project basic info
      */
-    public function updateIdream(Request $request)
+    public function updateBasicInfo(Request $request, $type)
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'subtitle' => 'nullable|string|max:500',
+            'overview' => 'nullable|string',
+            'hero_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'contact_email' => 'nullable|email|max:100',
+            'contact_phone' => 'nullable|string|max:50',
+            'contact_address' => 'nullable|string|max:500',
+            'office_hours' => 'nullable|string|max:500',
         ]);
 
-        $data = [
-            'project_type' => 'idream',
-            'title' => $request->title,
-            'content' => $request->content,
-            'status' => 'active',
-        ];
+        $project = ResearchProjectV2::getOrCreateByType($type);
+        
+        $data = $request->only([
+            'title', 'subtitle', 'overview',
+            'contact_email', 'contact_phone', 'contact_address', 'office_hours'
+        ]);
 
-        if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('research-projects', 'public');
+        if ($request->hasFile('hero_image')) {
+            $data['hero_image'] = $request->file('hero_image')->store('research-projects-v2', 'public');
         }
 
-        ResearchProject::updateOrCreate(
-            ['project_type' => 'idream'],
-            $data
-        );
+        $project->update($data);
 
-        return redirect()->route('admin.research.projects.index')
-            ->with('success', 'iDream Lab project updated successfully!');
+        return redirect()->route('admin.research.projects.show', $type)
+            ->with('success', 'Project information updated successfully!');
     }
 
     /**
-     * Update HDSS project
+     * Add function
      */
-    public function updateHdss(Request $request)
+    public function addFunction(Request $request, $type)
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'description' => 'required|string',
+            'icon' => 'nullable|string|max:50',
+            'features_text' => 'nullable|string',
+            'order_index' => 'nullable|integer|min:0'
         ]);
 
-        $data = [
-            'project_type' => 'hdss',
-            'title' => $request->title,
-            'content' => $request->content,
-            'status' => 'active',
-        ];
-
-        if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('research-projects', 'public');
+        $project = ResearchProjectV2::getOrCreateByType($type);
+        
+        $data = $request->only(['title', 'description', 'icon', 'order_index']);
+        
+        // Handle features
+        if ($request->features_text) {
+            $features = array_filter(array_map('trim', explode("\n", $request->features_text)));
+            $data['features'] = $features;
         }
 
-        ResearchProject::updateOrCreate(
-            ['project_type' => 'hdss'],
-            $data
-        );
+        $project->functions()->create($data);
 
-        return redirect()->route('admin.research.projects.index')
-            ->with('success', 'HDSS project updated successfully!');
+        return redirect()->route('admin.research.projects.show', $type)
+            ->with('success', 'Function added successfully!');
+    }
+
+    /**
+     * Add workflow step
+     */
+    public function addWorkflow(Request $request, $type)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'step_number' => 'required|integer|min:1',
+            'icon' => 'nullable|string|max:50',
+            'estimated_time' => 'nullable|string|max:100',
+            'requirements_text' => 'nullable|string'
+        ]);
+
+        $project = ResearchProjectV2::getOrCreateByType($type);
+        
+        $data = $request->only(['title', 'description', 'step_number', 'icon', 'estimated_time']);
+        
+        // Handle requirements
+        if ($request->requirements_text) {
+            $requirements = array_filter(array_map('trim', explode("\n", $request->requirements_text)));
+            $data['requirements'] = $requirements;
+        }
+
+        $project->workflows()->create($data);
+
+        return redirect()->route('admin.research.projects.show', $type)
+            ->with('success', 'Workflow step added successfully!');
+    }
+
+    /**
+     * Add resource
+     */
+    public function addResource(Request $request, $type)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'file' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx|max:10240',
+            'external_url' => 'nullable|url|max:500',
+            'icon' => 'nullable|string|max:50',
+            'order_index' => 'nullable|integer|min:0'
+        ]);
+
+        $project = ResearchProjectV2::getOrCreateByType($type);
+        
+        $data = $request->only(['title', 'description', 'external_url', 'icon', 'order_index']);
+
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $data['file_path'] = $file->store('research-resources-v2', 'public');
+            $data['file_type'] = $file->getClientOriginalExtension();
+            $data['file_size'] = $this->formatFileSize($file->getSize());
+        }
+
+        $project->resources()->create($data);
+
+        return redirect()->route('admin.research.projects.show', $type)
+            ->with('success', 'Resource added successfully!');
+    }
+
+    /**
+     * Add statistic
+     */
+    public function addStatistic(Request $request, $type)
+    {
+        $request->validate([
+            'label' => 'required|string|max:255',
+            'value' => 'required|string|max:100',
+            'description' => 'nullable|string',
+            'icon' => 'nullable|string|max:50',
+            'color' => 'nullable|string|max:50',
+            'order_index' => 'nullable|integer|min:0'
+        ]);
+
+        $project = ResearchProjectV2::getOrCreateByType($type);
+        $project->statistics()->create($request->all());
+
+        return redirect()->route('admin.research.projects.show', $type)
+            ->with('success', 'Statistic added successfully!');
+    }
+
+    /**
+     * Add team member
+     */
+    public function addTeamMember(Request $request, $type)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'role' => 'required|string|max:255',
+            'bio' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'email' => 'nullable|email|max:100',
+            'phone' => 'nullable|string|max:50',
+            'order_index' => 'nullable|integer|min:0'
+        ]);
+
+        $project = ResearchProjectV2::getOrCreateByType($type);
+        
+        $data = $request->only(['name', 'role', 'bio', 'email', 'phone', 'order_index']);
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('research-team-v2', 'public');
+        }
+
+        $project->teamMembers()->create($data);
+
+        return redirect()->route('admin.research.projects.show', $type)
+            ->with('success', 'Team member added successfully!');
+    }
+
+    /**
+     * Add FAQ
+     */
+    public function addFaq(Request $request, $type)
+    {
+        $request->validate([
+            'question' => 'required|string|max:500',
+            'answer' => 'required|string',
+            'order_index' => 'nullable|integer|min:0'
+        ]);
+
+        $project = ResearchProjectV2::getOrCreateByType($type);
+        $project->faqs()->create($request->all());
+
+        return redirect()->route('admin.research.projects.show', $type)
+            ->with('success', 'FAQ added successfully!');
+    }
+
+    /**
+     * Format file size
+     */
+    private function formatFileSize($bytes)
+    {
+        if ($bytes >= 1073741824) {
+            return number_format($bytes / 1073741824, 2) . ' GB';
+        } elseif ($bytes >= 1048576) {
+            return number_format($bytes / 1048576, 2) . ' MB';
+        } elseif ($bytes >= 1024) {
+            return number_format($bytes / 1024, 2) . ' KB';
+        } else {
+            return $bytes . ' bytes';
+        }
     }
 }

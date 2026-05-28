@@ -165,7 +165,7 @@ import { useParams } from 'react-router-dom'
 import AcademicProjects from './academics/AcademicProjects';
 import AcademicResearchDetail from './academics/AcademicResearchDetail';
 import ResearchOverview from './research/Overview';
-import ResearchProjects from './research/Projects';
+import { ResearchProjectsV2 } from './research'
 import ResearchPublications from './school-research-publications/ResearchPublications';
 import ResearchPublicationDetail from './school-research-publications/ResearchPublicationDetail';
 import RegistrarOffice from './offices/Registrar'
@@ -696,7 +696,7 @@ function App(): JSX.Element {
           <Route path="/academics/nursing/departments/medical" element={<MedicalSurgical onBack={() => navigate('/academics/nursing/departments')} />} />
           <Route path="/academics/nursing/departments/operative" element={<OperativeTheatre onBack={() => navigate('/academics/nursing/departments')} />} />
           <Route path="/research/overview" element={<ResearchOverview />} />
-          <Route path="/research/projects" element={<ResearchProjects />} />
+          <Route path="/research/projects" element={<ResearchProjectsV2 />} />
           <Route path="/research/roles-responsibilities" element={<RolesResponsibilities />} />
           <Route path="/academics/academic-research" element={<AcademicProjects onBack={() => navigate('/')} onViewProject={(slug) => navigate(`/academics/academic-research/${slug}`)} />} />
           <Route path="/academics/academic-research/:slug" element={<AcademicResearchDetailRoute onBack={() => navigate('/academics/academic-research')} />} />

@@ -2,64 +2,41 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ResearchProject;
+use App\Models\ResearchProjectV2;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ResearchProjectsController extends Controller
 {
     /**
-     * Get IRB project data
+     * Get project by type
      */
-    public function irb()
+    public function getProject($type)
     {
-        $irb = ResearchProject::getIrb();
+        $project = ResearchProjectV2::getByType($type);
         
-        if ($irb) {
-            $irb->legal_framework_content = $irb->getLegalFrameworkContent();
-            $irb->irb_structure_content = $irb->getIrbStructureContent();
-            $irb->appointment_training_content = $irb->getAppointmentTrainingContent();
+        if ($project) {
+            $project->loadCompleteData();
         }
         
         return response()->json([
             'success' => true,
-            'data' => $irb
+            'data' => $project
         ]);
     }
 
     /**
-     * Get iDream project data
+     * Get all projects
      */
-    public function idream()
+    public function getAllProjects()
     {
-        $idream = ResearchProject::getIdream();
+        $irb = ResearchProjectV2::getByType('irb');
+        $idream = ResearchProjectV2::getByType('idream');
+        $hdss = ResearchProjectV2::getByType('hdss');
         
-        return response()->json([
-            'success' => true,
-            'data' => $idream
-        ]);
-    }
-
-    /**
-     * Get HDSS project data
-     */
-    public function hdss()
-    {
-        $hdss = ResearchProject::getHdss();
-        
-        return response()->json([
-            'success' => true,
-            'data' => $hdss
-        ]);
-    }
-
-    /**
-     * Get all research projects data
-     */
-    public function all()
-    {
-        $irb = ResearchProject::getIrb();
-        $idream = ResearchProject::getIdream();
-        $hdss = ResearchProject::getHdss();
+        if ($irb) $irb->loadCompleteData();
+        if ($idream) $idream->loadCompleteData();
+        if ($hdss) $hdss->loadCompleteData();
         
         return response()->json([
             'success' => true,
@@ -70,4 +47,10 @@ class ResearchProjectsController extends Controller
             ]
         ]);
     }
+
+    // Legacy methods for backward compatibility
+    public function irb() { return $this->getProject('irb'); }
+    public function idream() { return $this->getProject('idream'); }
+    public function hdss() { return $this->getProject('hdss'); }
+    public function all() { return $this->getAllProjects(); }
 }

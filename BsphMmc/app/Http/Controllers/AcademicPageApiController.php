@@ -38,6 +38,28 @@ class AcademicPageApiController extends Controller
 
         $data = $record->toArray();
 
+        // Decode HTML entities in text fields
+        $data['title'] = html_entity_decode($data['title'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $data['content'] = html_entity_decode($data['content'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $data['secondary_title'] = html_entity_decode($data['secondary_title'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $data['secondary_content'] = html_entity_decode($data['secondary_content'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $data['tertiary_title'] = html_entity_decode($data['tertiary_title'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $data['tertiary_content'] = html_entity_decode($data['tertiary_content'] ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        
+        // Handle additional_content JSON
+        if (!empty($data['additional_content'])) {
+            $decodedContent = html_entity_decode($data['additional_content'], ENT_QUOTES | ENT_HTML5, 'UTF-8');
+            $cleanContent = strip_tags($decodedContent);
+            try {
+                $parsedContent = json_decode($cleanContent, true);
+                if (json_last_error() === JSON_ERROR_NONE) {
+                    $data['additional_content'] = $parsedContent;
+                }
+            } catch (\Exception $e) {
+                \Log::warning('Failed to parse additional_content JSON: ' . $e->getMessage());
+            }
+        }
+
         if ($record->featured_image && !str_starts_with($record->featured_image, 'http')) {
             $data['featured_image'] = asset('storage/' . $record->featured_image);
         }
