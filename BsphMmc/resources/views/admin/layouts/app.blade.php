@@ -334,6 +334,12 @@
                 <span>Research Projects</span>
             </a>
 
+            <a href="{{ route('admin.research.roles-responsibility.index') }}"
+               class="flex flex-row items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all w-full {{ request()->routeIs('admin.research.roles-responsibility.*') ? 'bg-blue-700 text-white' : 'text-blue-200 hover:bg-blue-700 hover:text-white' }}">
+                <i class="fa-solid fa-book text-base w-5 text-center flex-shrink-0"></i>
+                <span>Roles & Responsibility</span>
+            </a>
+
             <p class="px-4 pt-4 pb-1 text-xs font-semibold text-blue-400 uppercase tracking-wider">Account</p>
 
             <a href="{{ route('admin.profile.edit') }}"

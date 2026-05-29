@@ -1,29 +1,144 @@
 import { useState, useEffect, type JSX } from 'react'
 import { useNavigate } from 'react-router-dom'
+import DOMPurify from 'dompurify'
 import './RolesResponsibilities.css'
 
-const researchStats = [
-  { label:'Annual Proposals', value:'1,400', icon:'📋' },
-  { label:'Student Research', value:'80%', icon:'👨‍🎓' },
-  { label:'Faculty Research', value:'15%', icon:'👨‍🏫' },
-  { label:'External Research', value:'5%', icon:'🤝' },
-]
+interface HeroData {
+  id?: number
+  title?: string
+  subtitle?: string
+  content?: string
+  image?: string
+  cta_button_text?: string
+  cta_button_link?: string
+}
 
-const collaborationAreas = [
-  { icon:'🎓', title:'Capacity Building', desc:'Continued training for IRB members in advanced ethical review processes, international standards certification, and continuous professional development.' },
-  { icon:'🏗️', title:'Infrastructure Improvement', desc:'Providing IRBs with better resources including digitalizing the review and application process so that applicants can follow the status of their protocol approval online.' },
-  { icon:'👥', title:'Strengthen Human Power', desc:'Additional full-time staff for monitoring and oversight of approved research activities and improved data recording systems.' },
-  { icon:'📢', title:'Public Awareness', desc:'Increasing awareness among researchers about the importance of ethical research practices and the role of IRBs through campaigns and training programs.' },
-]
+interface Category {
+  id: number
+  title: string
+  icon?: string
+  image?: string
+  summary: string
+  detailed_content: string
+}
+
+interface Process {
+  id: number
+  title: string
+  description: string
+  step_number: number
+  icon?: string
+}
+
+interface Policy {
+  id: number
+  title: string
+  description?: string
+  file_path: string
+  file_url: string
+  file_type: string
+  category?: string
+}
+
+interface FAQ {
+  id: number
+  question: string
+  answer: string
+}
+
+interface Statistic {
+  id: number
+  label: string
+  value: string
+  icon?: string
+  description?: string
+}
+
+interface Contact {
+  id?: number
+  office_name: string
+  office_location?: string
+  email?: string
+  phone?: string
+  office_hours?: string
+  website?: string
+  additional_info?: string
+}
 
 function RolesResponsibilities(): JSX.Element {
   const navigate = useNavigate()
   const [scrolled, setScrolled] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  
+  const [hero, setHero] = useState<HeroData | null>(null)
+  const [overview, setOverview] = useState<HeroData | null>(null)
+  const [categories, setCategories] = useState<Category[]>([])
+  const [processes, setProcesses] = useState<Process[]>([])
+  const [policies, setPolicies] = useState<Policy[]>([])
+  const [faqs, setFaqs] = useState<FAQ[]>([])
+  const [statistics, setStatistics] = useState<Statistic[]>([])
+  const [contact, setContact] = useState<Contact | null>(null)
+  const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
+
   useEffect(() => {
     const h = () => setScrolled(window.scrollY > 10)
     window.addEventListener('scroll', h)
     return () => window.removeEventListener('scroll', h)
   }, [])
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  const fetchData = async () => {
+    try {
+      setLoading(true)
+      const response = await fetch('/api/research/roles-responsibility/all')
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch data')
+      }
+      
+      const result = await response.json()
+      
+      if (result.success && result.data) {
+        setHero(result.data.hero)
+        setOverview(result.data.overview)
+        setCategories(result.data.categories || [])
+        setProcesses(result.data.processes || [])
+        setPolicies(result.data.policies || [])
+        setFaqs(result.data.faqs || [])
+        setStatistics(result.data.statistics || [])
+        setContact(result.data.contact)
+      }
+    } catch (err) {
+      console.error('Error fetching data:', err)
+      setError('Failed to load page content')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="rp-page">
+        <div style={{ padding: '4rem 2rem', textAlign: 'center', color: '#666' }}>
+          Loading...
+        </div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="rp-page">
+        <div style={{ padding: '4rem 2rem', textAlign: 'center', color: '#dc3545' }}>
+          {error}
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="rp-page">
@@ -31,146 +146,177 @@ function RolesResponsibilities(): JSX.Element {
         <div className="rp-header-inner">
           <button className="rp-back" onClick={() => navigate('/')}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-            Back to Home
+            Back to Research
           </button>
-          <h1 className="rp-header-title">Roles &amp; Responsibilities</h1>
+          <h1 className="rp-header-title">{hero?.title || 'Roles & Responsibilities'}</h1>
         </div>
       </header>
 
       <main className="rp-main">
         <div className="rp-content">
 
-          <div className="rp-hero">
-            <div className="rp-badge"><span>⚖️</span><span>IRB Governance</span></div>
-            <h2 className="rp-hero-title">Ensuring Ethical Excellence in Research</h2>
-            <p className="rp-hero-desc">The Institutional Review Board plays a critical role in safeguarding human subjects while promoting scientific integrity and ethical research practices.</p>
-          </div>
+          {/* Hero Section */}
+          {hero && (
+            <div className="rp-hero" style={hero.image ? { backgroundImage: `url(${hero.image})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}>
+              <div className="rp-hero-overlay"></div>
+              <div className="rp-hero-inner">
+                <h2 className="rp-hero-title">{hero.subtitle || hero.title}</h2>
+                {hero.content && (
+                  <p className="rp-hero-desc" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(hero.content) }}></p>
+                )}
+                {hero.cta_button_text && hero.cta_button_link && (
+                  <button className="rp-btn-primary" onClick={() => navigate(hero.cta_button_link || '/')}>
+                    {hero.cta_button_text}
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
 
-          {/* Core Responsibilities */}
-          <section className="rp-section rp-section--white">
-            <div className="rp-sec-header">
-              <span className="rp-sec-icon">📋</span>
-              <h2 className="rp-sec-title">IRB Core Responsibilities</h2>
-              <div className="rp-underline"></div>
-            </div>
-            <p className="rp-intro-text">The IRB serves as the guardian of research ethics, ensuring that all studies involving human subjects meet the highest standards of scientific integrity and participant protection.</p>
-            <div className="rp-grid-4">
-              <div className="rp-card"><div className="rp-card-head"><div className="rp-card-icon">🔍</div><h3>Review &amp; Approve</h3></div><p>Evaluate research proposals for ethical compliance</p></div>
-              <div className="rp-card"><div className="rp-card-head"><div className="rp-card-icon">👁️</div><h3>Monitor &amp; Supervise</h3></div><p>Oversight of ongoing research activities</p></div>
-              <div className="rp-card"><div className="rp-card-head"><div className="rp-card-icon">📊</div><h3>Evaluate &amp; Report</h3></div><p>Assess research outcomes and compliance</p></div>
-              <div className="rp-card"><div className="rp-card-head"><div className="rp-card-icon">🎓</div><h3>Educate &amp; Train</h3></div><p>Guide researchers on ethical practices</p></div>
-            </div>
-          </section>
+          {/* Overview Section */}
+          {overview?.content && (
+            <section className="rp-section rp-section--light">
+              <div className="rp-sec-header">
+                <h2 className="rp-sec-title">Overview</h2>
+                <div className="rp-underline"></div>
+              </div>
+              <div className="rp-overview-content" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(overview.content) }}></div>
+            </section>
+          )}
 
-          {/* Review of Proposals */}
-          <section className="rp-section rp-section--light">
-            <div className="rp-sec-header">
-              <span className="rp-sec-icon">📋</span>
-              <h2 className="rp-sec-title">Review of Research Proposals</h2>
-              <div className="rp-underline"></div>
-            </div>
-            <p className="rp-intro-text">The primary responsibility of IRBs is to review and approve research proposals involving human subjects, assessing:</p>
-            <div className="rp-card-grid">
-              <div className="rp-card"><div className="rp-card-head"><div className="rp-card-icon">⚖️</div><h3>Risk-Benefit Analysis</h3></div><p>The potential risks and benefits to participants</p></div>
-              <div className="rp-card"><div className="rp-card-head"><div className="rp-card-icon">📝</div><h3>Informed Consent</h3></div><p>The written informed consent process</p></div>
-              <div className="rp-card"><div className="rp-card-head"><div className="rp-card-icon">🔒</div><h3>Data Protection</h3></div><p>Confidentiality and data protection measures</p></div>
-              <div className="rp-card"><div className="rp-card-head"><div className="rp-card-icon">⚖️</div><h3>Equitable Recruitment</h3></div><p>Equitable participant recruitment practices</p></div>
-              <div className="rp-card"><div className="rp-card-head"><div className="rp-card-icon">🔬</div><h3>Scientific Integrity</h3></div><p>The proposed research scientific integrity to the highest standard</p></div>
-            </div>
-
-            {/* Stats */}
-            <div style={{marginTop:'3rem'}}>
-              <h3 style={{fontSize:'1.6rem',fontWeight:'800',color:'#0a1628',marginBottom:'1.5rem',textAlign:'center'}}>Research Approval Statistics</h3>
-              <div className="rp-grid-4">
-                {researchStats.map((s, i) => (
-                  <div key={i} className="rp-stat-card">
-                    <span className="rp-stat-icon">{s.icon}</span>
-                    <div className="rp-stat-num">{s.value}</div>
-                    <div className="rp-stat-label">{s.label}</div>
+          {/* Categories Section */}
+          {categories.length > 0 && (
+            <section className="rp-section rp-section--white">
+              <div className="rp-sec-header">
+                <h2 className="rp-sec-title">Responsibility Categories</h2>
+                <div className="rp-underline"></div>
+              </div>
+              <div className="rp-card-grid">
+                {categories.map((category) => (
+                  <div key={category.id} className="rp-card">
+                    <div className="rp-card-head">
+                      {category.icon && <div className="rp-card-icon">{category.icon}</div>}
+                      <h3>{category.title}</h3>
+                    </div>
+                    <p>{category.summary}</p>
+                    {category.detailed_content && (
+                      <div className="rp-card-details" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(category.detailed_content) }}></div>
+                    )}
                   </div>
                 ))}
               </div>
-              <div className="rp-note" style={{marginTop:'1.5rem'}}>
-                <p>Starting from 2020 G.C the IRB has approved an average of 1,400 proposals annually. Student researches account for about 80% followed by faculty and external applicants.</p>
+            </section>
+          )}
+
+          {/* Process Timeline */}
+          {processes.length > 0 && (
+            <section className="rp-section rp-section--light">
+              <div className="rp-sec-header">
+                <h2 className="rp-sec-title">Workflow & Process</h2>
+                <div className="rp-underline"></div>
               </div>
-            </div>
-
-            <div className="rp-warn" style={{marginTop:'2rem'}}>
-              <h4>Compliance Limitations</h4>
-              <p>Limited monitoring capacity, documentation gaps, and staff shortages present ongoing challenges to full compliance oversight.</p>
-            </div>
-          </section>
-
-          {/* Monitoring */}
-          <section className="rp-section rp-section--white">
-            <div className="rp-sec-header">
-              <span className="rp-sec-icon">👁️</span>
-              <h2 className="rp-sec-title">Monitoring Ongoing Research</h2>
-              <div className="rp-underline"></div>
-            </div>
-            <div className="rp-warn">
-              <h4>Limited Monitoring Resources</h4>
-              <p>The IRB rarely monitors approved studies because of limited number of full time staff to ensure they adhere to the approved protocol and ethical guidelines.</p>
-            </div>
-            <div className="rp-grid-3" style={{marginTop:'2rem'}}>
-              <div className="rp-card"><div className="rp-card-head"><div className="rp-card-icon">⏸️</div><h3>Study Suspension</h3></div><p>Can suspend studies if violations are identified</p></div>
-              <div className="rp-card"><div className="rp-card-head"><div className="rp-card-icon">🛑</div><h3>Study Termination</h3></div><p>Can terminate studies for ethical violations</p></div>
-              <div className="rp-card"><div className="rp-card-head"><div className="rp-card-icon">📋</div><h3>Protocol Review</h3></div><p>Review adherence to approved protocols</p></div>
-            </div>
-            <div className="rp-warn" style={{marginTop:'2rem'}}>
-              <h4>Documentation Gap</h4>
-              <p>No single documented record was obtained up to the reporters search from IRB archives, limiting tracking of ongoing studies and audit trail creation.</p>
-            </div>
-          </section>
-
-          {/* Post-Research */}
-          <section className="rp-section rp-section--light">
-            <div className="rp-sec-header">
-              <span className="rp-sec-icon">📊</span>
-              <h2 className="rp-sec-title">Post-Research Review</h2>
-              <div className="rp-underline"></div>
-            </div>
-            <div className="rp-warn">
-              <h4>IRB Review Limitations</h4>
-              <p>After research completion, SPHMMC IRBs fails to review findings to ensure that the study was conducted ethically and that data handling meets the ethical standards. Other than the student thesis defense at department levels, no systematic post-research review exists.</p>
-            </div>
-            <div className="rp-card-grid" style={{marginTop:'2rem'}}>
-              <div className="rp-card"><div className="rp-card-head"><div className="rp-card-icon">📋</div><h3>Ethical Compliance Review</h3></div><p>No systematic review of ethical conduct after study completion</p></div>
-              <div className="rp-card"><div className="rp-card-head"><div className="rp-card-icon">🔒</div><h3>Data Handling Assessment</h3></div><p>Limited evaluation of data protection post-study</p></div>
-              <div className="rp-card"><div className="rp-card-head"><div className="rp-card-icon">📊</div><h3>Outcome Documentation</h3></div><p>Incomplete final study documentation</p></div>
-              <div className="rp-card"><div className="rp-card-head"><div className="rp-card-icon">📝</div><h3>Compliance Certification</h3></div><p>No formal compliance certification process</p></div>
-            </div>
-          </section>
-
-          {/* Collaboration */}
-          <section className="rp-section rp-section--white">
-            <div className="rp-sec-header">
-              <span className="rp-sec-icon">🤝</span>
-              <h2 className="rp-sec-title">Potentials of Collaboration on IRBs</h2>
-              <div className="rp-underline"></div>
-            </div>
-            <p className="rp-intro-text">Strategic collaboration opportunities exist to strengthen IRB operations and enhance research ethics governance across the institution.</p>
-            <div className="rp-collab-grid">
-              {collaborationAreas.map((a, i) => (
-                <div key={i} className="rp-collab-card">
-                  <div className="rp-collab-head"><div className="rp-collab-icon">{a.icon}</div><h3>{a.title}</h3></div>
-                  <p>{a.desc}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* CTA */}
-          <section className="rp-section rp-section--cta">
-            <div className="rp-cta-inner">
-              <h2>Strengthening IRB Excellence</h2>
-              <p>Through strategic collaboration and capacity building, we can enhance our IRB's ability to protect research participants while promoting scientific innovation.</p>
-              <div className="rp-cta-btns">
-                <button className="rp-btn-primary">Partner With IRB</button>
-                <button className="rp-btn-secondary">Learn More</button>
+              <div className="rp-timeline">
+                {processes.map((proc, idx) => (
+                  <div key={proc.id} className="rp-timeline-item">
+                    <div className="rp-timeline-marker">{proc.icon || `${proc.step_number}`}</div>
+                    <div className="rp-timeline-content">
+                      <h4>{proc.title}</h4>
+                      <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(proc.description) }}></p>
+                    </div>
+                  </div>
+                ))}
               </div>
-            </div>
-          </section>
+            </section>
+          )}
+
+          {/* Policies Section */}
+          {policies.length > 0 && (
+            <section className="rp-section rp-section--white">
+              <div className="rp-sec-header">
+                <h2 className="rp-sec-title">Policies & Guidelines</h2>
+                <div className="rp-underline"></div>
+              </div>
+              <div className="rp-policies-grid">
+                {policies.map((policy) => (
+                  <div key={policy.id} className="rp-policy-card">
+                    <div className="rp-policy-icon">📄</div>
+                    <h4>{policy.title}</h4>
+                    {policy.description && <p>{policy.description}</p>}
+                    <a href={policy.file_url} target="_blank" rel="noopener noreferrer" className="rp-btn-secondary">
+                      Download ({policy.file_type.toUpperCase()})
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Statistics Section */}
+          {statistics.length > 0 && (
+            <section className="rp-section rp-section--light">
+              <div className="rp-sec-header">
+                <h2 className="rp-sec-title">Key Statistics</h2>
+                <div className="rp-underline"></div>
+              </div>
+              <div className="rp-grid-4">
+                {statistics.map((stat) => (
+                  <div key={stat.id} className="rp-stat-card">
+                    {stat.icon && <span className="rp-stat-icon">{stat.icon}</span>}
+                    <div className="rp-stat-num">{stat.value}</div>
+                    <div className="rp-stat-label">{stat.label}</div>
+                    {stat.description && <p className="rp-stat-desc">{stat.description}</p>}
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* FAQ Section */}
+          {faqs.length > 0 && (
+            <section className="rp-section rp-section--white">
+              <div className="rp-sec-header">
+                <h2 className="rp-sec-title">Frequently Asked Questions</h2>
+                <div className="rp-underline"></div>
+              </div>
+              <div className="rp-accordion">
+                {faqs.map((faq) => (
+                  <div key={faq.id} className="rp-accordion-item">
+                    <button
+                      className="rp-accordion-trigger"
+                      onClick={() => setExpandedFaq(expandedFaq === faq.id ? null : faq.id)}
+                    >
+                      <span>{faq.question}</span>
+                      <span className={`rp-accordion-icon ${expandedFaq === faq.id ? 'open' : ''}`}>▼</span>
+                    </button>
+                    {expandedFaq === faq.id && (
+                      <div className="rp-accordion-content" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(faq.answer) }}></div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Contact Section */}
+          {contact && (
+            <section className="rp-section rp-section--light">
+              <div className="rp-sec-header">
+                <h2 className="rp-sec-title">Contact Information</h2>
+                <div className="rp-underline"></div>
+              </div>
+              <div className="rp-contact-card">
+                <h3>{contact.office_name}</h3>
+                {contact.office_location && <p><strong>Location:</strong> {contact.office_location}</p>}
+                {contact.email && <p><strong>Email:</strong> <a href={`mailto:${contact.email}`}>{contact.email}</a></p>}
+                {contact.phone && <p><strong>Phone:</strong> <a href={`tel:${contact.phone}`}>{contact.phone}</a></p>}
+                {contact.office_hours && <p><strong>Office Hours:</strong> {contact.office_hours}</p>}
+                {contact.website && <p><strong>Website:</strong> <a href={contact.website} target="_blank" rel="noopener noreferrer">{contact.website}</a></p>}
+                {contact.additional_info && (
+                  <div className="rp-additional-info" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(contact.additional_info) }}></div>
+                )}
+              </div>
+            </section>
+          )}
 
         </div>
       </main>

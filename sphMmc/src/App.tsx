@@ -592,7 +592,7 @@ function App(): JSX.Element {
                 <div className="dropdown-content">
                   <a href="#" onClick={(e) => { e.preventDefault(); navigate('/research/overview'); }}>Overview</a>
                   <a href="#" onClick={(e) => { e.preventDefault(); navigate('/research/projects'); }}>Research Projects</a>
-                  <a href="#"onClick={(e) =>{e.preventDefault(); navigate('/research/RolesResponsibilities')}}>Roles&Responsibilities</a>
+                  <a href="#"onClick={(e) =>{e.preventDefault(); navigate('/research/roles-responsibilities')}}>Roles&Responsibilities</a>
                 </div>
               </div>
 

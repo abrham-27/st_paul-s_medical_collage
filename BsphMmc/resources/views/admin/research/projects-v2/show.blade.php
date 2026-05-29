@@ -101,7 +101,7 @@
 
                         <div class="mb-3">
                             <label for="overview" class="form-label">Overview Content</label>
-                            <textarea class="form-control" id="overview" name="overview" rows="8">{{ $project->overview }}</textarea>
+                            <textarea class="form-control rich-editor" id="overview" name="overview" rows="8">{{ $project->overview }}</textarea>
                         </div>
 
                         <div class="mb-3">
@@ -129,7 +129,7 @@
 
                         <div class="mb-3">
                             <label for="contact_address" class="form-label">Contact Address</label>
-                            <textarea class="form-control" id="contact_address" name="contact_address" rows="3">{{ $project->contact_address }}</textarea>
+                            <textarea class="form-control rich-editor" id="contact_address" name="contact_address" rows="3">{{ $project->contact_address }}</textarea>
                         </div>
 
                         <div class="mb-3">
@@ -474,7 +474,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="function_description" class="form-label">Description</label>
-                        <textarea class="form-control" id="function_description" name="description" rows="4" required></textarea>
+                        <textarea class="form-control rich-editor" id="function_description" name="description" rows="4" required></textarea>
                     </div>
                     <div class="row">
                         <div class="col-md-6">

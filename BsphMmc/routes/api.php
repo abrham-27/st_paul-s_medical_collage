@@ -24,6 +24,7 @@ use App\Http\Controllers\HomeHeroApiController;
 use App\Http\Controllers\MedicinePartnershipApiController;
 use App\Http\Controllers\NursingPartnershipApiController;
 use App\Http\Controllers\PublicHealthPartnershipApiController;
+use App\Http\Controllers\ResearchRolesResponsibilityApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -158,3 +159,16 @@ Route::get('/research/projects/hdss', [ResearchProjectsController::class, 'hdss'
 Route::get('/research/projects/all', [ResearchProjectsController::class, 'all']);
 Route::get('/research/projects-v2/{type}', [ResearchProjectsController::class, 'getProject']);
 Route::get('/research/projects-v2/all/data', [ResearchProjectsController::class, 'getAllProjects']);
+
+// Research Roles & Responsibility API routes
+Route::prefix('/research/roles-responsibility')->group(function () {
+    Route::get('/all', [ResearchRolesResponsibilityApiController::class, 'getAll']);
+    Route::get('/hero', [ResearchRolesResponsibilityApiController::class, 'getHero']);
+    Route::get('/overview', [ResearchRolesResponsibilityApiController::class, 'getOverview']);
+    Route::get('/categories', [ResearchRolesResponsibilityApiController::class, 'getCategories']);
+    Route::get('/process', [ResearchRolesResponsibilityApiController::class, 'getProcess']);
+    Route::get('/policies', [ResearchRolesResponsibilityApiController::class, 'getPolicies']);
+    Route::get('/faqs', [ResearchRolesResponsibilityApiController::class, 'getFaqs']);
+    Route::get('/statistics', [ResearchRolesResponsibilityApiController::class, 'getStatistics']);
+    Route::get('/contact', [ResearchRolesResponsibilityApiController::class, 'getContact']);
+});

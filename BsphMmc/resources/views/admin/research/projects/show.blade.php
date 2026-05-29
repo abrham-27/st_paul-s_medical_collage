@@ -46,7 +46,7 @@
 
                 <div class="mt-6">
                     <label for="overview" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Overview Content</label>
-                    <textarea class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" id="overview" name="overview" rows="8">{{ $project->overview }}</textarea>
+                    <textarea class="rich-editor w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" id="overview" name="overview" rows="8">{{ $project->overview }}</textarea>
                 </div>
 
                 <div class="mt-6">
@@ -70,7 +70,7 @@
 
                 <div class="mt-6">
                     <label for="contact_address" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Contact Address</label>
-                    <textarea class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" id="contact_address" name="contact_address" rows="3">{{ $project->contact_address }}</textarea>
+                    <textarea class="rich-editor w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" id="contact_address" name="contact_address" rows="3">{{ $project->contact_address }}</textarea>
                 </div>
 
                 <div class="mt-6">
@@ -104,7 +104,7 @@
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Description</label>
-                            <textarea name="description" rows="3" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" required></textarea>
+                            <textarea name="description" rows="3" class="rich-editor w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" required></textarea>
                         </div>
                         <div class="grid grid-cols-2 gap-4">
                             <div>
@@ -143,7 +143,7 @@
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Description</label>
-                            <textarea name="description" rows="3" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" required></textarea>
+                            <textarea name="description" rows="3" class="rich-editor w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white" required></textarea>
                         </div>
                         <div class="grid grid-cols-3 gap-4">
                             <div>

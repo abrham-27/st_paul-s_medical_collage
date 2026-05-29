@@ -24,10 +24,20 @@ use App\Http\Controllers\Admin\RegistrarCmsController;
 use App\Http\Controllers\Admin\EditorUploadController;
 use App\Http\Controllers\Admin\ResearchController as AdminResearchController;
 use App\Http\Controllers\Admin\ResearchProjectsController as AdminResearchProjectsController;
+use App\Http\Controllers\Admin\ResearchRolesResponsibilityAdminController;
 use App\Http\Controllers\Admin\SchoolResearchPublicationController;
 use App\Http\Controllers\Admin\HomeHeroController;
 use App\Http\Controllers\Admin\HomeFeaturedController;
 use Illuminate\Support\Facades\Route;
+
+// ─── Setup Route (for database table creation) ──────────────────────────────────
+Route::get('/setup-tables', function () {
+    try {
+        require base_path('../setup_role_responsibility_tables.php');
+    } catch (Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+})->name('setup.tables');
 
 // ─── Public Routes ───────────────────────────────────────────────────────────
 Route::get('/', function () {
@@ -303,6 +313,63 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
         Route::get('goals/{goal}/edit', [AdminResearchController::class, 'editGoal'])->name('goals.edit');
         Route::put('goals/{goal}', [AdminResearchController::class, 'updateGoal'])->name('goals.update');
         Route::delete('goals/{goal}', [AdminResearchController::class, 'destroyGoal'])->name('goals.destroy');
+
+        // Roles and Responsibility Management
+        Route::prefix('roles-responsibility')->name('roles-responsibility.')->group(function () {
+            Route::get('/', [ResearchRolesResponsibilityAdminController::class, 'index'])->name('index');
+            
+            // Hero Section
+            Route::get('hero/edit', [ResearchRolesResponsibilityAdminController::class, 'editHero'])->name('hero.edit');
+            Route::post('hero', [ResearchRolesResponsibilityAdminController::class, 'updateHero'])->name('hero.update');
+            
+            // Overview Section
+            Route::get('overview/edit', [ResearchRolesResponsibilityAdminController::class, 'editOverview'])->name('overview.edit');
+            Route::post('overview', [ResearchRolesResponsibilityAdminController::class, 'updateOverview'])->name('overview.update');
+            
+            // Categories
+            Route::get('categories', [ResearchRolesResponsibilityAdminController::class, 'indexCategories'])->name('categories.index');
+            Route::get('categories/create', [ResearchRolesResponsibilityAdminController::class, 'createCategory'])->name('categories.create');
+            Route::post('categories', [ResearchRolesResponsibilityAdminController::class, 'storeCategory'])->name('categories.store');
+            Route::get('categories/{category}/edit', [ResearchRolesResponsibilityAdminController::class, 'editCategory'])->name('categories.edit');
+            Route::put('categories/{category}', [ResearchRolesResponsibilityAdminController::class, 'updateCategory'])->name('categories.update');
+            Route::delete('categories/{category}', [ResearchRolesResponsibilityAdminController::class, 'destroyCategory'])->name('categories.destroy');
+            
+            // Processes
+            Route::get('processes', [ResearchRolesResponsibilityAdminController::class, 'indexProcesses'])->name('processes.index');
+            Route::get('processes/create', [ResearchRolesResponsibilityAdminController::class, 'createProcess'])->name('processes.create');
+            Route::post('processes', [ResearchRolesResponsibilityAdminController::class, 'storeProcess'])->name('processes.store');
+            Route::get('processes/{process}/edit', [ResearchRolesResponsibilityAdminController::class, 'editProcess'])->name('processes.edit');
+            Route::put('processes/{process}', [ResearchRolesResponsibilityAdminController::class, 'updateProcess'])->name('processes.update');
+            Route::delete('processes/{process}', [ResearchRolesResponsibilityAdminController::class, 'destroyProcess'])->name('processes.destroy');
+            
+            // Policies
+            Route::get('policies', [ResearchRolesResponsibilityAdminController::class, 'indexPolicies'])->name('policies.index');
+            Route::get('policies/create', [ResearchRolesResponsibilityAdminController::class, 'createPolicy'])->name('policies.create');
+            Route::post('policies', [ResearchRolesResponsibilityAdminController::class, 'storePolicy'])->name('policies.store');
+            Route::get('policies/{policy}/edit', [ResearchRolesResponsibilityAdminController::class, 'editPolicy'])->name('policies.edit');
+            Route::put('policies/{policy}', [ResearchRolesResponsibilityAdminController::class, 'updatePolicy'])->name('policies.update');
+            Route::delete('policies/{policy}', [ResearchRolesResponsibilityAdminController::class, 'destroyPolicy'])->name('policies.destroy');
+            
+            // FAQs
+            Route::get('faqs', [ResearchRolesResponsibilityAdminController::class, 'indexFaqs'])->name('faqs.index');
+            Route::get('faqs/create', [ResearchRolesResponsibilityAdminController::class, 'createFaq'])->name('faqs.create');
+            Route::post('faqs', [ResearchRolesResponsibilityAdminController::class, 'storeFaq'])->name('faqs.store');
+            Route::get('faqs/{faq}/edit', [ResearchRolesResponsibilityAdminController::class, 'editFaq'])->name('faqs.edit');
+            Route::put('faqs/{faq}', [ResearchRolesResponsibilityAdminController::class, 'updateFaq'])->name('faqs.update');
+            Route::delete('faqs/{faq}', [ResearchRolesResponsibilityAdminController::class, 'destroyFaq'])->name('faqs.destroy');
+            
+            // Statistics
+            Route::get('statistics', [ResearchRolesResponsibilityAdminController::class, 'indexStatistics'])->name('statistics.index');
+            Route::get('statistics/create', [ResearchRolesResponsibilityAdminController::class, 'createStatistic'])->name('statistics.create');
+            Route::post('statistics', [ResearchRolesResponsibilityAdminController::class, 'storeStatistic'])->name('statistics.store');
+            Route::get('statistics/{statistic}/edit', [ResearchRolesResponsibilityAdminController::class, 'editStatistic'])->name('statistics.edit');
+            Route::put('statistics/{statistic}', [ResearchRolesResponsibilityAdminController::class, 'updateStatistic'])->name('statistics.update');
+            Route::delete('statistics/{statistic}', [ResearchRolesResponsibilityAdminController::class, 'destroyStatistic'])->name('statistics.destroy');
+            
+            // Contact
+            Route::get('contact/edit', [ResearchRolesResponsibilityAdminController::class, 'editContact'])->name('contact.edit');
+            Route::post('contact', [ResearchRolesResponsibilityAdminController::class, 'updateContact'])->name('contact.update');
+        });
     });
 
     // Research Projects CMS

@@ -9,6 +9,40 @@ interface HeroSectionProps {
   navigate: (path: string) => void;
 }
 
+// Helper function to determine if a link is external
+function isExternalLink(url: string): boolean {
+  try {
+    // Check if it's a full URL with protocol
+    if (url.startsWith('http://') || url.startsWith('https://')) {
+      return true;
+    }
+    // Check if it's a protocol-relative URL
+    if (url.startsWith('//')) {
+      return true;
+    }
+    // Check if it contains a domain (basic check)
+    if (url.includes('.com') || url.includes('.org') || url.includes('.net') || url.includes('.edu') || url.includes('.gov')) {
+      return true;
+    }
+    return false;
+  } catch {
+    return false;
+  }
+}
+
+// Helper function to handle navigation
+function handleNavigation(url: string, navigate: (path: string) => void): void {
+  if (!url) return;
+  
+  if (isExternalLink(url)) {
+    // For external links, open in new tab
+    window.open(url, '_blank', 'noopener,noreferrer');
+  } else {
+    // For local links, use React Router navigation
+    navigate(url);
+  }
+}
+
 export default function HeroSection({
   slides,
   currentSlide,
@@ -56,9 +90,13 @@ export default function HeroSection({
                   <div className="hero-cta-group">
                     <button
                       className="hero-btn hero-btn--primary"
-                      onClick={() => navigate(slide.button_link ?? '/')}
+                      onClick={() => handleNavigation(slide.button_link ?? '/', navigate)}
+                      title={isExternalLink(slide.button_link ?? '') ? 'Opens in new tab' : undefined}
                     >
                       {slide.button_text}
+                      {isExternalLink(slide.button_link ?? '') && (
+                        <span className="external-link-icon" style={{ marginLeft: '4px' }}>↗</span>
+                      )}
                     </button>
                   </div>
                 )}
