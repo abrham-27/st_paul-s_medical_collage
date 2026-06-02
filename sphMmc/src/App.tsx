@@ -6,6 +6,7 @@ import background from './assets/images/background.jpg'
 import { apiService, type LatestPost, type HomeHeroSlide } from './services/api'
 import HeroSection from './components/HeroSection'
 import HomeNewsSection from './components/HomeNewsSection'
+import HomeQuickLinks from './components/HomeQuickLinks'
 import HomeGallerySection from './components/HomeGallerySection'
 
 // Static background component for pages
@@ -236,11 +237,13 @@ function Home({ navigate, slides, currentSlide, onPrev, onNext, currentNewsSlide
         navigate={navigate}
       />
 
+      <HomeQuickLinks navigate={navigate} />
+
       {/* Explore SPHMMC bar — fixed at bottom of viewport, hidden once user scrolls */}
       <div
         className={`explore-bar${scrolled ? ' explore-bar--hidden' : ''}`}
         onClick={() => {
-          const el = document.querySelector('.health-tips-aau') as HTMLElement;
+          const el = document.querySelector('.home-quick-links') as HTMLElement;
           if (el) el.scrollIntoView({ behavior: 'smooth' });
         }}
       >
@@ -700,7 +703,7 @@ function App(): JSX.Element {
           <Route path="/research/roles-responsibilities" element={<RolesResponsibilities />} />
           <Route path="/academics/academic-research" element={<AcademicProjects onBack={() => navigate('/')} onViewProject={(slug) => navigate(`/academics/academic-research/${slug}`)} />} />
           <Route path="/academics/academic-research/:slug" element={<AcademicResearchDetailRoute onBack={() => navigate('/academics/academic-research')} />} />
-          <Route path="/partners" element={<StaticBackground backgroundImage={background}><Partners /></StaticBackground>} />
+          <Route path="/partners" element={<Partners />} />
           <Route path="/alumni" element={<StaticBackground backgroundImage={background}><Alumni onBack={() => navigate('/')} /></StaticBackground>} />
           <Route path="/office/registrar" element={<RegistrarOffice onBack={() => navigate('/')} />} />
           <Route path="/office/ict" element={<ICTOffice onBack={() => navigate('/')} />} />

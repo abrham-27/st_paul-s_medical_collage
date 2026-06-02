@@ -172,3 +172,37 @@ Route::prefix('/research/roles-responsibility')->group(function () {
     Route::get('/statistics', [ResearchRolesResponsibilityApiController::class, 'getStatistics']);
     Route::get('/contact', [ResearchRolesResponsibilityApiController::class, 'getContact']);
 });
+
+// Partners Public API Routes
+use App\Http\Controllers\PartnersApiController;
+use App\Http\Controllers\PartnershipStatisticsApiController;
+use App\Http\Controllers\PartnershipAreasApiController;
+use App\Http\Controllers\SuccessStoriesApiController;
+use App\Http\Controllers\PartnershipDocumentsApiController;
+use App\Http\Controllers\PartnershipContactApiController;
+
+Route::prefix('/partners')->group(function () {
+    Route::get('/page', [PartnersApiController::class, 'pageSettings']);
+    Route::get('', [PartnersApiController::class, 'index']);
+    Route::get('/local', [PartnersApiController::class, 'local']);
+    Route::get('/external', [PartnersApiController::class, 'external']);
+    Route::get('/featured', [PartnersApiController::class, 'featured']);
+    Route::get('/{slug}', [PartnersApiController::class, 'show']);
+});
+
+Route::get('/partnership-statistics', [PartnershipStatisticsApiController::class, 'index']);
+Route::get('/partnership-areas', [PartnershipAreasApiController::class, 'index']);
+
+Route::prefix('/success-stories')->group(function () {
+    Route::get('', [SuccessStoriesApiController::class, 'index']);
+    Route::get('/{slug}', [SuccessStoriesApiController::class, 'show']);
+});
+
+Route::prefix('/partnership-documents')->group(function () {
+    Route::get('', [PartnershipDocumentsApiController::class, 'index']);
+    Route::get('/category/{category}', [PartnershipDocumentsApiController::class, 'byCategory']);
+});
+
+Route::get('/partnership-contact', [PartnershipContactApiController::class, 'index']);
+
+Route::post('/partnership-applications', [\App\Http\Controllers\PartnershipApplicationApiController::class, 'store']);

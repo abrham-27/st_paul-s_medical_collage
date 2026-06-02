@@ -5,8 +5,8 @@ export function sanitizeHtml(html: string | null | undefined): string {
   if (!html) return '';
   return DOMPurify.sanitize(html, {
     USE_PROFILES: { html: true },
-    ADD_TAGS: ['iframe'],
-    ADD_ATTR: ['target', 'rel', 'allowfullscreen', 'frameborder'],
+    ADD_TAGS: ['iframe', 'figure', 'table', 'thead', 'tbody', 'tfoot', 'tr', 'th', 'td', 'caption', 'colgroup', 'col'],
+    ADD_ATTR: ['target', 'rel', 'allowfullscreen', 'frameborder', 'class', 'colspan', 'rowspan', 'scope'],
   });
 }
 

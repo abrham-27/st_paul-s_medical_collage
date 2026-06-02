@@ -64,6 +64,10 @@
                                     @if($post->featured_image)
                                         <img src="{{ Storage::url($post->featured_image) }}"
                                              class="w-10 h-10 rounded-lg object-cover flex-shrink-0" alt="">
+                                    @elseif($post->type === 'document' && $post->file_path)
+                                        <div class="w-10 h-10 rounded-lg bg-red-50 dark:bg-red-900/30 flex items-center justify-center flex-shrink-0">
+                                            <i class="fa-solid fa-file-pdf text-red-500 text-sm"></i>
+                                        </div>
                                     @else
                                         <div class="w-10 h-10 rounded-lg bg-gray-200 dark:bg-gray-600 flex items-center justify-center flex-shrink-0">
                                             <i class="fa-solid fa-image text-gray-400 text-xs"></i>

@@ -4,7 +4,11 @@
 .rg-page a, .rg-page button { color:inherit; }
 
 /* HEADER */
-.rg-header { position:sticky; top:0; z-index:100; background:#0a1628; border-bottom:3px solid #0ea5e9; padding:1rem 2rem; width:100%; transition:box-shadow .3s; }
+.rg-header { position:sticky; top:0;
+   z-index:100; 
+   background:#0a1628;
+    border-bottom:3px solid #0ea5e9; 
+    padding:1rem 2rem; width:100%; transition:box-shadow .3s; }
 .rg-header.scrolled { box-shadow:0 4px 24px rgba(10,22,40,.5); }
 .rg-header-inner { display:flex; align-items:center; justify-content:space-between; width:100%; }
 .rg-back { display:flex; align-items:center; gap:.5rem; background:transparent; border:1px solid rgba(245,158,11,.5); color:#f59e0b !important; font-weight:600; font-size:.9rem; cursor:pointer; padding:.5rem 1rem; border-radius:8px; transition:all .2s; font-family:inherit; }

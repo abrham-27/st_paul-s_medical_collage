@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             NursingDepartmentSeeder::class,
             ResearchProjectsSeeder::class,
             HealthTipsSeeder::class,
+            PartnerCategorySeeder::class,
         ]);
     }
 }

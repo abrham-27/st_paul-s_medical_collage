@@ -15,7 +15,7 @@ interface AboutUsProps {
 }
 
 const AboutUs: React.FC<AboutUsProps> = ({ onBack }) => {
-  const [showWhy, setShowWhy] = useState(true); // Show by default since we have content
+  const [showWhy, setShowWhy] = useState(false); // Show by default since we have content
   const [about, setAbout] = useState<AboutPage | null>(null);
   const [mission, setMission] = useState<string>('');
   const [vision, setVision] = useState<string>('');

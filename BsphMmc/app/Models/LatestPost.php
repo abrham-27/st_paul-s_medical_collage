@@ -29,6 +29,7 @@ class LatestPost extends Model
 
     protected $appends = [
         'featured_image_url',
+        'file_url',
     ];
 
     public function getRouteKeyName()
@@ -47,6 +48,19 @@ class LatestPost extends Model
         }
 
         return asset('storage/' . $this->featured_image);
+    }
+
+    public function getFileUrlAttribute(): ?string
+    {
+        if (! $this->file_path) {
+            return null;
+        }
+
+        if (str_starts_with($this->file_path, 'http')) {
+            return $this->file_path;
+        }
+
+        return asset('storage/' . $this->file_path);
     }
 
     public function scopePublished($query)

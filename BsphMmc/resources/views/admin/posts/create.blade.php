@@ -63,8 +63,11 @@
                           class="rich-editor w-full px-4 py-2.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none resize-y">{{ old('content') }}</textarea>
             </div>
 
+            {{-- Document upload (document type only) --}}
+            @include('admin.posts.partials.document-upload')
+
             {{-- Featured Image --}}
-            <div>
+            <div id="featured-image-field">
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Featured Image</label>
                 <input type="file" name="featured_image" accept="image/*"
                        class="w-full text-sm text-gray-600 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 dark:file:bg-blue-900 dark:file:text-blue-300">
@@ -88,10 +91,19 @@
 <script>
     const typeSelect = document.getElementById('post-type');
     const eventField = document.getElementById('event-date-field');
-    function toggleEventDate() {
-        eventField.style.display = typeSelect.value === 'event' ? 'block' : 'none';
+    const documentField = document.getElementById('document-file-field');
+    const documentInput = document.getElementById('document_file');
+
+    function toggleTypeFields() {
+        const type = typeSelect.value;
+        eventField.style.display = type === 'event' ? 'block' : 'none';
+        const isDocument = type === 'document';
+        documentField.classList.toggle('hidden', !isDocument);
+        if (documentInput) {
+            documentInput.required = isDocument;
+        }
     }
-    typeSelect.addEventListener('change', toggleEventDate);
-    toggleEventDate();
+    typeSelect.addEventListener('change', toggleTypeFields);
+    toggleTypeFields();
 </script>
 @endsection

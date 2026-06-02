@@ -28,7 +28,7 @@ class LatestPostController extends Controller
         }
 
         $posts = $query->latestFirst()->paginate($request->get('per_page', 10));
-        $posts = $this->attachFeaturedImageUrlToPaginator($posts);
+        $posts = $this->attachMediaUrlsToPaginator($posts);
 
         return response()->json([
             'success' => true,
@@ -44,7 +44,7 @@ class LatestPostController extends Controller
         $validated['status'] = $validated['status'] ?? 'published';
 
         $post = LatestPost::create($validated);
-        $post = $this->attachFeaturedImageUrl($post);
+        $post = $this->attachMediaUrls($post);
 
         return response()->json([
             'success' => true,
@@ -56,7 +56,7 @@ class LatestPostController extends Controller
     public function show(string $slug): JsonResponse
     {
         $post = LatestPost::where('slug', $slug)->firstOrFail();
-        $post = $this->attachFeaturedImageUrl($post);
+        $post = $this->attachMediaUrls($post);
 
         return response()->json([
             'success' => true,
@@ -75,7 +75,7 @@ class LatestPostController extends Controller
         }
 
         $post->update($validated);
-        $post = $this->attachFeaturedImageUrl($post);
+        $post = $this->attachMediaUrls($post);
 
         return response()->json([
             'success' => true,
@@ -84,19 +84,23 @@ class LatestPostController extends Controller
         ]);
     }
 
-    protected function attachFeaturedImageUrl(LatestPost $post): LatestPost
+    protected function attachMediaUrls(LatestPost $post): LatestPost
     {
-        if ($post->featured_image && !str_starts_with($post->featured_image, 'http')) {
+        if ($post->featured_image && ! str_starts_with($post->featured_image, 'http')) {
             $post->featured_image = asset('storage/' . $post->featured_image);
+        }
+
+        if ($post->file_path && ! str_starts_with($post->file_path, 'http')) {
+            $post->file_path = asset('storage/' . $post->file_path);
         }
 
         return $post;
     }
 
-    protected function attachFeaturedImageUrlToPaginator($posts)
+    protected function attachMediaUrlsToPaginator($posts)
     {
         $posts->getCollection()->transform(function ($post) {
-            return $this->attachFeaturedImageUrl($post);
+            return $this->attachMediaUrls($post);
         });
 
         return $posts;
@@ -127,7 +131,7 @@ class LatestPostController extends Controller
             ->latestFirst()
             ->paginate(10);
 
-        $posts = $this->attachFeaturedImageUrlToPaginator($posts);
+        $posts = $this->attachMediaUrlsToPaginator($posts);
 
         return response()->json([
             'success' => true,
@@ -141,7 +145,7 @@ class LatestPostController extends Controller
             ->published()
             ->paginate(10);
 
-        $events = $this->attachFeaturedImageUrlToPaginator($events);
+        $events = $this->attachMediaUrlsToPaginator($events);
 
         return response()->json([
             'success' => true,
@@ -155,7 +159,7 @@ class LatestPostController extends Controller
             ->published()
             ->paginate(10);
 
-        $events = $this->attachFeaturedImageUrlToPaginator($events);
+        $events = $this->attachMediaUrlsToPaginator($events);
 
         return response()->json([
             'success' => true,
@@ -170,7 +174,7 @@ class LatestPostController extends Controller
             ->latestFirst()
             ->take(5)
             ->get()
-            ->map(fn($post) => $this->attachFeaturedImageUrl($post));
+            ->map(fn($post) => $this->attachMediaUrls($post));
 
         return response()->json([
             'success' => true,
@@ -185,7 +189,7 @@ class LatestPostController extends Controller
             ->latestFirst()
             ->take(5)
             ->get()
-            ->map(fn($post) => $this->attachFeaturedImageUrl($post));
+            ->map(fn($post) => $this->attachMediaUrls($post));
 
         return response()->json([
             'success' => true,

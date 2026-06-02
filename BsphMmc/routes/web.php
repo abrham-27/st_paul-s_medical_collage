@@ -28,6 +28,13 @@ use App\Http\Controllers\Admin\ResearchRolesResponsibilityAdminController;
 use App\Http\Controllers\Admin\SchoolResearchPublicationController;
 use App\Http\Controllers\Admin\HomeHeroController;
 use App\Http\Controllers\Admin\HomeFeaturedController;
+use App\Http\Controllers\Admin\PartnershipsCmsController;
+use App\Http\Controllers\Admin\PartnerController;
+use App\Http\Controllers\Admin\PartnershipStatisticController;
+use App\Http\Controllers\Admin\PartnershipAreaController;
+use App\Http\Controllers\Admin\SuccessStoryController;
+use App\Http\Controllers\Admin\PartnershipDocumentController;
+use App\Http\Controllers\Admin\PartnershipContactController;
 use Illuminate\Support\Facades\Route;
 
 // ─── Setup Route (for database table creation) ──────────────────────────────────
@@ -383,5 +390,50 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
         Route::post('/{type}/statistics', [AdminResearchProjectsController::class, 'addStatistic'])->name('statistics.store');
         Route::post('/{type}/team-members', [AdminResearchProjectsController::class, 'addTeamMember'])->name('team-members.store');
         Route::post('/{type}/faqs', [AdminResearchProjectsController::class, 'addFaq'])->name('faqs.store');
+    });
+
+    // Partnerships Management
+    Route::prefix('partnerships')->name('partnerships.')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Admin\PartnershipsCmsController::class, 'index'])->name('index');
+        
+        // Overview Management
+        Route::get('overview/edit', [\App\Http\Controllers\Admin\PartnershipsCmsController::class, 'editOverview'])->name('overview-edit');
+        Route::put('overview', [\App\Http\Controllers\Admin\PartnershipsCmsController::class, 'updateOverview'])->name('overview-update');
+        
+        // Partners CRUD
+        Route::resource('partners', \App\Http\Controllers\Admin\PartnerController::class)->except(['show']);
+        Route::post('partners/reorder', [\App\Http\Controllers\Admin\PartnerController::class, 'reorder'])->name('partners.reorder');
+        
+        // Statistics CRUD
+        Route::resource('statistics', \App\Http\Controllers\Admin\PartnershipStatisticController::class)->except(['show']);
+        Route::post('statistics/reorder', [\App\Http\Controllers\Admin\PartnershipStatisticController::class, 'reorder'])->name('statistics.reorder');
+        
+        // Partnership Areas CRUD
+        Route::resource('areas', \App\Http\Controllers\Admin\PartnershipAreaController::class)->except(['show']);
+        Route::post('areas/reorder', [\App\Http\Controllers\Admin\PartnershipAreaController::class, 'reorder'])->name('areas.reorder');
+        
+        // Success Stories CRUD
+        Route::resource('success-stories', \App\Http\Controllers\Admin\SuccessStoryController::class)->except(['show']);
+        Route::post('success-stories/reorder', [\App\Http\Controllers\Admin\SuccessStoryController::class, 'reorder'])->name('success-stories.reorder');
+        
+        // Featured Partners
+        Route::get('featured-partners', [\App\Http\Controllers\Admin\FeaturedPartnerController::class, 'index'])->name('featured-partners.index');
+        Route::post('featured-partners', [\App\Http\Controllers\Admin\FeaturedPartnerController::class, 'store'])->name('featured-partners.store');
+        Route::delete('featured-partners/{id}', [\App\Http\Controllers\Admin\FeaturedPartnerController::class, 'remove'])->name('featured-partners.remove');
+        Route::post('featured-partners/reorder', [\App\Http\Controllers\Admin\FeaturedPartnerController::class, 'reorder'])->name('featured-partners.reorder');
+        
+        // Documents CRUD
+        Route::resource('documents', \App\Http\Controllers\Admin\PartnershipDocumentController::class)->except(['show']);
+        Route::post('documents/reorder', [\App\Http\Controllers\Admin\PartnershipDocumentController::class, 'reorder'])->name('documents.reorder');
+        
+        // Contact Information
+        Route::get('contact/edit', [\App\Http\Controllers\Admin\PartnershipContactController::class, 'edit'])->name('contact.edit');
+        Route::put('contact', [\App\Http\Controllers\Admin\PartnershipContactController::class, 'update'])->name('contact.update');
+
+        // Partnership Applications
+        Route::get('applications', [\App\Http\Controllers\Admin\PartnershipApplicationController::class, 'index'])->name('applications.index');
+        Route::get('applications/{application}', [\App\Http\Controllers\Admin\PartnershipApplicationController::class, 'show'])->name('applications.show');
+        Route::put('applications/{application}/status', [\App\Http\Controllers\Admin\PartnershipApplicationController::class, 'updateStatus'])->name('applications.update-status');
+        Route::delete('applications/{application}', [\App\Http\Controllers\Admin\PartnershipApplicationController::class, 'destroy'])->name('applications.destroy');
     });
 });

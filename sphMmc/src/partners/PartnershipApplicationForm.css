@@ -1,0 +1,177 @@
+.partner-app-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.partner-app-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+}
+
+.partner-app-modal {
+  position: relative;
+  width: min(640px, 100%);
+  max-height: min(90vh, 900px);
+  overflow-y: auto;
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.75rem 1.5rem 1.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.partner-app-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  background: #f1f5f9;
+  border-radius: 50%;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #334155;
+}
+
+.partner-app-close:hover {
+  background: #e2e8f0;
+}
+
+.partner-app-modal h2 {
+  margin: 0 2rem 0.5rem 0;
+  font-size: 1.35rem;
+  color: #0f172a;
+}
+
+.partner-app-intro {
+  margin: 0 0 1.25rem;
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+.partner-app-error {
+  background: #fef2f2;
+  color: #b91c1c;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.partner-app-success {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.partner-app-success h2 {
+  margin: 0 auto 0.75rem;
+}
+
+.partner-app-success-note {
+  color: #64748b;
+  font-size: 0.9rem;
+  margin: 0.75rem 0 1.5rem;
+}
+
+.partner-app-fieldset {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 0 0 1rem;
+}
+
+.partner-app-fieldset legend {
+  font-weight: 600;
+  color: #1e3a5f;
+  padding: 0 0.25rem;
+}
+
+.partner-app-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #334155;
+  margin-bottom: 0.75rem;
+}
+
+.partner-app-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.partner-app-form input,
+.partner-app-form select,
+.partner-app-form textarea {
+  font: inherit;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.partner-app-form input:focus,
+.partner-app-form select:focus,
+.partner-app-form textarea:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 0;
+  border-color: #2563eb;
+}
+
+.required {
+  color: #dc2626;
+}
+
+.field-error {
+  color: #dc2626;
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
+.partner-app-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.partner-app-cancel {
+  padding: 0.6rem 1.1rem;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  font: inherit;
+}
+
+.partner-app-submit {
+  padding: 0.6rem 1.25rem;
+  background: #fbbf24;
+  color: #0f172a;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font: inherit;
+}
+
+.partner-app-submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+@media (max-width: 520px) {
+  .partner-app-row {
+    grid-template-columns: 1fr;
+  }
+}
