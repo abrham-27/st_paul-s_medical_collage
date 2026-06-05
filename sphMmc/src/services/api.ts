@@ -276,13 +276,60 @@ export type NursingPartnershipDetail = MedicinePartnershipDetail;
 export type PublicHealthPartnershipListItem = MedicinePartnershipListItem;
 export type PublicHealthPartnershipDetail = MedicinePartnershipDetail;
 
+// Alumni Interfaces
+export interface AlumniMember {
+  id: number;
+  name: string;
+  graduation_year: number;
+  degree: string;
+  specialty: string;
+  current_position: string | null;
+  workplace: string | null;
+  location: string | null;
+  email: string;
+  phone: string | null;
+  image: string | null;
+  achievements: string[] | null;
+  awards: string[] | null;
+  bio: string | null;
+  linkedin: string | null;
+  twitter: string | null;
+  research_gate: string | null;
+  publications: number;
+  is_featured: boolean;
+  is_active: boolean;
+}
+
+export interface AlumniEvent {
+  id: number;
+  title: string;
+  date: string;
+  location: string;
+  type: string;
+  description: string | null;
+  attendees: string | null;
+  is_active: boolean;
+}
+
+export interface AlumniStat {
+  number: string;
+  label: string;
+  icon: string;
+}
+
 class ApiService {
   private async request<T>(url: string, options?: RequestInit): Promise<T> {
     try {
+      const headers: Record<string, string> = {
+        'Accept': 'application/json',
+      };
+      if (!(options?.body instanceof FormData)) {
+        headers['Content-Type'] = 'application/json';
+      }
+
       const response = await fetch(url, {
         headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
+          ...headers,
           ...options?.headers,
         },
         ...options,
@@ -531,6 +578,40 @@ class ApiService {
 
   async getNursingDepartment(slug: string): Promise<NursingDepartmentDetail> {
     return this.request<NursingDepartmentDetail>(`${API_BASE_URL}/nursing/departments/${slug}`);
+  }
+
+  // ── Alumni Section ─────────────────────────────────────────────────────────
+
+  async getAlumni(params?: {
+    search?: string;
+    specialty?: string;
+    year?: string;
+    featured?: boolean;
+  }): Promise<{ success: boolean; data: AlumniMember[] }> {
+    const query = new URLSearchParams();
+    if (params?.search) query.append('search', params.search);
+    if (params?.specialty && params.specialty !== 'all') query.append('specialty', params.specialty);
+    if (params?.year && params.year !== 'all') query.append('year', params.year);
+    if (params?.featured !== undefined) query.append('featured', String(params.featured));
+
+    const url = query.toString() ? `${API_BASE_URL}/alumni?${query}` : `${API_BASE_URL}/alumni`;
+    return this.request<{ success: boolean; data: AlumniMember[] }>(url);
+  }
+
+  async getAlumniStats(): Promise<{ success: boolean; data: AlumniStat[] }> {
+    return this.request<{ success: boolean; data: AlumniStat[] }>(`${API_BASE_URL}/alumni/stats`);
+  }
+
+  async getAlumniEvents(): Promise<{ success: boolean; data: AlumniEvent[] }> {
+    return this.request<{ success: boolean; data: AlumniEvent[] }>(`${API_BASE_URL}/alumni/events`);
+  }
+
+  async registerAlumnus(formData: FormData): Promise<{ success: boolean; message: string; data: AlumniMember }> {
+    return this.request<{ success: boolean; message: string; data: AlumniMember }>(`${API_BASE_URL}/alumni/register`, {
+      method: 'POST',
+      body: formData,
+      headers: {},
+    });
   }
 }
 

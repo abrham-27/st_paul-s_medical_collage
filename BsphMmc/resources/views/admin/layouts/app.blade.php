@@ -118,6 +118,13 @@
                 <span>Partnerships</span>
             </a>
 
+            {{-- Alumni Directory Management --}}
+            <a href="{{ route('admin.alumni.index') }}"
+               class="flex flex-row items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all w-full {{ request()->routeIs('admin.alumni.*') ? 'bg-blue-700 text-white' : 'text-blue-200 hover:bg-blue-700 hover:text-white' }}">
+                <i class="fa-solid fa-user-graduation text-base w-5 text-center flex-shrink-0"></i>
+                <span>Alumni Directory</span>
+            </a>
+
             <p class="px-4 pt-4 pb-1 text-xs font-semibold text-blue-400 uppercase tracking-wider">Academics</p>
 
             {{-- School of Medicine --}}

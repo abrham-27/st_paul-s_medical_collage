@@ -36,6 +36,7 @@ use App\Http\Controllers\Admin\SuccessStoryController;
 use App\Http\Controllers\Admin\PartnershipDocumentController;
 use App\Http\Controllers\Admin\PartnershipContactController;
 use App\Http\Controllers\Admin\FooterController as AdminFooterController;
+use App\Http\Controllers\Admin\AlumniAdminController;
 use Illuminate\Support\Facades\Route;
 
 // ─── Setup Route (for database table creation) ──────────────────────────────────
@@ -441,4 +442,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
         Route::put('applications/{application}/status', [\App\Http\Controllers\Admin\PartnershipApplicationController::class, 'updateStatus'])->name('applications.update-status');
         Route::delete('applications/{application}', [\App\Http\Controllers\Admin\PartnershipApplicationController::class, 'destroy'])->name('applications.destroy');
     });
+
+    // Alumni Management
+    Route::resource('alumni', AlumniAdminController::class)->except(['show'])->parameters(['alumni' => 'alumni']);
+    Route::put('alumni/{alumni}/toggle-status', [AlumniAdminController::class, 'toggleStatus'])->name('alumni.toggle-status');
 });

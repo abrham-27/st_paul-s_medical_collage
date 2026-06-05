@@ -705,7 +705,7 @@ function App(): JSX.Element {
           <Route path="/academics/academic-research" element={<AcademicProjects onBack={() => navigate('/')} onViewProject={(slug) => navigate(`/academics/academic-research/${slug}`)} />} />
           <Route path="/academics/academic-research/:slug" element={<AcademicResearchDetailRoute onBack={() => navigate('/academics/academic-research')} />} />
           <Route path="/partners" element={<Partners />} />
-          <Route path="/alumni" element={<StaticBackground backgroundImage={background}><Alumni onBack={() => navigate('/')} /></StaticBackground>} />
+           <Route path="/alumni" element={<Alumni onBack={() => navigate("/")} />} />
           <Route path="/office/registrar" element={<RegistrarOffice onBack={() => navigate('/')} />} />
           <Route path="/office/ict" element={<ICTOffice onBack={() => navigate('/')} />} />
           <Route path="/office/library" element={<LibraryOffice onBack={() => navigate('/')} />} />

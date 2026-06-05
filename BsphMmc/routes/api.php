@@ -26,6 +26,7 @@ use App\Http\Controllers\NursingPartnershipApiController;
 use App\Http\Controllers\PublicHealthPartnershipApiController;
 use App\Http\Controllers\ResearchRolesResponsibilityApiController;
 use App\Http\Controllers\FooterController;
+use App\Http\Controllers\AlumniApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -208,3 +209,10 @@ Route::get('/partnership-contact', [PartnershipContactApiController::class, 'ind
 
 Route::post('/partnership-applications', [\App\Http\Controllers\PartnershipApplicationApiController::class, 'store']);
 Route::get('/footer', [FooterController::class, 'index']);
+
+Route::prefix('/alumni')->group(function () {
+    Route::get('', [AlumniApiController::class, 'index']);
+    Route::get('/stats', [AlumniApiController::class, 'stats']);
+    Route::get('/events', [AlumniApiController::class, 'events']);
+    Route::post('/register', [AlumniApiController::class, 'register']);
+});
