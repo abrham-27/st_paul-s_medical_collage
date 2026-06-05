@@ -85,6 +85,12 @@
                 <span>Gallery</span>
             </a>
 
+            <a href="{{ route('admin.footer.edit') }}"
+               class="flex flex-row items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all w-full {{ request()->routeIs('admin.footer.*') ? 'bg-blue-700 text-white' : 'text-blue-200 hover:bg-blue-700 hover:text-white' }}">
+                <i class="fa-solid fa-window-maximize text-base w-5 text-center flex-shrink-0"></i>
+                <span>Footer</span>
+            </a>
+
             {{-- Home Content --}}
             <div x-data="{ homeContentOpen: {{ request()->is('admin/content/home-content*') ? 'true' : 'false' }} }">
                 <button @click="homeContentOpen=!homeContentOpen"

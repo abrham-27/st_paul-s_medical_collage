@@ -82,3 +82,4 @@ class AcademicsDataSeeder extends Seeder
         DB::table('academics')->insert($data);
     }
 }
+

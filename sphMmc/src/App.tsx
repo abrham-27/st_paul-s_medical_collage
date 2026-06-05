@@ -147,6 +147,7 @@ import MedicalSurgical from './school-of-nursing/departments/MedicalSurgical'
 import OperativeTheatre from './school-of-nursing/departments/OperativeTheatre'
 import { RolesResponsibilities } from './research'
 import { Partners } from './partners'
+import Footer from './footer/Footer';
 import SpecializedCenters from './centers/SpecializedCenters'
 import AboutUs from './about/AboutUs'
 import Leaders from './about/Leaders'
@@ -736,38 +737,14 @@ function App(): JSX.Element {
 <Statistics />
             </div>
           </section>
-        </>
-      )}
+        </>) }
+      
 
-      {/* Footer */}
-      <footer className="main-footer">
-        <div className="container">
-          <div className="footer-grid">
-            <div className="footer-col">
-              <h4>About SPHMMC</h4>
-              <p>St. Paul's Hospital Millennium Medical College is committed to providing high-quality healthcare and medical education in Ethiopia.</p>
-            </div>
-            <div className="footer-col">
-              <h4>Quick Links</h4>
-              <ul className="footer-links">
-                <li><a href="#">Academic Calendar</a></li>
-                <li><a href="#">Admission Portal</a></li>
-                <li><a href="#">Online Journal</a></li>
-                <li><a href="#">Careers</a></li>
-              </ul>
-            </div>
-            <div className="footer-col">
-              <h4>Contact Us</h4>
-              <p>Gulele Sub-City, Addis Ababa, Ethiopia PO Box 1271, Short Code 976</p>
-              <p>Phone: +251 112 75 01 25</p>
-            </div>
-          </div>
-          <div className="footer-bottom">
-            <p>&copy; {new Date().getFullYear()} St. Paul's Hospital Millennium Medical College. All Rights Reserved.</p>
-          </div>
-        </div>
-      </footer>
-    </div>
+
+
+{/* Footer */}
+<Footer />
+  </div>
   )
 }
 

@@ -35,6 +35,7 @@ use App\Http\Controllers\Admin\PartnershipAreaController;
 use App\Http\Controllers\Admin\SuccessStoryController;
 use App\Http\Controllers\Admin\PartnershipDocumentController;
 use App\Http\Controllers\Admin\PartnershipContactController;
+use App\Http\Controllers\Admin\FooterController as AdminFooterController;
 use Illuminate\Support\Facades\Route;
 
 // ─── Setup Route (for database table creation) ──────────────────────────────────
@@ -131,6 +132,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 
     Route::get('about-us', [AboutPageController::class, 'edit'])->name('about.edit');
     Route::put('about-us', [AboutPageController::class, 'update'])->name('about.update');
+
+    // Footer Management
+    Route::get('footer', [AdminFooterController::class, 'edit'])->name('footer.edit');
+    Route::put('footer', [AdminFooterController::class, 'update'])->name('footer.update');
 
     // Leaders
     Route::resource('leaders', LeaderController::class)->except(['show']);

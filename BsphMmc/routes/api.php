@@ -25,6 +25,7 @@ use App\Http\Controllers\MedicinePartnershipApiController;
 use App\Http\Controllers\NursingPartnershipApiController;
 use App\Http\Controllers\PublicHealthPartnershipApiController;
 use App\Http\Controllers\ResearchRolesResponsibilityApiController;
+use App\Http\Controllers\FooterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -206,3 +207,4 @@ Route::prefix('/partnership-documents')->group(function () {
 Route::get('/partnership-contact', [PartnershipContactApiController::class, 'index']);
 
 Route::post('/partnership-applications', [\App\Http\Controllers\PartnershipApplicationApiController::class, 'store']);
+Route::get('/footer', [FooterController::class, 'index']);
