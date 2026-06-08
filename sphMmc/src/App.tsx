@@ -8,6 +8,7 @@ import HeroSection from './components/HeroSection'
 import HomeNewsSection from './components/HomeNewsSection'
 import HomeQuickLinks from './components/HomeQuickLinks'
 import HomeGallerySection from './components/HomeGallerySection'
+import Gallery from './Gallery'
 
 // Static background component for pages
 const StaticBackground = ({ children, backgroundImage }: { children: JSX.Element; backgroundImage: string }) => {
@@ -652,6 +653,7 @@ function App(): JSX.Element {
         <Routes>
           <Route path="/" element={<Home navigate={navigate} slides={slides} currentSlide={currentSlide} onPrev={handlePrev} onNext={handleNext} currentNewsSlide={currentNewsSlide} newsImages={newsImages} latestNews={latestNews} scrolled={scrolled} announcements={announcements} />} />
           <Route path="/about" element={<AboutUs onBack={() => navigate('/')} />} />
+          <Route path="/gallery" element={<Gallery onBack={() => navigate('/')} />} />
           <Route path="/about/leaders/*" element={<Leaders onBack={() => navigate('/about')} />} />
           <Route path="/about/mission-vision-values/*" element={<MissionVisionValues onBack={() => navigate('/about')} />} />
           <Route path="/health/tips" element={<HealthTips onBack={() => navigate('/')} />} />
